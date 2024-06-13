@@ -1,9 +1,7 @@
 package com.openclassrooms.mddapi.model;
 
 import lombok.Data;
-
 import javax.persistence.*;
-
 import java.sql.Timestamp;
 
 @Data
@@ -14,11 +12,11 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 

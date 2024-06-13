@@ -1,9 +1,9 @@
 package com.openclassrooms.mddapi.model;
 
-import java.security.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
-
 import javax.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.Data;
 
@@ -24,6 +24,7 @@ public class Topic {
     @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts;
 
-    @Column(name = "created_at")
-    private Timestamp createdAt;
+    @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 }
