@@ -13,5 +13,6 @@ public interface UserService {
     boolean authenticateUser(String email, String password);
     Optional<User> findByEmail(String email);
     Optional<UserDto> getUserDetails(String email);
+    Optional<User> findByUsername(String username);
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 }

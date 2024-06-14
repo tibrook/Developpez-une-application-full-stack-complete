@@ -106,22 +106,22 @@ public class JwtExceptionHandlingFilter extends OncePerRequestFilter {
      */
     private void setupSecurityContext(String jwt, HttpServletRequest request) {
 	  try {
-	        String username = jwtService.getUsernameFromToken(jwt);
-	        if (StringUtils.hasText(username) && SecurityContextHolder.getContext().getAuthentication() == null) {
-	            UserDetails userDetails;
-	            try {
-	                userDetails = userService.loadUserByUsername(username);
-	            } catch (UsernameNotFoundException e) {
-	                throw new JwtAuthenticationException("User does not exist.");
-	            }
+          String email = jwtService.getUsernameFromToken(jwt);
+          if (StringUtils.hasText(email) && SecurityContextHolder.getContext().getAuthentication() == null) {
+              UserDetails userDetails;
+              try {
+                  userDetails = userService.loadUserByUsername(email);
+              } catch (UsernameNotFoundException e) {
+                  throw new JwtAuthenticationException("User does not exist.");
+              }
 
-	            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-	                userDetails, null, userDetails.getAuthorities());
-	            authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-	            SecurityContextHolder.getContext().setAuthentication(authToken);
-	        }
-	    } catch (JwtAuthenticationException e) {
-	        throw e;  // Re-throw the exception to be caught in doFilterInternal
-	    }
+              UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                  userDetails, null, userDetails.getAuthorities());
+              authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+              SecurityContextHolder.getContext().setAuthentication(authToken);
+          }
+      } catch (JwtAuthenticationException e) {
+          throw e;
+      }
     }
 }

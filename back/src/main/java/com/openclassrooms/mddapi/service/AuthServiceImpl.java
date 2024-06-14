@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.openclassrooms.mddapi.dto.requests.LoginRequest;
 import com.openclassrooms.mddapi.dto.requests.RegisterRequest;
 import com.openclassrooms.mddapi.dto.responses.TokenResponse;
+import com.openclassrooms.mddapi.exception.CustomException;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.service.interfaces.AuthService;
 import com.openclassrooms.mddapi.service.interfaces.JwtService;
@@ -34,16 +35,25 @@ public class AuthServiceImpl implements AuthService{
     }
  
     public TokenResponse authenticateAndGenerateToken(LoginRequest loginRequest) {
-        log.info("Authenticating user {}", loginRequest.getUsernameOrEmail());
+    	log.info("Authenticating user {}", loginRequest.getUsernameOrEmail());
+
         // Use UserService to authenticate the user first
         userService.authenticateUser(loginRequest.getUsernameOrEmail(), loginRequest.getPassword());
+
+        // Load the user details to get the email
+        User user = userService.findByEmail(loginRequest.getUsernameOrEmail())
+                .orElseGet(() -> userService.findByUsername(loginRequest.getUsernameOrEmail())
+                        .orElseThrow(() -> new CustomException("User not found")));
+        String email = user.getEmail();
+
         // If authentication is successful, proceed with Spring Security Authentication.
         Authentication authentication = authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(loginRequest.getUsernameOrEmail(), loginRequest.getPassword())
+            new UsernamePasswordAuthenticationToken(email, loginRequest.getPassword())
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        log.info("User {} authenticated successfully", loginRequest.getUsernameOrEmail());
-        return new TokenResponse(jwtService.generateToken(authentication));
+        log.info("User {} authenticated successfully", email);
+        log.info("Authentication {}", authentication.getName());
+        return new TokenResponse(jwtService.generateTokenWithSubject(email));
     }
 
     public TokenResponse registerAndGenerateToken(RegisterRequest registerRequest) {

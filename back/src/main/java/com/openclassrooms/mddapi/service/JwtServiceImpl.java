@@ -56,6 +56,23 @@ public class JwtServiceImpl implements JwtService{
 		return this.jwtEncoder.encode(jwtEncoderParameters).getTokenValue();
 	}
 	/**
+	 * Generates a JWT token for the provided subject (email).
+	 * @param subject Email of the authenticated user.
+	 * @return JWT token generated for the subject.
+	 */
+	public String generateTokenWithSubject(String subject) {
+    	Instant now = Instant.now();
+ 		JwtClaimsSet claims = JwtClaimsSet.builder()
+          		  .issuer("self")
+           		  .issuedAt(now)
+           		  .expiresAt(now.plus(jwtExpiration, ChronoUnit.SECONDS))
+          		  .subject(subject)
+          		  .build();
+		JwtEncoderParameters jwtEncoderParameters = JwtEncoderParameters.from(JwsHeader.with(MacAlgorithm.HS256).build(), claims);
+		return this.jwtEncoder.encode(jwtEncoderParameters).getTokenValue();
+	}
+	
+	/**
 	 * Validates the provided JWT token.
 	 * @param token JWT token to be validated.
 	 * @return true if the token is valid, false otherwise.
