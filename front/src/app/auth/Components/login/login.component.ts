@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginRequest } from '../../interfaces/LoginRequest.interface';
 import { AuthService } from 'src/app/services/auth.service';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -42,5 +44,8 @@ export class LoginComponent implements OnInit {
         this.errorMessage = error.error.message || 'Login failed';
       }
     );
+  }
+  goBack(): void {
+    this.location.back();
   }
 }

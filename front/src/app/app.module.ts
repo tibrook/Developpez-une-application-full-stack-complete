@@ -11,6 +11,8 @@ import { LoginComponent } from './auth/Components/login/login.component';
 import { RegisterComponent } from './auth/Components/register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './header/header.component';
+import { MatIconModule } from '@angular/material/icon';
+
 @NgModule({
   declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, HeaderComponent],
   imports: [
@@ -20,6 +22,7 @@ import { HeaderComponent } from './header/header.component';
     MatButtonModule,
     HttpClientModule,
     ReactiveFormsModule, 
+    MatIconModule
   ],
 
   bootstrap: [AppComponent],

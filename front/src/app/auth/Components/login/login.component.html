@@ -1,16 +1,33 @@
 <div class="login-container">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <div>
-        <label for="usernameOrEmail">Email or Username</label>
-        <input id="usernameOrEmail" formControlName="usernameOrEmail" type="text" />
+  <div class="back-button">
+    <button mat-icon-button (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </div>
+    <div class="login-header">
+      <h2>Se connecter</h2>
     </div>
-  
-      <div>
-        <label for="password">Password</label>
-        <input id="password" formControlName="password" type="password" />
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="UsernameOrEmail">E-mail ou nom d'utilisateur</label>
+        <input id="UsernameOrEmail" formControlName="UsernameOrEmail" type="text" />
+        <div *ngIf="submitted && formControls['UsernameOrEmail'].errors" class="error">
+          <div *ngIf="formControls['UsernameOrEmail'].errors['required']">Ce champ est requis</div>
+        </div>
       </div>
   
-      <button type="submit">Login</button>
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input id="password" formControlName="password" type="password" />
+        <div *ngIf="submitted && formControls['password'].errors" class="error">
+          <div *ngIf="formControls['password'].errors['required']">Ce champ est requis</div>
+          <div *ngIf="formControls['password'].errors['minlength']">Le mot de passe doit contenir au moins 8 caractères</div>
+        </div>
+      </div>
+  
+      <div class="button-container">
+        <button type="submit" class="btn">Se connecter</button>
+      </div>
   
       <div *ngIf="errorMessage" class="error">
         {{ errorMessage }}
