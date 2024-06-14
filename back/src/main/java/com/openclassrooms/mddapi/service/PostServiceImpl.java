@@ -68,12 +68,6 @@ public class PostServiceImpl implements PostService {
         return postDto;
     }
 
-    @Override
-    public List<PostDto> getAllPosts() {
-        return postRepository.findAll().stream()
-                .map(post -> modelMapper.map(post, PostDto.class))
-                .collect(Collectors.toList());
-    }
 
     @Override
     public PostDto getPostById(Long id) {
