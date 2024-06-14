@@ -41,7 +41,6 @@ public class AuthController {
         return authService.registerAndGenerateToken(registerRequest);
     }
      
-  
     @PostMapping("/login")
     public TokenResponse loginUser(@RequestBody @Valid LoginRequest loginRequest, BindingResult bindingResult) {
         log.info("Logging in {}", loginRequest.getUsernameOrEmail());
