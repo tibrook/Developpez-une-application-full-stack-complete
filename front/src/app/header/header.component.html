@@ -3,14 +3,15 @@
       <img src="assets/logo_p6.png" alt="MDD Logo" class="logo">
     </div>
     <ng-container *ngIf="isAuthPage">
-      <nav class="nav-links">
-        <a routerLink="/articles" routerLinkActive="active">Articles</a>
-        <a routerLink="/themes" routerLinkActive="active">Thèmes</a>
-        <a routerLink="/profile" routerLinkActive="active">Profil</a>
-      </nav>
-      <div class="profile-menu">
-        <div class="profile-picture">
-          <img src="assets/profile-picture.png" alt="Profile Picture">
+      <div class="right-header">
+        <nav class="nav-links">
+          <a routerLink="/articles" routerLinkActive="active">Articles</a>
+          <a routerLink="/themes" routerLinkActive="active">Thèmes</a>
+        </nav>
+        <div class="profile-menu">
+          <button mat-icon-button class="profile-button">
+            <mat-icon class="profile-icon">account_circle</mat-icon> 
+          </button>
         </div>
       </div>
     </ng-container>

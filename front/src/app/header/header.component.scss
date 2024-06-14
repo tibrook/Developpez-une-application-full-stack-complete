@@ -5,6 +5,12 @@
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     height: 94px;
+    .right-header{
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      width: 25rem;
+    }
     .logo-container {
       display: flex;
       align-items: center;
@@ -15,5 +21,40 @@
         width: 140px;
       }
     }
+  .nav-links {
+    display: flex;
+    gap: 16px;
+
+    a {
+      font-size: 16px;
+      color: #333;
+      text-decoration: none;
+
+      &.active {
+        color: #7763C5;
+      }
+    }
+  }
+
+  .profile-menu {
+    display: flex;
+    align-items: center;
+
+    .profile-button {
+      width: 56px; /* Augmente la taille du bouton */
+      height: 56px;
+
+      .mat-button-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .profile-icon {
+        color: #333;
+        transform: scale(2);
+      }
+    }
+  }
   }
   
