@@ -4,7 +4,11 @@ import java.util.Collections;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.dto.UserDto;
+import com.openclassrooms.mddapi.dto.requests.UpdateUserRequest;
 import com.openclassrooms.mddapi.exception.AuthenticationException;
 import com.openclassrooms.mddapi.exception.CustomException;
 import com.openclassrooms.mddapi.model.User;
@@ -23,6 +28,7 @@ public class UserServiceImpl implements UserService, UserDetailsService{
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 	private final ModelMapper modelMapper;
+	
 	
 	public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, ModelMapper modelMapper) {
 		this.userRepository = userRepository;
@@ -82,6 +88,26 @@ public class UserServiceImpl implements UserService, UserDetailsService{
                 .orElseThrow(() -> new AuthenticationException("User not found with email or username: " + usernameOrEmail)));
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), Collections.emptyList());
+    }
+    
+    @Override
+    public UserDto getUserById(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        return modelMapper.map(user, UserDto.class);
+    }
+
+    @Override
+    public UserDto updateUser(UpdateUserRequest updateUserRequest) {
+    	 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    String currentUserName = authentication.getName();
+	    User user = userRepository.findByEmail(currentUserName)
+    	            .orElseThrow(() -> new CustomException("User not found"));
+    	    
+	    user.setUsername(updateUserRequest.getUsername());
+	    user.setEmail(updateUserRequest.getEmail());
+     
+        userRepository.save(user);
+        return modelMapper.map(user, UserDto.class);
     }
 }
 

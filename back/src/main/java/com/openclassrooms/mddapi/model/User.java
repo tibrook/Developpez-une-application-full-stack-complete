@@ -18,8 +18,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Table(name = "Users")
 public class User {
 	
-    
-   /** La clé primaire est générée automatiquement **/
+   
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

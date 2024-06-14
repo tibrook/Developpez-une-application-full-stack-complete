@@ -19,8 +19,6 @@ import com.openclassrooms.mddapi.service.interfaces.PostService;
 import com.openclassrooms.mddapi.service.interfaces.UserService;
 import com.openclassrooms.mddapi.exception.CustomException;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PostServiceImpl implements PostService {

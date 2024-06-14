@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.openclassrooms.mddapi.dto.UserDto;
+import com.openclassrooms.mddapi.dto.requests.UpdateUserRequest;
 import com.openclassrooms.mddapi.model.User;
 
 public interface UserService {
@@ -15,4 +16,6 @@ public interface UserService {
     Optional<UserDto> getUserDetails(String email);
     Optional<User> findByUsername(String username);
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+    UserDto getUserById(Long userId);
+    UserDto updateUser(UpdateUserRequest updateUserRequest);
 }
