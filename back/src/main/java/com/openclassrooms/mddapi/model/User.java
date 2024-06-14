@@ -7,7 +7,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 
 @Entity
@@ -17,8 +20,9 @@ import java.util.List;
 @Table(name = "Users")
 public class User {
 	
-    @Id
+    
    /** La clé primaire est générée automatiquement **/
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -35,9 +39,11 @@ public class User {
     private List<Post> posts;
     
     @Column(name = "created_at")
-    private Timestamp createdAt;
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
-    private Timestamp updatedAt;
+    @CreationTimestamp
+    private LocalDateTime updatedAt;
 
 }
