@@ -7,8 +7,8 @@ import com.openclassrooms.mddapi.model.Comment;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.CommentRepository;
 import com.openclassrooms.mddapi.repository.PostRepository;
+import com.openclassrooms.mddapi.repository.UserRepository;
 import com.openclassrooms.mddapi.service.interfaces.CommentService;
-import com.openclassrooms.mddapi.service.interfaces.UserService;
 
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -33,20 +33,19 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private PostRepository postRepository;
     @Autowired
-    private final UserService userService;
+    private final UserRepository userRepository;
     
-    public CommentServiceImpl(UserService userService) {
-        this.userService = userService;
+    public CommentServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
     @Override
     public CommentDto postComment(Long postId, CreateCommentRequest createCommentRequest) {
 	   Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-       String currentUserName = authentication.getName();
+        Long userId = Long.valueOf(authentication.getName());
+	    User user = userRepository.findById(userId)
+	            .orElseThrow(() -> new CustomException("User not found"));
+        String currentUserName = user.getUsername();
        log.info("currentUserName : {}", currentUserName);
-       User user = userService.getUserDetails(currentUserName)
-               .map(userDto -> modelMapper.map(userDto, User.class))
-               .orElseThrow(() -> new CustomException("User not found"));
-           
         Comment comment = modelMapper.map(createCommentRequest, Comment.class);
         comment.setPost(postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found")));
         comment.setUser(user);

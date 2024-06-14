@@ -45,6 +45,7 @@ public class AuthServiceImpl implements AuthService{
                 .orElseGet(() -> userService.findByUsername(loginRequest.getUsernameOrEmail())
                         .orElseThrow(() -> new CustomException("User not found")));
         String email = user.getEmail();
+        Long userId = user.getId();
 
         // If authentication is successful, proceed with Spring Security Authentication.
         Authentication authentication = authenticationManager.authenticate(
@@ -53,7 +54,7 @@ public class AuthServiceImpl implements AuthService{
         SecurityContextHolder.getContext().setAuthentication(authentication);
         log.info("User {} authenticated successfully", email);
         log.info("Authentication {}", authentication.getName());
-        return new TokenResponse(jwtService.generateTokenWithSubject(email));
+        return new TokenResponse(jwtService.generateTokenWithSubject(String.valueOf(userId)));
     }
 
     public TokenResponse registerAndGenerateToken(RegisterRequest registerRequest) {

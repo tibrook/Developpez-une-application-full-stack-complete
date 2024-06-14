@@ -21,9 +21,9 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/me")
-    public Optional<UserDto> getUserInfo(Authentication authentication) {
+    public UserDto getUserInfo(Authentication authentication) {
         log.info("Fetching user info for {}", authentication.getName());
-        return userService.getUserDetails(authentication.getName());
+        return userService.getUserById(Long.valueOf(authentication.getName()));
     }
 
     @PutMapping("/me")

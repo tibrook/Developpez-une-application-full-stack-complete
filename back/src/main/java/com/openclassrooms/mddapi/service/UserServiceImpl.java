@@ -98,9 +98,9 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 
     @Override
     public UserDto updateUser(UpdateUserRequest updateUserRequest) {
-    	 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	    String currentUserName = authentication.getName();
-	    User user = userRepository.findByEmail(currentUserName)
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    Long userId = Long.valueOf(authentication.getName());
+	    User user = userRepository.findById(userId)
     	            .orElseThrow(() -> new CustomException("User not found"));
     	    
 	    user.setUsername(updateUserRequest.getUsername());

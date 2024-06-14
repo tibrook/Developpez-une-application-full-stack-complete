@@ -15,6 +15,7 @@ import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.PostRepository;
 import com.openclassrooms.mddapi.repository.TopicRepository;
+import com.openclassrooms.mddapi.repository.UserRepository;
 import com.openclassrooms.mddapi.service.interfaces.PostService;
 import com.openclassrooms.mddapi.service.interfaces.UserService;
 import com.openclassrooms.mddapi.exception.CustomException;
@@ -26,9 +27,9 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private PostRepository postRepository;
+    
+    private final UserRepository userRepository;
 
-    @Autowired
-    private final UserService userService;
 
     @Autowired
     private TopicRepository topicRepository;
@@ -36,20 +37,20 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public PostServiceImpl(UserService userService) {
-        this.userService = userService;
+    public PostServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     public PostDto createPost(CreatePostRequest createPostRequest) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserName = authentication.getName();
+	    Long userId = Long.valueOf(authentication.getName());
+	    User user = userRepository.findById(userId)
+	            .orElseThrow(() -> new CustomException("User not found"));
+	    
+        String currentUserName = user.getUsername();
         log.info("currentUserName : {}", currentUserName);
-        User user = userService.getUserDetails(currentUserName)
-                .map(userDto -> modelMapper.map(userDto, User.class))
-                .orElseThrow(() -> new CustomException("User not found"));
-       
-
+    
         Topic topic = topicRepository.findById(createPostRequest.getTopicId())
                 .orElseThrow(() -> new CustomException("Topic not found"));
         Post post = new Post();

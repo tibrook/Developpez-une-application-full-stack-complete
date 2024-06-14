@@ -5,6 +5,7 @@ import java.time.temporal.ChronoUnit;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwsHeader;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -15,6 +16,8 @@ import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.exception.JwtAuthenticationException;
+import com.openclassrooms.mddapi.model.User;
+import com.openclassrooms.mddapi.repository.UserRepository;
 import com.openclassrooms.mddapi.service.interfaces.JwtService;
 
 
@@ -26,7 +29,7 @@ public class JwtServiceImpl implements JwtService{
 
 	private JwtEncoder jwtEncoder;
 	private JwtDecoder jwtDecoder;
-		
+	private UserRepository userRepository;
 	@Value("${jwt.expiration}")
 	private long jwtExpiration; 
 	
@@ -35,9 +38,10 @@ public class JwtServiceImpl implements JwtService{
 	 * @param jwtEncoder JwtEncoder instance for encoding JWT tokens.
 	 * @param jwtDecoder JwtDecoder instance for decoding JWT tokens.
 	 */
-	public JwtServiceImpl(JwtEncoder jwtEncoder, JwtDecoder jwtDecoder) {
+	public JwtServiceImpl(JwtEncoder jwtEncoder, JwtDecoder jwtDecoder, UserRepository userRepository) {
 		this.jwtEncoder = jwtEncoder;
 		this.jwtDecoder = jwtDecoder;
+		this.userRepository = userRepository;
 	}
 	/**
 	 * Generates a JWT token for the provided authentication.
@@ -60,13 +64,13 @@ public class JwtServiceImpl implements JwtService{
 	 * @param subject Email of the authenticated user.
 	 * @return JWT token generated for the subject.
 	 */
-	public String generateTokenWithSubject(String subject) {
+	public String generateTokenWithSubject(String userId) {
     	Instant now = Instant.now();
  		JwtClaimsSet claims = JwtClaimsSet.builder()
           		  .issuer("self")
            		  .issuedAt(now)
            		  .expiresAt(now.plus(jwtExpiration, ChronoUnit.SECONDS))
-          		  .subject(subject)
+          		  .subject(userId)
           		  .build();
 		JwtEncoderParameters jwtEncoderParameters = JwtEncoderParameters.from(JwsHeader.with(MacAlgorithm.HS256).build(), claims);
 		return this.jwtEncoder.encode(jwtEncoderParameters).getTokenValue();
@@ -96,6 +100,9 @@ public class JwtServiceImpl implements JwtService{
      */
     public String getUsernameFromToken(String token) {
         Jwt jwt = jwtDecoder.decode(token);
-        return jwt.getSubject();
+        Long userId = Long.valueOf(jwt.getSubject());
+        User user = userRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return user.getEmail();
+
     }
 }
