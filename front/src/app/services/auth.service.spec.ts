@@ -5,7 +5,6 @@ import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
   let service: AuthService;
-  private apiUrl = `${environment.apiUrl}/auth`;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});

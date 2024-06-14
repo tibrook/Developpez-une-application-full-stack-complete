@@ -40,7 +40,8 @@ export class RegisterComponent implements OnInit {
     const observer = {
       next: (response: any) => {
         console.log('Registration successful', response);
-        this.router.navigate(['/login']); // Rediriger vers la page de login
+        localStorage.setItem('token', response.token);
+        this.router.navigate(['/']);
       },
       error: (error: any) => {
         console.error('Registration error', error);
