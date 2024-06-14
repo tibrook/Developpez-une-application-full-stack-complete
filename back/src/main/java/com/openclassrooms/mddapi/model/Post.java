@@ -1,6 +1,5 @@
 package com.openclassrooms.mddapi.model;
 
-import java.security.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 

@@ -2,7 +2,6 @@ package com.openclassrooms.mddapi.model;
 
 import lombok.Data;
 import jakarta.persistence.*;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
