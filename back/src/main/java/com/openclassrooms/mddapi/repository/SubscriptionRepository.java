@@ -1,5 +1,7 @@
 package com.openclassrooms.mddapi.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,4 +13,5 @@ import com.openclassrooms.mddapi.model.User;
 public interface SubscriptionRepository extends JpaRepository<Subscription, Long> {
     void deleteByUserAndTopic(User user, Topic topic);
     boolean existsByUserAndTopic(User user, Topic topic);
+    Optional<Subscription> findByUserAndTopic(User user, Topic topic);
 }

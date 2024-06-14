@@ -1,5 +1,7 @@
 package com.openclassrooms.mddapi.service;
 
+import java.util.Optional;
+
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,6 +72,13 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         
         Topic topic = topicRepository.findById(topicId)
             .orElseThrow(() -> new CustomException("Topic not found"));
+        
+        // Verify if the subscription exists
+        Optional<Subscription> subscriptionOpt = subscriptionRepository.findByUserAndTopic(user, topic);
+        if (!subscriptionOpt.isPresent()) {
+            throw new CustomException("No subscription found to unsubscribe");
+        }
+        
         subscriptionRepository.deleteByUserAndTopic(user, topic);
         return new SubscriptionResponse("Unsubscribed successfully from topic " + topicId, topicId);
     }
