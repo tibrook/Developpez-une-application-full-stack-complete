@@ -1,7 +1,10 @@
 package com.openclassrooms.mddapi.model;
 
 import java.security.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.*;
 
@@ -15,11 +18,11 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "topic_id", nullable = false)
     private Topic topic;
 
@@ -34,9 +37,11 @@ public class Post {
 
    
     @Column(name = "created_at")
-    private Timestamp createdAt;
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
    
     @Column(name = "updated_at")
-    private Timestamp updatedAt;
+    @CreationTimestamp
+    private LocalDateTime updatedAt;
 }
