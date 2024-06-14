@@ -35,15 +35,20 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     console.log("login with credentials", this.loginForm.value)
     const loginRequest = this.loginForm.value as LoginRequest;
-    this.authService.login(loginRequest).subscribe(
-      response => {
+
+    const observer = {
+      next: (response: any) => {
+        console.log('Login successful', response);
         localStorage.setItem('token', response.token);
         this.router.navigate(['/']);
       },
-      error => {
+      error: (error: any) => {
+        console.error('Login error', error);
         this.errorMessage = error.error.message || 'Login failed';
       }
-    );
+    };
+    this.authService.login(loginRequest).subscribe(observer);
+   
   }
   goBack(): void {
     this.location.back();
