@@ -1,0 +1,29 @@
+.login-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .login-container div {
+    margin-bottom: 1rem;
+  }
+  
+  .login-container label {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  .login-container input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .login-container .error {
+    color: red;
+    font-size: 0.875rem;
+  }
+  
