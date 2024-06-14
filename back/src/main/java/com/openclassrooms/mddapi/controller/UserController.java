@@ -4,8 +4,6 @@ import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.dto.requests.UpdateUserRequest;
 import com.openclassrooms.mddapi.service.interfaces.UserService;
 
-import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

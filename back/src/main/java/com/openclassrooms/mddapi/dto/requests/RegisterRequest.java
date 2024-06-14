@@ -25,6 +25,6 @@ public class RegisterRequest {
     
 	@NotBlank(message = "Name is required and cannot be blank.")
     @Size(max = 255, message = "Name must not exceed 255 characters.")
-    private final String name;
+    private final String username;
 
 }

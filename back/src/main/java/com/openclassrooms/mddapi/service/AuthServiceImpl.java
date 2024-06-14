@@ -59,7 +59,7 @@ public class AuthServiceImpl implements AuthService{
 
     public TokenResponse registerAndGenerateToken(RegisterRequest registerRequest) {
         log.info("Registering user {}", registerRequest.getEmail());
-        User newUser = userService.registerUser(registerRequest.getEmail(), registerRequest.getName(), registerRequest.getPassword());
+        User newUser = userService.registerUser(registerRequest.getEmail(), registerRequest.getUsername(), registerRequest.getPassword());
         log.info("User {} registered successfully", newUser.getEmail());
         return new TokenResponse(jwtService.generateToken(new UsernamePasswordAuthenticationToken(newUser.getEmail(), null, new ArrayList<>())));
     }
