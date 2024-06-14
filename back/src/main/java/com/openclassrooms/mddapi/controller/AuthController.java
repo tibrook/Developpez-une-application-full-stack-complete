@@ -12,7 +12,6 @@ import com.openclassrooms.mddapi.dto.responses.TokenResponse;
 import com.openclassrooms.mddapi.exception.AuthenticationException;
 import com.openclassrooms.mddapi.exception.CustomException;
 import com.openclassrooms.mddapi.service.interfaces.AuthService;
-import com.openclassrooms.mddapi.service.interfaces.UserService;
 
 import org.springframework.validation.BindingResult;
 import org.slf4j.Logger;
@@ -23,11 +22,9 @@ import org.slf4j.LoggerFactory;
 public class AuthController {
     private static final Logger log = LoggerFactory.getLogger(AuthController.class);
 
-    private final UserService userService;
     private final AuthService authService;
     
-    public AuthController(UserService userService,  AuthService authService) {
-        this.userService = userService;
+    public AuthController( AuthService authService) {
         this.authService = authService;
     }
     
@@ -46,14 +43,14 @@ public class AuthController {
      
   
     @PostMapping("/login")
-    public TokenResponse loginUser(@RequestBody @Valid  LoginRequest loginRequest, BindingResult bindingResult) {
-        log.info("Logging in {}", loginRequest.getEmail());
+    public TokenResponse loginUser(@RequestBody @Valid LoginRequest loginRequest, BindingResult bindingResult) {
+        log.info("Logging in {}", loginRequest.getUsernameOrEmail());
         if (bindingResult.hasErrors()) {
             String errorDetails = bindingResult.getFieldErrors().stream()
                 .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
                 .collect(Collectors.joining(", "));
-            log.error("Login : Validation failed for user {}: {}", loginRequest.getEmail(), errorDetails);
-            throw new CustomException(errorDetails);
+            log.error("Login : Validation failed for user {}: {}", loginRequest.getUsernameOrEmail(), errorDetails);
+            throw new AuthenticationException(errorDetails);
         }
         return authService.authenticateAndGenerateToken(loginRequest);
     }

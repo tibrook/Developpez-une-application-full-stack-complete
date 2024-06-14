@@ -40,22 +40,23 @@ public class UserServiceImpl implements UserService, UserDetailsService{
         return userRepository.save(user);
     }
 
-    public User loginUser(String email, String password) {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    public User loginUser(String usernameOrEmail, String password) {
+    	User user = userRepository.findByEmail(usernameOrEmail)
+             .orElseGet(() -> userRepository.findByUsername(usernameOrEmail)
+             .orElseThrow(() -> new UsernameNotFoundException("User not found")));
+
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new BadCredentialsException("Invalid password");
         }
         return user;
     }
     @Override
-    public boolean authenticateUser(String email, String password) {
-        Optional<User> user = userRepository.findByEmail(email);
-        if (user.isEmpty()) {
-            throw new AuthenticationException("error");
-        }
-        if (!passwordEncoder.matches(password, user.get().getPassword())) {
-            throw new AuthenticationException("error");
+    public boolean authenticateUser(String usernameOrEmail, String password) {
+    	User user = userRepository.findByEmail(usernameOrEmail)
+                .orElseGet(() -> userRepository.findByUsername(usernameOrEmail)
+                .orElseThrow(() -> new AuthenticationException("Invalid username or email")));
+    	if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new AuthenticationException("Invalid password");
         }
         return true;
     }
@@ -71,10 +72,12 @@ public class UserServiceImpl implements UserService, UserDetailsService{
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByEmail(username)
-                             .map(user -> new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), Collections.emptyList()))
-                             .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
+    public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(usernameOrEmail)
+                .orElseGet(() -> userRepository.findByUsername(usernameOrEmail)
+                .orElseThrow(() -> new AuthenticationException("User not found with email or username: " + usernameOrEmail)));
+
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), Collections.emptyList());
     }
 }
 

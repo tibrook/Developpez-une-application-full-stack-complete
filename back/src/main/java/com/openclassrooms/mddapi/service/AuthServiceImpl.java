@@ -34,15 +34,15 @@ public class AuthServiceImpl implements AuthService{
     }
  
     public TokenResponse authenticateAndGenerateToken(LoginRequest loginRequest) {
-        log.info("Authenticating user {}", loginRequest.getEmail());
+        log.info("Authenticating user {}", loginRequest.getUsernameOrEmail());
         // Use UserService to authenticate the user first
-        userService.authenticateUser(loginRequest.getEmail(), loginRequest.getPassword());
+        userService.authenticateUser(loginRequest.getUsernameOrEmail(), loginRequest.getPassword());
         // If authentication is successful, proceed with Spring Security Authentication.
         Authentication authentication = authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
+            new UsernamePasswordAuthenticationToken(loginRequest.getUsernameOrEmail(), loginRequest.getPassword())
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        log.info("User {} authenticated successfully", loginRequest.getEmail());
+        log.info("User {} authenticated successfully", loginRequest.getUsernameOrEmail());
         return new TokenResponse(jwtService.generateToken(authentication));
     }
 
