@@ -10,6 +10,7 @@ import com.openclassrooms.mddapi.dto.requests.LoginRequest;
 import com.openclassrooms.mddapi.dto.requests.RegisterRequest;
 import com.openclassrooms.mddapi.dto.responses.TokenResponse;
 import com.openclassrooms.mddapi.exception.AuthenticationException;
+import com.openclassrooms.mddapi.exception.CustomException;
 import com.openclassrooms.mddapi.service.interfaces.AuthService;
 import com.openclassrooms.mddapi.service.interfaces.UserService;
 
@@ -38,7 +39,7 @@ public class AuthController {
                 .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
                 .collect(Collectors.joining(", "));
             log.error("Register : Validation failed for user {}: {}", registerRequest.getEmail(), errorDetails);
-            throw new AuthenticationException("error");
+            throw new CustomException(errorDetails);
         }
         return authService.registerAndGenerateToken(registerRequest);
     }
@@ -52,7 +53,7 @@ public class AuthController {
                 .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
                 .collect(Collectors.joining(", "));
             log.error("Login : Validation failed for user {}: {}", loginRequest.getEmail(), errorDetails);
-            throw new AuthenticationException("error");
+            throw new CustomException(errorDetails);
         }
         return authService.authenticateAndGenerateToken(loginRequest);
     }
