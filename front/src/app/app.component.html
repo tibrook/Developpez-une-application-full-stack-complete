@@ -1,2 +1,4 @@
-<app-header></app-header>
+<ng-container *ngIf="!isHomePage">
+    <app-header></app-header>
+</ng-container>
 <router-outlet></router-outlet>
