@@ -1,14 +1,18 @@
 package com.openclassrooms.mddapi.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 import java.util.List;
 
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Table(name = "Users")
 public class User {

@@ -2,7 +2,7 @@ package com.openclassrooms.mddapi.model;
 
 import java.security.Timestamp;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import lombok.Data;
 
