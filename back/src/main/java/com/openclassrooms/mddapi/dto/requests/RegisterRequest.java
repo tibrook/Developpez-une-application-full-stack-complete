@@ -1,5 +1,7 @@
 package com.openclassrooms.mddapi.dto.requests;
 
+import com.openclassrooms.mddapi.validation.ValidPassword;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -16,6 +18,7 @@ public class RegisterRequest {
 	@Size(max = 255, message = "Email must not exceed 255 characters.")
     private final String email;
     
+    @ValidPassword
 	@NotEmpty(message = "Password cannot be empty.")
 	@Size(min = 8, message = "Password must be at least 8 characters long.")
     private final String password;
