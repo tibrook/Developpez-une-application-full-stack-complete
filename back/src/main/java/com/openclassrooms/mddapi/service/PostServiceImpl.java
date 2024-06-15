@@ -77,9 +77,11 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDto getPostById(Long id) {
-        Post post = postRepository.findById(id)
-                .orElseThrow(() -> new CustomException("Post not found"));
-        return modelMapper.map(post, PostDto.class);
+    	  Post post = postRepository.findById(id)
+                  .orElseThrow(() -> new CustomException("Post not found"));
+          PostDto postDto = modelMapper.map(post, PostDto.class);
+          postDto.setAuthor(post.getUser().getUsername());
+          return postDto;
     }
     
     @Override
@@ -89,14 +91,18 @@ public class PostServiceImpl implements PostService {
   	    User user = userRepository.findById(userId)
   	            .orElseThrow(() -> new CustomException("User not found"));
 
-        List<Subscription> subscriptions = subscriptionRepository.findByUser(user);
+  	  List<Subscription> subscriptions = subscriptionRepository.findByUser(user);
 
-        List<Post> posts = subscriptions.stream()
-                .flatMap(subscription -> postRepository.findByTopic(subscription.getTopic()).stream())
-                .collect(Collectors.toList());
+      List<Post> posts = subscriptions.stream()
+              .flatMap(subscription -> postRepository.findByTopic(subscription.getTopic()).stream())
+              .collect(Collectors.toList());
 
-        return posts.stream()
-                .map(post -> modelMapper.map(post, PostDto.class))
-                .collect(Collectors.toList());
+      return posts.stream()
+              .map(post -> {
+                  PostDto postDto = modelMapper.map(post, PostDto.class);
+                  postDto.setAuthor(post.getUser().getUsername());
+                  return postDto;
+              })
+              .collect(Collectors.toList());
     }
 }
