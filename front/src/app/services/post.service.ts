@@ -15,4 +15,7 @@ export class PostService {
   getPostsBySubscribedTopics(): Observable<Post[]> {
     return this.http.get<Post[]>(`${this.apiUrl}/postsSubscribedTopics`);
   }
+  getPostById(postId: string): Observable<Post> {
+    return this.http.get<any>(`${this.apiUrl}/${postId}`);
+  }
 }
