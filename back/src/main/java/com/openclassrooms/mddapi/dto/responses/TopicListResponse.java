@@ -10,4 +10,5 @@ public class TopicListResponse {
     private String name;
     private String description;
     private LocalDateTime createdAt;
+    private boolean subscribed; 
 }

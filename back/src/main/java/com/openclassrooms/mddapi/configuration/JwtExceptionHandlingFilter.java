@@ -41,8 +41,7 @@ public class JwtExceptionHandlingFilter extends OncePerRequestFilter {
             "/api/auth/login",
             "/api-docs/**",
             "/swagger-ui.html",
-            "/swagger-ui/**",
-            "/uploads/**"
+            "/swagger-ui/**"
         );
     /**
      * Core method to perform JWT checking and authentication on each request, except for the public URLs.

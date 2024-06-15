@@ -32,15 +32,13 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     private final TopicRepository topicRepository;
     private final SubscriptionRepository subscriptionRepository;
     private static final Logger log = LoggerFactory.getLogger(SubscriptionServiceImpl.class);
-    private final UserService userService;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
     @Autowired
     public SubscriptionServiceImpl(TopicRepository topicRepository,SubscriptionRepository subscriptionRepository, 
-    		UserService userService, ModelMapper modelMapper, UserRepository userRepository) {
+    		 ModelMapper modelMapper, UserRepository userRepository) {
         this.topicRepository = topicRepository;
         this.subscriptionRepository = subscriptionRepository;
-        this.userService = userService;
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;
     }
@@ -87,19 +85,19 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         return new SubscriptionResponse("Unsubscribed successfully from topic " + topicId, topicId);
     }
     
-    @Override
-    public List<TopicListResponse> getUserSubscribedTopics() {
-    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    	Long userId = Long.valueOf(authentication.getName());
-	    User user = userRepository.findById(userId)
-	            .orElseThrow(() -> new CustomException("User not found"));
-	    
-        List<Subscription> subscriptions = subscriptionRepository.findByUser(user);
-
-        log.info("Subscriptions Fetched :  {}", subscriptions);
-
-        return subscriptions.stream()
-                .map(subscription -> modelMapper.map(subscription.getTopic(), TopicListResponse.class))
-                .collect(Collectors.toList());
-    }
+//    @Override
+//    public List<TopicListResponse> getUserSubscribedTopics() {
+//    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//    	Long userId = Long.valueOf(authentication.getName());
+//	    User user = userRepository.findById(userId)
+//	            .orElseThrow(() -> new CustomException("User not found"));
+//	    
+//        List<Subscription> subscriptions = subscriptionRepository.findByUser(user);
+//
+//        log.info("Subscriptions Fetched :  {}", subscriptions);
+//
+//        return subscriptions.stream()
+//                .map(subscription -> modelMapper.map(subscription.getTopic(), TopicListResponse.class))
+//                .collect(Collectors.toList());
+//    }
 }

@@ -22,10 +22,10 @@ public class SubscriptionController {
     @Autowired
     private SubscriptionService subscriptionService;
 
-    @GetMapping("/topics/mySubscriptions")
-    public List<TopicListResponse> getUserSubscribedTopics() {
-        return subscriptionService.getUserSubscribedTopics();
-    }
+//    @GetMapping("/topics/mySubscriptions")
+//    public List<TopicListResponse> getUserSubscribedTopics() {
+//        return subscriptionService.getUserSubscribedTopics();
+//    }
     
     @PostMapping("/{topicId}/subscribe")
     public SubscriptionResponse subscribe(@PathVariable Long topicId) {
