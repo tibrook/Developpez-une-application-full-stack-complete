@@ -1,0 +1,26 @@
+.profile-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 16px;
+  
+    h1 {
+      margin-bottom: 16px;
+    }
+  
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+  
+    .subscriptions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+  
+    button {
+      margin-top: 16px;
+    }
+  }
+  

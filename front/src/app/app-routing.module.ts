@@ -8,6 +8,7 @@ import { AuthGuard } from './guards/auth.guards';
 import { PostsComponent } from './pages/posts/posts.component';
 import { TopicsComponent } from './pages/topics/topics.component';
 import { PostDetailComponent } from './pages/post-detail/post-detail.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [UnauthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [UnauthGuard] },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'posts', component: PostsComponent, canActivate: [AuthGuard] },
   { path: 'posts/:id', component: PostDetailComponent, canActivate: [AuthGuard] },
   { path: 'topics', component: TopicsComponent, canActivate: [AuthGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' }
 ];
 @NgModule({

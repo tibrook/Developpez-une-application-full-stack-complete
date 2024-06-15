@@ -24,6 +24,7 @@ export class UserService {
   subscriptions$ = this.subscriptionsSubject.asObservable();
   topics$ = this.topicsSubject.asObservable();
   posts$ = this.postsSubject.asObservable();
+
   constructor(private http: HttpClient,  private topicService: TopicService, private subscriptionService: SubscriptionService, private postService: PostService) {}
 
   setUser(user: any): void {
@@ -39,7 +40,7 @@ export class UserService {
       next: (user) => {
         this.setUser(user);
         this.loadTopics();
-        this.loadSubscriptions();
+        // this.loadSubscriptions();
         this.loadSubscribedTopicsPosts();
       },
       error: (err) => {
@@ -62,23 +63,13 @@ export class UserService {
       }
     });
   }
-  loadSubscriptions(): void {
-    this.subscriptionService.getUserSubscriptions().subscribe({
-      next: (subscriptions: SubscriptionResponse[]) => {
-        this.subscriptionsSubject.next(subscriptions);
-      },
-      error: (err) => {
-        console.error('Error loading subscriptions', err);
-      }
-    });
-  }
   loadSubscribedTopicsPosts(): void {
     this.postService.getPostsBySubscribedTopics().subscribe({
       next: (posts: Post[]) => {
         this.postsSubject.next(posts);
       },
       error: (err) => {
-        console.error('Error loading posts', err);
+        console.error('Error loading subscribed topics posts', err);
       }
     });
   }

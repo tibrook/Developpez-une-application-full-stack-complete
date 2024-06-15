@@ -8,11 +8,14 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class SubscriptionService {
-  private apiUrl = `${environment.baseUrl}/subscriptions`;
+  private apiUrl = `${environment.baseUrl}`;
 
   constructor(private http: HttpClient) { }
 
-  getUserSubscriptions(): Observable<SubscriptionResponse[]> {
-    return this.http.get<SubscriptionResponse[]>(`${this.apiUrl}/topics/mySubscriptions`);
+  unsubscribe(topicId: number): Observable<SubscriptionResponse> {
+    return this.http.delete<SubscriptionResponse>(`${this.apiUrl}/topics/${topicId}/unsubscribe`);
+  }
+  subscribe(topicId: number): Observable<SubscriptionResponse>  {
+    return this.http.post<SubscriptionResponse>(`${this.apiUrl}/topics/${topicId}/subscribe`, "test");
   }
 }

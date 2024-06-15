@@ -16,7 +16,7 @@ import com.openclassrooms.mddapi.dto.responses.TopicListResponse;
 import com.openclassrooms.mddapi.service.interfaces.SubscriptionService;
 
 @RestController
-@RequestMapping("/api/subscriptions")
+@RequestMapping("/api/topics")
 public class SubscriptionController {
 
     @Autowired

@@ -1,0 +1,21 @@
+<div class="profile-container">
+    <h1>Profil utilisateur</h1>
+    <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+      <mat-form-field appearance="outline">
+        <input matInput formControlName="username">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <input matInput formControlName="email">
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Sauvegarder</button>
+    </form>
+    <button mat-button (click)="logout()">Se déconnecter</button>
+    <hr />
+    <h2>Abonnements</h2>
+    <div class="subscriptions">
+      <app-topic-card *ngFor="let subscription of subscriptions" [topic]="subscription">
+        <button mat-raised-button color="warn" (click)="unsubscribe(subscription.id)">Se désabonner</button>
+      </app-topic-card>
+    </div>
+  </div>
+  
