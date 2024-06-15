@@ -1,5 +1,8 @@
 package com.openclassrooms.mddapi.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,13 +14,14 @@ import org.springframework.stereotype.Service;
 import com.openclassrooms.mddapi.dto.requests.CreatePostRequest;
 import com.openclassrooms.mddapi.dto.PostDto;
 import com.openclassrooms.mddapi.model.Post;
+import com.openclassrooms.mddapi.model.Subscription;
 import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.PostRepository;
+import com.openclassrooms.mddapi.repository.SubscriptionRepository;
 import com.openclassrooms.mddapi.repository.TopicRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import com.openclassrooms.mddapi.service.interfaces.PostService;
-import com.openclassrooms.mddapi.service.interfaces.UserService;
 import com.openclassrooms.mddapi.exception.CustomException;
 
 
@@ -27,6 +31,9 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private PostRepository postRepository;
+    
+    @Autowired
+    private SubscriptionRepository subscriptionRepository;
     
     private final UserRepository userRepository;
 
@@ -73,5 +80,23 @@ public class PostServiceImpl implements PostService {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new CustomException("Post not found"));
         return modelMapper.map(post, PostDto.class);
+    }
+    
+    @Override
+    public List<PostDto> getPostsBySubscribedTopics() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    	Long userId = Long.valueOf(authentication.getName());
+  	    User user = userRepository.findById(userId)
+  	            .orElseThrow(() -> new CustomException("User not found"));
+
+        List<Subscription> subscriptions = subscriptionRepository.findByUser(user);
+
+        List<Post> posts = subscriptions.stream()
+                .flatMap(subscription -> postRepository.findByTopic(subscription.getTopic()).stream())
+                .collect(Collectors.toList());
+
+        return posts.stream()
+                .map(post -> modelMapper.map(post, PostDto.class))
+                .collect(Collectors.toList());
     }
 }

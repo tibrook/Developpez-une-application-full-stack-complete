@@ -2,6 +2,9 @@ package com.openclassrooms.mddapi.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import com.openclassrooms.mddapi.dto.requests.CreatePostRequest;
 import com.openclassrooms.mddapi.dto.PostDto;
@@ -22,5 +25,9 @@ public class PostController {
     @GetMapping("/{id}")
     public PostDto getPostById(@PathVariable Long id) {
     	return postService.getPostById(id);
+    }
+    @GetMapping("/subscribed")
+    public List<PostDto> getSubscribedTopicsPosts() {
+        return postService.getPostsBySubscribedTopics();
     }
 }
