@@ -1,1 +1,24 @@
-<p>posts works!</p>
+<div class="posts-container">
+    <div class="header-post">
+        <button mat-raised-button color="primary" class="create-article-button">
+            Créer un article
+          </button>
+        
+          <div class="sort-section">
+            <span>Trier par</span>
+            <mat-icon>arrow_downward</mat-icon>
+          </div>
+    </div>
+    
+    <div class="posts-grid">
+      <div *ngFor="let post of posts" class="post-card">
+        <h2>{{ post.title }}</h2>
+        <div class="post-meta">
+          <span>{{ post.createdAt | date:'shortDate' }}</span>
+          <span>{{ post.author }}</span>
+        </div>
+        <p>{{ post.content }}</p>
+      </div>
+    </div>
+  </div>
+  

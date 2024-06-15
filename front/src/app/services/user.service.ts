@@ -7,6 +7,8 @@ import { TopicService } from './topic.service';
 import { Topic } from '../interfaces/topic.interface';
 import { SubscriptionService } from './subscription.service';
 import { SubscriptionResponse } from '../interfaces/subscription.interface';
+import { PostService } from './post.service';
+import { Post } from '../interfaces/post.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -16,11 +18,13 @@ export class UserService {
   private apiUrl = `${environment.baseUrl}/users/me`;
   private topicsSubject = new BehaviorSubject<Topic[]>([]);
   private subscriptionsSubject = new BehaviorSubject<SubscriptionResponse[]>([]);
+  private postsSubject = new BehaviorSubject<Post[]>([]);
+
   user$ = this.userSubject.asObservable();
   subscriptions$ = this.subscriptionsSubject.asObservable();
   topics$ = this.topicsSubject.asObservable();
-
-  constructor(private http: HttpClient,  private topicService: TopicService, private subscriptionService: SubscriptionService) {}
+  posts$ = this.postsSubject.asObservable();
+  constructor(private http: HttpClient,  private topicService: TopicService, private subscriptionService: SubscriptionService, private postService: PostService) {}
 
   setUser(user: any): void {
     this.userSubject.next(user);
@@ -36,6 +40,7 @@ export class UserService {
         this.setUser(user);
         this.loadTopics();
         this.loadSubscriptions();
+        this.loadSubscribedTopicsPosts();
       },
       error: (err) => {
         console.error('Error loading user details', err);
@@ -64,6 +69,16 @@ export class UserService {
       },
       error: (err) => {
         console.error('Error loading subscriptions', err);
+      }
+    });
+  }
+  loadSubscribedTopicsPosts(): void {
+    this.postService.getPostsBySubscribedTopics().subscribe({
+      next: (posts: Post[]) => {
+        this.postsSubject.next(posts);
+      },
+      error: (err) => {
+        console.error('Error loading posts', err);
       }
     });
   }

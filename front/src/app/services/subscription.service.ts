@@ -13,6 +13,6 @@ export class SubscriptionService {
   constructor(private http: HttpClient) { }
 
   getUserSubscriptions(): Observable<SubscriptionResponse[]> {
-    return this.http.get<SubscriptionResponse[]>(`${this.apiUrl}/topics/subscribed`);
+    return this.http.get<SubscriptionResponse[]>(`${this.apiUrl}/topics/mySubscriptions`);
   }
 }

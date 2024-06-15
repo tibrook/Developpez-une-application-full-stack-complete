@@ -26,12 +26,12 @@
     gap: 16px;
 
     a {
-      font-size: 16px;
-      color: #333;
+      font-size: 20px;
+      color: #000000;
       text-decoration: none;
-
+      line-height: 24.2px;;
       &.active {
-        color: #7763C5;
+        color: #6C5CCF
       }
     }
   }
