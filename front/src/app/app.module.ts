@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 // import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { LoginComponent } from './auth/Components/login/login.component';
 import { RegisterComponent } from './auth/Components/register/register.component';
@@ -13,9 +13,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './header/header.component';
 import { MatIconModule } from '@angular/material/icon';
 import { PostsComponent } from './pages/posts/posts.component';
-
+import { TopicsComponent } from './pages/topics/topics.component';
+import {  CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, HeaderComponent, PostsComponent],
+  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, HeaderComponent, PostsComponent, TopicsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -25,7 +27,10 @@ import { PostsComponent } from './pages/posts/posts.component';
     ReactiveFormsModule, 
     MatIconModule
   ],
-
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  ],
 })
 export class AppModule {}

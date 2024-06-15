@@ -1,5 +1,8 @@
 import { Component , OnInit} from '@angular/core';
 import { Router ,NavigationEnd} from '@angular/router';
+import { TopicService } from './services/topic.service';
+import { AuthService } from './services/auth.service';
+import { UserService } from './services/user.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,7 +11,11 @@ import { Router ,NavigationEnd} from '@angular/router';
 export class AppComponent implements OnInit {
   isHomePage: boolean = false;
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router, 
+    private authService: AuthService,
+    private userService: UserService)
+  {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.isHomePage = this.router.url === '/';
@@ -16,5 +23,9 @@ export class AppComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.authService.isLoggedIn()) {
+      this.userService.loadUserData();
+    }
+  }
 }
