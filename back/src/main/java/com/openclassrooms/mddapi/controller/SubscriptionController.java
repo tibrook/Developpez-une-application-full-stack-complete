@@ -22,7 +22,7 @@ public class SubscriptionController {
     @Autowired
     private SubscriptionService subscriptionService;
 
-    @GetMapping("/topics/subscribed")
+    @GetMapping("/topics/mySubscriptions")
     public List<TopicListResponse> getUserSubscribedTopics() {
         return subscriptionService.getUserSubscribedTopics();
     }

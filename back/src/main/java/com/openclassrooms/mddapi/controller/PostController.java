@@ -26,7 +26,7 @@ public class PostController {
     public PostDto getPostById(@PathVariable Long id) {
     	return postService.getPostById(id);
     }
-    @GetMapping("/subscribed")
+    @GetMapping("/postsSubscribedTopics")
     public List<PostDto> getSubscribedTopicsPosts() {
         return postService.getPostsBySubscribedTopics();
     }
