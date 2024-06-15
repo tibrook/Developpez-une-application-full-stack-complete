@@ -1,10 +1,5 @@
-<div>
-    <ul>
-      <li *ngFor="let topic of topics">
-        <h3>{{ topic.name }}</h3>
-        <p>{{ topic.description }}</p>
-        <button mat-raised-button color="primary">S'abonner</button>
-      </li>
-    </ul>
+<div class="topics-container">
+  <div class="topics-list">
+    <app-topic-card *ngFor="let topic of topics" [topic]="topic"></app-topic-card>
   </div>
-  
+</div>

@@ -1,0 +1,28 @@
+@import "../../../../styles/styles.scss";
+@import "../../../../styles/_variables.scss";
+.topic-card {
+    background-color: #F5F5F5;
+    border-radius: $border-radius;
+    padding: 15px;
+    h2 {
+        margin-top: 0;
+        font-size: 16px;
+        font-weight: 700;
+      }
+
+    p {
+      margin: 0 0 16px 0;
+    }
+    button {
+        margin-bottom: 20px;
+        border-radius: $border-radius;
+        background: #7763C5;
+        height: 40px;
+        font-size: 16px;
+        width: 153px;
+      &:hover {
+        background-color: darken(#7763C5, 10%);
+      }
+    }
+  }
+  
