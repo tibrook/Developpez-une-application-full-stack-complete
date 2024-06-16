@@ -39,7 +39,7 @@
   .profile-menu {
     display: flex;
     align-items: center;
-
+   
     .profile-button {
       width: 56px;
       height: 56px;
@@ -53,8 +53,12 @@
       .profile-icon {
         color: #333;
         transform: scale(2);
-      }
+          &.active {
+            color: #6C5CCF;
+          }
+          }
+        }
+      
     }
-  }
   }
   
