@@ -21,7 +21,6 @@ export class PostDetailComponent implements OnInit {
     const postId = this.route.snapshot.paramMap.get('id');
     if (postId) {
       this.getPost(postId);
-      this.getComments(postId);
     }
   }
 
@@ -31,11 +30,6 @@ export class PostDetailComponent implements OnInit {
     });
   }
 
-  getComments(postId: string): void {
-    this.commentService.getCommentsByPostId(postId).subscribe((comments: any[]) => {
-      this.comments = comments;
-    });
-  }
   addComment(): void {
   // TO DO
 }
