@@ -18,8 +18,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -53,10 +51,4 @@ public class CommentServiceImpl implements CommentService {
         return modelMapper.map(comment, CommentDto.class);
     }
 
-    @Override
-    public List<CommentDto> getCommentsByPostId(Long postId) {
-        return commentRepository.findByPostId(postId).stream()
-                .map(comment -> modelMapper.map(comment, CommentDto.class))
-                .collect(Collectors.toList());
-    }
 }

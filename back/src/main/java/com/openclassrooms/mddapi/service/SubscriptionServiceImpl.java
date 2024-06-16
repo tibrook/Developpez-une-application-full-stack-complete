@@ -1,10 +1,7 @@
 package com.openclassrooms.mddapi.service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +10,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.dto.responses.SubscriptionResponse;
-import com.openclassrooms.mddapi.dto.responses.TopicListResponse;
 import com.openclassrooms.mddapi.exception.CustomException;
 import com.openclassrooms.mddapi.model.Subscription;
 import com.openclassrooms.mddapi.model.Topic;
@@ -22,8 +18,6 @@ import com.openclassrooms.mddapi.repository.SubscriptionRepository;
 import com.openclassrooms.mddapi.repository.TopicRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import com.openclassrooms.mddapi.service.interfaces.SubscriptionService;
-import com.openclassrooms.mddapi.service.interfaces.UserService;
-
 import jakarta.transaction.Transactional;
 
 
@@ -32,14 +26,11 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     private final TopicRepository topicRepository;
     private final SubscriptionRepository subscriptionRepository;
     private static final Logger log = LoggerFactory.getLogger(SubscriptionServiceImpl.class);
-    private final ModelMapper modelMapper;
     private final UserRepository userRepository;
     @Autowired
-    public SubscriptionServiceImpl(TopicRepository topicRepository,SubscriptionRepository subscriptionRepository, 
-    		 ModelMapper modelMapper, UserRepository userRepository) {
+    public SubscriptionServiceImpl(TopicRepository topicRepository,SubscriptionRepository subscriptionRepository,  UserRepository userRepository) {
         this.topicRepository = topicRepository;
         this.subscriptionRepository = subscriptionRepository;
-        this.modelMapper = modelMapper;
         this.userRepository = userRepository;
     }
 
@@ -84,20 +75,5 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         subscriptionRepository.deleteByUserAndTopic(user, topic);
         return new SubscriptionResponse("Unsubscribed successfully from topic " + topicId, topicId);
     }
-    
-//    @Override
-//    public List<TopicListResponse> getUserSubscribedTopics() {
-//    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//    	Long userId = Long.valueOf(authentication.getName());
-//	    User user = userRepository.findById(userId)
-//	            .orElseThrow(() -> new CustomException("User not found"));
-//	    
-//        List<Subscription> subscriptions = subscriptionRepository.findByUser(user);
-//
-//        log.info("Subscriptions Fetched :  {}", subscriptions);
-//
-//        return subscriptions.stream()
-//                .map(subscription -> modelMapper.map(subscription.getTopic(), TopicListResponse.class))
-//                .collect(Collectors.toList());
-//    }
+
 }

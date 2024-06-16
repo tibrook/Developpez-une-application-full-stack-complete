@@ -9,8 +9,6 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/posts/{postId}/comments")
 public class CommentController {
@@ -21,10 +19,5 @@ public class CommentController {
     @PostMapping
     public CommentDto addComment(@PathVariable Long postId, @RequestBody @Valid CreateCommentRequest createCommentRequest) {
         return commentService.postComment(postId,createCommentRequest);
-    }
-
-    @GetMapping
-    public List<CommentDto> getCommentsByPostId(@PathVariable Long postId) {
-        return commentService.getCommentsByPostId(postId);
     }
 }
