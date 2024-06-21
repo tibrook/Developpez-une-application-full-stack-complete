@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { LoginRequest } from '../../interfaces/LoginRequest.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { Location } from '@angular/common';
+import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
@@ -40,7 +42,9 @@ export class LoginComponent implements OnInit {
       next: (response: any) => {
         console.log('Login successful', response);
         localStorage.setItem('token', response.token);
+        this.userService.loadUserData();
         this.router.navigate(['/']);
+
       },
       error: (error: any) => {
         console.error('Login error', error);

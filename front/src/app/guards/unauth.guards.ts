@@ -14,9 +14,9 @@ export class UnauthGuard implements CanActivate {
   public canActivate(): boolean {
     if (this.authService.isLoggedIn()) {
       const token = localStorage.getItem('token');
-      if (token) {
-        this.userService.setUser({ token });
-      }
+      // if (token) {
+      //   this.userService.setUser({ token });
+      // }
       this.router.navigate(['posts']);
       return false;
     }

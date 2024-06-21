@@ -8,7 +8,7 @@ import { Topic } from '../interfaces/topic.interface';
 import { SubscriptionService } from './subscription.service';
 import { SubscriptionResponse } from '../interfaces/subscription.interface';
 import { PostService } from './post.service';
-import { Post } from '../interfaces/post.interface';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,12 +18,10 @@ export class UserService {
   private apiUrl = `${environment.baseUrl}/users/me`;
   private topicsSubject = new BehaviorSubject<Topic[]>([]);
   private subscriptionsSubject = new BehaviorSubject<SubscriptionResponse[]>([]);
-  private postsSubject = new BehaviorSubject<Post[]>([]);
 
   user$ = this.userSubject.asObservable();
   subscriptions$ = this.subscriptionsSubject.asObservable();
   topics$ = this.topicsSubject.asObservable();
-  posts$ = this.postsSubject.asObservable();
 
   constructor(private http: HttpClient,  private topicService: TopicService, private subscriptionService: SubscriptionService, private postService: PostService) {}
 
@@ -36,17 +34,18 @@ export class UserService {
   }
 
   loadUserData(): void {
-    this.getUserDetails().subscribe({
-      next: (user) => {
-        this.setUser(user);
-        this.loadTopics();
-      },
-      error: (err) => {
-        console.error('Error loading user details', err);
-      }
-    });
+    if (!this.getUser()) {
+      this.getUserDetails().subscribe({
+        next: (user) => {
+          this.setUser(user);
+          this.loadTopics();
+        },
+        error: (err) => {
+          console.error('Error loading user details', err);
+        }
+      });
+    }
   }
-
   getUserDetails(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}`);
   }

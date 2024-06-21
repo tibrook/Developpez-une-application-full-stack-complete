@@ -38,10 +38,16 @@ export class ProfileComponent implements OnInit {
     });
   }
   loadUserProfile(): void {
-    this.userService.getUserDetails().subscribe(user => {
+    const user = this.userService.getUser();
+    if (user) {
       this.user = user;
       this.profileForm.patchValue(user);
-    });
+    } else {
+      this.userService.user$.subscribe(user => {
+        this.user = user;
+        this.profileForm.patchValue(user);
+      });
+    }
 
   }
 
