@@ -1,26 +1,56 @@
+@import "../../../styles/variables.scss";
+
 .profile-container {
-    max-width: 800px;
     margin: 0 auto;
-    padding: 16px;
-  
+    padding: 3rem 6rem;
     h1 {
-      margin-bottom: 16px;
+      text-align: center;
+      font-size: 24px;
+      width: 100%;
+      line-height: 29px;
+      font-weight: 700;
+      margin: 16px auto 24px auto;
+    }
+    .user-profile-container{
+      text-align: center;
+      margin: 16px auto;
+      max-width: 280px;
+    
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        input{
+          border: 2px $primary-color solid;
+          width: 100%;
+          height: 50px;
+          padding: 0.5rem;
+          box-sizing: border-box;
+          border-radius: 8px;
+        }
+        button {
+          border-radius: 8px;
+          margin: 8px auto;
+          width: 140px; 
+  
+        }
+      }
+      .logout-button{
+        font-weight: 700;
+        font-size: 14px;
+        color: #A40F0F; 
+      }
+    }
+    .subscriptions-grid{
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      .subscriptions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
     }
   
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-  
-    .subscriptions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-  
-    button {
-      margin-top: 16px;
-    }
   }
   

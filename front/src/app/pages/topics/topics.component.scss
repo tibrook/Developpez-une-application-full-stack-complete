@@ -1,9 +1,9 @@
 .topics-container {
-    padding: 16px;
+    padding: 3rem 6rem;
 }
   
-.topics-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
+.topics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
 }

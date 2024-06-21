@@ -1,9 +1,8 @@
 @import "../../../styles/_variables.scss";
 @import "../../../styles/styles.scss";
 .posts-container {
-    max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 3rem 6rem;
     .header-post{
         display: flex;
         justify-content: space-between;
