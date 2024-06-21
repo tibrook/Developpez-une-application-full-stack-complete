@@ -45,7 +45,7 @@ public class CommentServiceImpl implements CommentService {
         String currentUserName = user.getUsername();
         log.info("currentUserName : {}", currentUserName);
         Comment comment = modelMapper.map(createCommentRequest, Comment.class);
-        comment.setPost(postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found")));
+        comment.setPost(postRepository.findById(postId).orElseThrow(() -> new CustomException("Post not found")));
         comment.setUser(user);
         comment = commentRepository.save(comment);
         return modelMapper.map(comment, CommentDto.class);

@@ -12,6 +12,7 @@ import org.springframework.web.context.request.WebRequest;
 import com.openclassrooms.mddapi.dto.responses.ErrorResponse;
 import com.openclassrooms.mddapi.exception.AuthenticationException;
 import com.openclassrooms.mddapi.exception.CustomException;
+import com.openclassrooms.mddapi.exception.JwtAuthenticationException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -31,9 +32,16 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
+    // Handle JWT Authentication exceptions
+    @ExceptionHandler(JwtAuthenticationException.class)
+    public ResponseEntity<ErrorResponse> handleCustomException(JwtAuthenticationException ex, WebRequest request) {
+    	logger.error("handle JwtAuthenticationException: {}", ex.getMessage());
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), "Bad JWT");
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+    }
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<Object> handleAuthenticationxception(AuthenticationException ex, HttpServletRequest request) {
-    	logger.error("handleAuthenticationxception: {}", ex.getMessage());
+    	logger.error("handle Authenticationxception: {}", ex.getMessage());
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Invalid Credentials");
     	return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
