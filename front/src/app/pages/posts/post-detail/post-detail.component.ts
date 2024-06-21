@@ -30,7 +30,18 @@ export class PostDetailComponent implements OnInit {
     });
   }
 
-  addComment(): void {
-    // TO DO
-  }
+  addComment(content: string): void {
+    const postId = this.route.snapshot.paramMap.get('id');
+    if (postId && content.trim()) {
+      this.commentService.addComment(postId, content).subscribe(response => {
+        this.getPost(postId);
+        const textArea = document.querySelector('textarea');
+        if (textArea) {
+          textArea.value = '';
+        }
+      }, error => {
+        console.error('Erreur lors de l\'ajout du commentaire :', error);
+      });
+    }
+}
 }
