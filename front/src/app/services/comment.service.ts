@@ -10,7 +10,10 @@ export class CommentService {
 
   constructor(private http: HttpClient) { }
 
-  getCommentsByPostId(postId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/${postId}/comments`);
+  addComment(postId: string, content: string): Observable<any[]> {
+    const jsonContent = {
+      content: content
+    }
+    return this.http.post<any[]>(`${this.apiUrl}/${postId}/comments`, jsonContent);
   }
 }
