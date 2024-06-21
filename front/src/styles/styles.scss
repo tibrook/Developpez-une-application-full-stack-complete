@@ -1,7 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./_variables.scss";
-html, body { height: 100%; }
-body {
+html, body {
     font-family: 'Inter', sans-serif  !important;
     margin: 0;
     padding: 0;
@@ -10,11 +9,8 @@ body {
 h2, span, p, a{
     font-family: 'Inter', sans-serif  !important;
 }
-h2{
-  font-size: 24px !important;
-  font-weight: 600 !important;
-  line-height: 29.05px !important;
-
+h1, h2, h3, h4, h5, h6, span, p, a, .mat-h1, .mat-headline, .mat-typography .mat-h1, .mat-typography .mat-headline, .mat-typography h1 {
+  font-family: 'Inter', sans-serif !important;
 }
 .back-button {
     position: absolute;

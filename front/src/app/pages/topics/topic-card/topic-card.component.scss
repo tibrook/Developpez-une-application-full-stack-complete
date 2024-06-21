@@ -13,8 +13,10 @@
     p {
       margin: 0 0 16px 0;
     }
+  
     button {
-        margin-bottom: 20px;
+      display: block;
+        margin: auto;
         border-radius: $border-radius;
         background: #7763C5;
         height: 40px;

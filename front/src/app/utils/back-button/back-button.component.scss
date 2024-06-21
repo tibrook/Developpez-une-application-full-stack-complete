@@ -1,16 +1,11 @@
 .back-button {
     position: absolute;
-    top: 140px;
-    left: 20px;
+    top: 145px;
+    left: 40px;
 
-    button {
+    svg {
       background: none;
       border: none;
       cursor: pointer;
     }
-
-    .mat-icon {
-      font-size: 39px;
-      width: 39px;
-    }
-  }
+}
