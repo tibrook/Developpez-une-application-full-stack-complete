@@ -40,8 +40,6 @@ export class UserService {
       next: (user) => {
         this.setUser(user);
         this.loadTopics();
-        // this.loadSubscriptions();
-        this.loadSubscribedTopicsPosts();
       },
       error: (err) => {
         console.error('Error loading user details', err);
@@ -60,16 +58,6 @@ export class UserService {
       },
       error: (err) => {
         console.error('Error loading topics', err);
-      }
-    });
-  }
-  loadSubscribedTopicsPosts(): void {
-    this.postService.getPostsBySubscribedTopics().subscribe({
-      next: (posts: Post[]) => {
-        this.postsSubject.next(posts);
-      },
-      error: (err) => {
-        console.error('Error loading subscribed topics posts', err);
       }
     });
   }
