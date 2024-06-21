@@ -1,12 +1,15 @@
-@import "../../../styles/_variables.scss";
+@import "../../../../styles/variables";
 .post-detail-container {
     max-width: 800px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 60px 20px;
     font-size: 20px;
     line-height: 24.2px;
     .post-content {
-     
+      h1 {
+       font-weight: 600;
+       font-size: 24px;
+      }
       .post-meta {
         display: flex;
         justify-content: space-between;
@@ -19,7 +22,7 @@
     .comments-section {
       margin-top: 40px;
   
-      h2, h3 {
+     h1 {
         margin-bottom: 20px;
         font-size: 20px;
         line-height: 24.2px;
