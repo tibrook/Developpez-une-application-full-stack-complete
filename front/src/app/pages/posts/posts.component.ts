@@ -10,11 +10,15 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./posts.component.scss']
 })
 export class PostsComponent {
+
   public posts$: Observable<Post[]> = this.postService.getPostsBySubscribedTopics();
 
   constructor(private postService: PostService, private router:Router) { }
 
   viewPost(postId: number): void {
     this.router.navigate(['/posts', postId.toString()]);
+  }
+  onClickCreatePost(): void {
+    this.router.navigate(['/posts/create']);
   }
 }

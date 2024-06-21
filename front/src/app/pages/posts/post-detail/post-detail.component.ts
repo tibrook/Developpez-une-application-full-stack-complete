@@ -31,6 +31,6 @@ export class PostDetailComponent implements OnInit {
   }
 
   addComment(): void {
-  // TO DO
-}
+    // TO DO
+  }
 }

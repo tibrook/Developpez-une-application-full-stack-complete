@@ -16,12 +16,13 @@ import { PostsComponent } from './pages/posts/posts.component';
 import { TopicsComponent } from './pages/topics/topics.component';
 import {  CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
-import { PostDetailComponent } from './pages/post-detail/post-detail.component';
+import { PostDetailComponent } from './pages/posts/post-detail/post-detail.component';
 import { BackButtonComponent } from './utils/back-button/back-button.component';
 import { TopicCardComponent } from './pages/topics/topic-card/topic-card.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { CreatePostComponent } from './pages/posts/create-post/create-post.component';
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, HeaderComponent, PostsComponent, TopicsComponent, PostDetailComponent, BackButtonComponent, TopicCardComponent, ProfileComponent],
+  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, HeaderComponent, PostsComponent, TopicsComponent, PostDetailComponent, BackButtonComponent, TopicCardComponent, ProfileComponent, CreatePostComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

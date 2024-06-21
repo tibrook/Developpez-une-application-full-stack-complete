@@ -1,13 +1,13 @@
 <div class="posts-container">
     <div class="header-post">
-        <button mat-raised-button color="primary" class="create-article-button">
+        <button mat-raised-button color="primary" class="create-article-button" (click)="onClickCreatePost()">
             Créer un article
-          </button>
-        
-          <div class="sort-section">
-            <span>Trier par</span>
-            <mat-icon>arrow_downward</mat-icon>
-          </div>
+        </button>
+      
+        <div class="sort-section">
+          <span>Trier par</span>
+          <mat-icon>arrow_downward</mat-icon>
+        </div>
     </div>
     
     <div class="posts-grid">
