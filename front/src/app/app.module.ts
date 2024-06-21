@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,6 +21,11 @@ import { BackButtonComponent } from './utils/back-button/back-button.component';
 import { TopicCardComponent } from './pages/topics/topic-card/topic-card.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { CreatePostComponent } from './pages/posts/create-post/create-post.component';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+
+registerLocaleData(localeFr, 'fr');
+
 @NgModule({
   declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, HeaderComponent, PostsComponent, TopicsComponent, PostDetailComponent, BackButtonComponent, TopicCardComponent, ProfileComponent, CreatePostComponent],
   imports: [
@@ -36,6 +41,7 @@ import { CreatePostComponent } from './pages/posts/create-post/create-post.compo
   bootstrap: [AppComponent],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: LOCALE_ID, useValue: 'fr' }
   ],
 })
 export class AppModule {}
