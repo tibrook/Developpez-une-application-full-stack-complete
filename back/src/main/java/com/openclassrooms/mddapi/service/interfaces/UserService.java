@@ -18,4 +18,5 @@ public interface UserService {
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
     UserDto getUserById(Long userId);
     UserDto updateUser(UpdateUserRequest updateUserRequest);
+    
 }

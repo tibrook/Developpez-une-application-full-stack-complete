@@ -54,6 +54,9 @@ public class TopicController {
     @ApiResponse(responseCode = "404", description = "Topic not found",
         content = @Content(mediaType = "application/json",
                            examples = @ExampleObject(name = "Not Found", value = "{\"message\":\"Topic with ID {topicId} not found\"}")))
+    @ApiResponse(responseCode = "400", description = "Already Subscribe",
+    content = @Content(mediaType = "application/json",
+                       examples = @ExampleObject(name = "Bad Request", value = "{\"message\":\"Already subscribed to topic\"}")))
     @PostMapping("/{topicId}/subscribe")
     public SubscriptionResponse subscribe(@PathVariable Long topicId) {
         log.info("Subscribe to topic {}", topicId);
@@ -67,6 +70,9 @@ public class TopicController {
     @ApiResponse(responseCode = "404", description = "Topic not found",
         content = @Content(mediaType = "application/json",
                            examples = @ExampleObject(name = "Not Found", value = "{\"message\":\"Topic with ID {topicId} not found\"}")))
+    @ApiResponse(responseCode = "400", description = "Already Subscribe",
+    content = @Content(mediaType = "application/json",
+                       examples = @ExampleObject(name = "Bad Request", value = "{\"message\":\"No subscription found to unsubscribe\"}")))
     @DeleteMapping("/{topicId}/unsubscribe")
     public SubscriptionResponse unsubscribe(@PathVariable Long topicId) {
         log.info("Unsubscribe to topic {}", topicId);
