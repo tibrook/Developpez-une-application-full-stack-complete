@@ -19,7 +19,7 @@ export class JwtInterceptor implements HttpInterceptor {
     }
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 401) {
+        if (error.status === 401 && error.error.message === 'Bad JWT') {
           this.authService.logout();
           this.router.navigate(['/login']);
         }
