@@ -10,7 +10,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.dto.responses.SubscriptionResponse;
+import com.openclassrooms.mddapi.exception.BadRequestException;
 import com.openclassrooms.mddapi.exception.CustomException;
+import com.openclassrooms.mddapi.exception.NotFoundException;
 import com.openclassrooms.mddapi.model.Subscription;
 import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.model.User;
@@ -39,14 +41,14 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     	Long userId = Long.valueOf(authentication.getName());
         User user = userRepository.findById(userId)
-	            .orElseThrow(() -> new CustomException("User not found"));
+	            .orElseThrow(() -> new NotFoundException("User not found"));
         
         Topic topic = topicRepository.findById(topicId)
-            .orElseThrow(() -> new CustomException("Topic not found"));
+                .orElseThrow(() -> new NotFoundException("Topic with "+ topicId +" not found"));
         // Check if subscription already exists
         boolean exists = subscriptionRepository.existsByUserAndTopic(user, topic);
         if (exists) {
-            throw new CustomException("Already subscribed to topic ");
+            throw new BadRequestException("Already subscribed to topic ");
         }
         Subscription subscription = new Subscription();
         subscription.setUser(user);
@@ -61,15 +63,15 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     	Long userId = Long.valueOf(authentication.getName());
         User user = userRepository.findById(userId)
-	            .orElseThrow(() -> new CustomException("User not found"));
+	            .orElseThrow(() -> new NotFoundException("User not found"));
         
         Topic topic = topicRepository.findById(topicId)
-            .orElseThrow(() -> new CustomException("Topic not found"));
+            .orElseThrow(() -> new NotFoundException("Topic with "+ topicId +" not found"));
         
         // Verify if the subscription exists
         Optional<Subscription> subscriptionOpt = subscriptionRepository.findByUserAndTopic(user, topic);
         if (!subscriptionOpt.isPresent()) {
-            throw new CustomException("No subscription found to unsubscribe");
+            throw new BadRequestException("No subscription found to unsubscribe");
         }
         
         subscriptionRepository.deleteByUserAndTopic(user, topic);

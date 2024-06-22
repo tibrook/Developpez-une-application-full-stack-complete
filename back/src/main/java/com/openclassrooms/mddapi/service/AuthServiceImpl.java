@@ -13,7 +13,6 @@ import com.openclassrooms.mddapi.dto.requests.LoginRequest;
 import com.openclassrooms.mddapi.dto.requests.RegisterRequest;
 import com.openclassrooms.mddapi.dto.responses.TokenResponse;
 import com.openclassrooms.mddapi.exception.AuthenticationException;
-import com.openclassrooms.mddapi.exception.CustomException;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.service.interfaces.AuthService;
 import com.openclassrooms.mddapi.service.interfaces.JwtService;
