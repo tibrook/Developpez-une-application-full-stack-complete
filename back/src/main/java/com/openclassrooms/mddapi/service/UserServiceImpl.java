@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.dto.requests.UpdateUserRequest;
 import com.openclassrooms.mddapi.exception.AuthenticationException;
+import com.openclassrooms.mddapi.exception.ConflictException;
 import com.openclassrooms.mddapi.exception.CustomException;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.UserRepository;
@@ -34,8 +34,11 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 		this.modelMapper=modelMapper;
 	}
     public User registerUser(String email, String username, String password) {
-        if (userRepository.findByEmail(email).isPresent() || userRepository.findByUsername(username).isPresent()) {
-            throw new CustomException("Email or Username already exists");
+        if (userRepository.findByEmail(email).isPresent()) {
+            throw new ConflictException("Email already exists");
+        }
+        if(userRepository.findByUsername(username).isPresent()) {
+            throw new ConflictException("Username already exists");
         }
         User user = new User();
         user.setEmail(email);
@@ -43,21 +46,12 @@ public class UserServiceImpl implements UserService, UserDetailsService{
         user.setPassword(passwordEncoder.encode(password));
         return userRepository.save(user);
     }
+    
     @Override
     public Optional<User> findByUsername(String username) { 
         return userRepository.findByUsername(username);
     }
 
-    public User loginUser(String usernameOrEmail, String password) {
-    	User user = userRepository.findByEmail(usernameOrEmail)
-             .orElseGet(() -> userRepository.findByUsername(usernameOrEmail)
-             .orElseThrow(() -> new UsernameNotFoundException("User not found")));
-
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new BadCredentialsException("Invalid password");
-        }
-        return user;
-    }
     @Override
     public boolean authenticateUser(String usernameOrEmail, String password) {
     	User user = userRepository.findByEmail(usernameOrEmail)

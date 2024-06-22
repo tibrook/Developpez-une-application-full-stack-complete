@@ -2,6 +2,7 @@ package com.openclassrooms.mddapi.dto.requests;
 
 import com.openclassrooms.mddapi.validation.ValidPassword;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -11,20 +12,23 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
+@Schema(description = "Request data for user registration")
 public class RegisterRequest {
 	
 	@Email(message = "Email should be in email format")
 	@NotEmpty(message = "Email cannot be empty.")
 	@Size(max = 255, message = "Email must not exceed 255 characters.")
+    @Schema(description = "User's email address", requiredMode = Schema.RequiredMode.REQUIRED, example = "user@example.com")
     private final String email;
     
     @ValidPassword
 	@NotEmpty(message = "Password cannot be empty.")
-	@Size(min = 8, message = "Password must be at least 8 characters long.")
+    @Schema(description = "User's password", requiredMode = Schema.RequiredMode.REQUIRED, example = "Password123#")
     private final String password;
     
-	@NotBlank(message = "Name is required and cannot be blank.")
-    @Size(max = 255, message = "Name must not exceed 255 characters.")
+	@NotBlank(message = "Username is required and cannot be blank.")
+    @Size(max = 255, message = "Username must not exceed 255 characters.")
+    @Schema(description = "User's username", requiredMode = Schema.RequiredMode.REQUIRED, example = "username")
     private final String username;
 
 }

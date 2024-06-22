@@ -57,18 +57,19 @@ public class SpringSecurityConfig {
      * @return Configured SecurityFilterChain object that Spring Security uses to handle security.
      * @throws Exception when there is a configuration error.
      */
+//  public SecurityFilterChain filterChain(HttpSecurity http,JwtExceptionHandlingFilter jwtExceptionHandlingFilter) throws Exception {
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http,JwtExceptionHandlingFilter jwtExceptionHandlingFilter) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/register", "/api/auth/login","/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/uploads/**").permitAll()
+                .requestMatchers("/api/auth/register", "/api/auth/login","/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                 .anyRequest().authenticated())
             .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
           
         http.addFilterBefore(jwtExceptionHandlingFilter, BearerTokenAuthenticationFilter.class);
-
         return http.build();
     }
     

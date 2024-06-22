@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.openclassrooms.mddapi.dto.requests.LoginRequest;
 import com.openclassrooms.mddapi.dto.requests.RegisterRequest;
 import com.openclassrooms.mddapi.dto.responses.TokenResponse;
+import com.openclassrooms.mddapi.exception.AuthenticationException;
 import com.openclassrooms.mddapi.exception.CustomException;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.service.interfaces.AuthService;
@@ -43,7 +44,7 @@ public class AuthServiceImpl implements AuthService{
         // Load the user details to get the email
         User user = userService.findByEmail(loginRequest.getUsernameOrEmail())
                 .orElseGet(() -> userService.findByUsername(loginRequest.getUsernameOrEmail())
-                        .orElseThrow(() -> new CustomException("User not found")));
+                        .orElseThrow(() -> new AuthenticationException("User not found")));
         String email = user.getEmail();
         Long userId = user.getId();
 
@@ -53,7 +54,6 @@ public class AuthServiceImpl implements AuthService{
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         log.info("User {} authenticated successfully", email);
-        log.info("Authentication {}", authentication.getName());
         return new TokenResponse(jwtService.generateTokenWithSubject(String.valueOf(userId)));
     }
 
