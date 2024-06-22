@@ -10,14 +10,12 @@ import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Table(name = "Users")
 public class User {
-	
    
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

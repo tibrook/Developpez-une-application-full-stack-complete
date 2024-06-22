@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.dto.responses.SubscriptionResponse;
 import com.openclassrooms.mddapi.exception.BadRequestException;
-import com.openclassrooms.mddapi.exception.CustomException;
 import com.openclassrooms.mddapi.exception.NotFoundException;
 import com.openclassrooms.mddapi.model.Subscription;
 import com.openclassrooms.mddapi.model.Topic;

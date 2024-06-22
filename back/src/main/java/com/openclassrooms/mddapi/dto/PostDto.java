@@ -8,6 +8,7 @@ import java.util.List;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Data
+@Schema(description = "Data transfer object for a post")
 public class PostDto {
     @Schema(description = "ID of the post", example = "1")
     private Long id;

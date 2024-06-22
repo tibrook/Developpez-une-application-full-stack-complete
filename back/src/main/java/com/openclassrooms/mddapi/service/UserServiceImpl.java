@@ -94,7 +94,12 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 	    Long userId = Long.valueOf(authentication.getName());
 	    User user = userRepository.findById(userId)
     	            .orElseThrow(() -> new CustomException("User not found"));
-    	    
+	    if(userRepository.findByUsername(updateUserRequest.getEmail()).isPresent()) {
+            throw new ConflictException("Email already exists");
+        }
+	    if(userRepository.findByUsername(updateUserRequest.getUsername()).isPresent()) {
+            throw new ConflictException("Username already exists");
+        }
 	    user.setUsername(updateUserRequest.getUsername());
 	    user.setEmail(updateUserRequest.getEmail());
      

@@ -57,8 +57,6 @@ public class SpringSecurityConfig {
      * @return Configured SecurityFilterChain object that Spring Security uses to handle security.
      * @throws Exception when there is a configuration error.
      */
-//  public SecurityFilterChain filterChain(HttpSecurity http,JwtExceptionHandlingFilter jwtExceptionHandlingFilter) throws Exception {
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http,JwtExceptionHandlingFilter jwtExceptionHandlingFilter) throws Exception {
         http
