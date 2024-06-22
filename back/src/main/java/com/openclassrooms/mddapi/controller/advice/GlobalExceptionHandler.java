@@ -15,6 +15,7 @@ import com.openclassrooms.mddapi.exception.BadRequestException;
 import com.openclassrooms.mddapi.exception.ConflictException;
 import com.openclassrooms.mddapi.exception.CustomException;
 import com.openclassrooms.mddapi.exception.JwtAuthenticationException;
+import com.openclassrooms.mddapi.exception.NotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -52,6 +53,12 @@ public class GlobalExceptionHandler {
     	logger.error("handle BadRequestException: {}", ex.getMessage());
         ErrorResponse errorResponse = new ErrorResponse(  ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFoundException(NotFoundException ex, WebRequest request) {
+    	logger.error("handle handleNotFoundException: {}", ex.getMessage());
+        ErrorResponse errorResponse = new ErrorResponse(  ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<Object> handleAuthenticationxception(AuthenticationException ex, HttpServletRequest request) {

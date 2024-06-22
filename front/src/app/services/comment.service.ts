@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CommentService {
-  private apiUrl = 'http://localhost:8082/api/posts';
+  private apiUrl = 'http://localhost:8082/api/auth/posts';
 
   constructor(private http: HttpClient) { }
 
@@ -14,6 +14,6 @@ export class CommentService {
     const jsonContent = {
       content: content
     }
-    return this.http.post<any[]>(`${this.apiUrl}/${postId}/comments`, jsonContent);
+    return this.http.post<any[]>(`${this.apiUrl}/${postId}/comment`, jsonContent);
   }
 }

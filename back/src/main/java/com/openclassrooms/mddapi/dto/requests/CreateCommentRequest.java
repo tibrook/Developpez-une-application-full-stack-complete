@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class CreateCommentRequest {
-    @NotEmpty(message = "Title cannot be empty.")
-    @Size(max = 255555, message = "Title must not exceed 255555 characters.")
+    @NotEmpty(message = "Content cannot be empty.")
+    @Size(max = 5000, message = "Content must not exceed 5000 characters.")
 	private String content;
 }

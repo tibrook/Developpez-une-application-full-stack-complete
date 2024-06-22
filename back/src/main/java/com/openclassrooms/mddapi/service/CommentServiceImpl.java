@@ -1,8 +1,8 @@
 package com.openclassrooms.mddapi.service;
 
-import com.openclassrooms.mddapi.dto.CommentDto;
 import com.openclassrooms.mddapi.dto.requests.CreateCommentRequest;
-import com.openclassrooms.mddapi.exception.CustomException;
+import com.openclassrooms.mddapi.dto.responses.MessageResponse;
+import com.openclassrooms.mddapi.exception.NotFoundException;
 import com.openclassrooms.mddapi.model.Comment;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.CommentRepository;
@@ -37,18 +37,18 @@ public class CommentServiceImpl implements CommentService {
         this.userRepository = userRepository;
     }
     @Override
-    public CommentDto postComment(Long postId, CreateCommentRequest createCommentRequest) {
+    public MessageResponse addComment(Long postId, CreateCommentRequest createCommentRequest) {
 	   Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long userId = Long.valueOf(authentication.getName());
 	    User user = userRepository.findById(userId)
-	            .orElseThrow(() -> new CustomException("User not found"));
+	            .orElseThrow(() -> new NotFoundException("User not found"));
         String currentUserName = user.getUsername();
         log.info("currentUserName : {}", currentUserName);
         Comment comment = modelMapper.map(createCommentRequest, Comment.class);
-        comment.setPost(postRepository.findById(postId).orElseThrow(() -> new CustomException("Post not found")));
+        comment.setPost(postRepository.findById(postId).orElseThrow(() -> new NotFoundException("Post not found")));
         comment.setUser(user);
         comment = commentRepository.save(comment);
-        return modelMapper.map(comment, CommentDto.class);
+        return new MessageResponse("Comment Added Successfully");
     }
 
 }
