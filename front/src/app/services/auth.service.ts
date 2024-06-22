@@ -10,7 +10,7 @@ import { RegisterResponse } from '../auth/interfaces/RegisterResponse.interface'
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = `${environment.baseUrl}/auth`;
+  private apiUrl = `${environment.baseUrl}`;
 
   constructor(private http: HttpClient) { }
 

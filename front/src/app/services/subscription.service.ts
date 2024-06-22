@@ -16,6 +16,6 @@ export class SubscriptionService {
     return this.http.delete<SubscriptionResponse>(`${this.apiUrl}/topics/${topicId}/unsubscribe`);
   }
   subscribe(topicId: number): Observable<SubscriptionResponse>  {
-    return this.http.post<SubscriptionResponse>(`${this.apiUrl}/topics/${topicId}/subscribe`, "test");
+    return this.http.post<SubscriptionResponse>(`${this.apiUrl}/topics/${topicId}/subscribe`, null);
   }
 }

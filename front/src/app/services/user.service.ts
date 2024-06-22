@@ -15,7 +15,7 @@ import { PostService } from './post.service';
 export class UserService {
 
   private userSubject = new BehaviorSubject<any>(null);
-  private apiUrl = `${environment.baseUrl}/users/me`;
+  private apiUrl = `${environment.baseUrl}/profile/me`;
   private topicsSubject = new BehaviorSubject<Topic[]>([]);
   private subscriptionsSubject = new BehaviorSubject<SubscriptionResponse[]>([]);
 

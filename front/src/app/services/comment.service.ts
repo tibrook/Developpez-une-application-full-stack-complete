@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommentService {
-  private apiUrl = 'http://localhost:8082/api/auth/posts';
+  private apiUrl = `${environment.baseUrl}/posts`;
 
   constructor(private http: HttpClient) { }
 
@@ -14,6 +15,6 @@ export class CommentService {
     const jsonContent = {
       content: content
     }
-    return this.http.post<any[]>(`${this.apiUrl}/${postId}/comment/add`, jsonContent);
+    return this.http.post<any[]>(`${this.apiUrl}/${postId}/comment`, jsonContent);
   }
 }
