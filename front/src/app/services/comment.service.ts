@@ -14,6 +14,6 @@ export class CommentService {
     const jsonContent = {
       content: content
     }
-    return this.http.post<any[]>(`${this.apiUrl}/${postId}/comment`, jsonContent);
+    return this.http.post<any[]>(`${this.apiUrl}/${postId}/comment/add`, jsonContent);
   }
 }

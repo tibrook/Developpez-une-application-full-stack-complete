@@ -32,7 +32,7 @@ public class CommentController {
     }
     
     @PostMapping
-    @Operation(summary = "Add a new comment to a post", description = "Adds a new comment to the specified post and returns the created comment")
+    @Operation(summary = "Add a new comment to a post", description = "Adds a new comment to the specified post and returns a message")
     @ApiResponse(responseCode = "200", description = "Comment added successfully",
         content = @Content(mediaType = "application/json",
         		 schema = @Schema(implementation = MessageResponse.class),  examples = @ExampleObject(value = "{\"message\": \"Comment Added Successfully\"}")))

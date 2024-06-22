@@ -13,7 +13,7 @@ export class PostService {
   constructor(private http: HttpClient) { }
 
   getPostsBySubscribedTopics(): Observable<Post[]> {
-    return this.http.get<Post[]>(`${this.apiUrl}/postsSubscribedTopics`);
+    return this.http.get<Post[]>(`${this.apiUrl}/feed`);
   }
   getPostById(postId: string): Observable<Post> {
     return this.http.get<any>(`${this.apiUrl}/${postId}`);

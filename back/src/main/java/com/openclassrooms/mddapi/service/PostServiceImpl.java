@@ -27,7 +27,7 @@ import com.openclassrooms.mddapi.repository.SubscriptionRepository;
 import com.openclassrooms.mddapi.repository.TopicRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import com.openclassrooms.mddapi.service.interfaces.PostService;
-import com.openclassrooms.mddapi.exception.CustomException;
+import com.openclassrooms.mddapi.exception.NotFoundException;
 
 
 @Service
@@ -59,13 +59,13 @@ public class PostServiceImpl implements PostService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	    Long userId = Long.valueOf(authentication.getName());
 	    User user = userRepository.findById(userId)
-	            .orElseThrow(() -> new CustomException("User not found"));
+	            .orElseThrow(() -> new NotFoundException("User not found"));
 	    
         String currentUserName = user.getUsername();
         log.info("currentUserName : {}", currentUserName);
     
         Topic topic = topicRepository.findById(createPostRequest.getTopicId())
-                .orElseThrow(() -> new CustomException("Topic not found"));
+                .orElseThrow(() -> new NotFoundException("Topic not found"));
         Post post = new Post();
         post.setUser(user);
         post.setTopic(topic);
@@ -84,7 +84,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostDto getPostById(Long id) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new CustomException("Post not found"));
+                .orElseThrow(() -> new NotFoundException("Post not found"));
         PostDto postDto = modelMapper.map(post, PostDto.class);
         postDto.setAuthor(post.getUser().getUsername());
         postDto.setTopicName(post.getTopic().getName());
@@ -122,15 +122,15 @@ public class PostServiceImpl implements PostService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     	Long userId = Long.valueOf(authentication.getName());
   	    User user = userRepository.findById(userId)
-  	            .orElseThrow(() -> new CustomException("User not found"));
+  	            .orElseThrow(() -> new NotFoundException("User not found"));
 
-  	  List<Subscription> subscriptions = subscriptionRepository.findByUser(user);
+  	    List<Subscription> subscriptions = subscriptionRepository.findByUser(user);
 
-      List<Post> posts = subscriptions.stream()
+  	    List<Post> posts = subscriptions.stream()
               .flatMap(subscription -> postRepository.findByTopic(subscription.getTopic()).stream())
               .collect(Collectors.toList());
 
-      return posts.stream()
+  	    return posts.stream()
               .map(post -> {
                   PostDto postDto = modelMapper.map(post, PostDto.class);
                   postDto.setAuthor(post.getUser().getUsername());
