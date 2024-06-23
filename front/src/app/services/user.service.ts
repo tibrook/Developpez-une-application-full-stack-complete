@@ -15,7 +15,7 @@ import { PostService } from './post.service';
 export class UserService {
 
   private userSubject = new BehaviorSubject<any>(null);
-  private apiUrl = `${environment.baseUrl}/profile/me`;
+  private apiUrl = `${environment.baseUrl}/auth/profile/me`;
   private topicsSubject = new BehaviorSubject<Topic[]>([]);
   private subscriptionsSubject = new BehaviorSubject<SubscriptionResponse[]>([]);
 
@@ -23,7 +23,7 @@ export class UserService {
   subscriptions$ = this.subscriptionsSubject.asObservable();
   topics$ = this.topicsSubject.asObservable();
 
-  constructor(private http: HttpClient,  private topicService: TopicService, private subscriptionService: SubscriptionService, private postService: PostService) {}
+  constructor(private http: HttpClient,  private topicService: TopicService) {}
 
   setUser(user: any): void {
     this.userSubject.next(user);

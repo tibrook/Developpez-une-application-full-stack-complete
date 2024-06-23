@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class PostService {
-  private apiUrl = `${environment.baseUrl}/posts`;
+  private apiUrl = `${environment.baseUrl}/auth/posts`;
 
   constructor(private http: HttpClient) { }
 
