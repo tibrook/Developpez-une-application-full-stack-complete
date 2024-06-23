@@ -4,7 +4,6 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwsHeader;
@@ -44,24 +43,8 @@ public class JwtServiceImpl implements JwtService{
 		this.userRepository = userRepository;
 	}
 	/**
-	 * Generates a JWT token for the provided authentication.
-	 * @param authentication Authentication object representing the authenticated user.
-	 * @return JWT token generated for the authentication.
-	 */
-	public String generateToken(Authentication authentication) {
-    	Instant now = Instant.now();
- 		JwtClaimsSet claims = JwtClaimsSet.builder()
-          		  .issuer("self")
-           		  .issuedAt(now)
-           		  .expiresAt(now.plus(jwtExpiration, ChronoUnit.SECONDS))
-          		  .subject(authentication.getName())
-          		  .build();
-		JwtEncoderParameters jwtEncoderParameters = JwtEncoderParameters.from(JwsHeader.with(MacAlgorithm.HS256).build(), claims);
-		return this.jwtEncoder.encode(jwtEncoderParameters).getTokenValue();
-	}
-	/**
 	 * Generates a JWT token for the provided subject (email).
-	 * @param subject Email of the authenticated user.
+	 * @param subject user Id of the authenticated user.
 	 * @return JWT token generated for the subject.
 	 */
 	public String generateTokenWithSubject(String userId) {

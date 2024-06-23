@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -32,28 +31,30 @@ import com.openclassrooms.mddapi.exception.NotFoundException;
 
 @Service
 public class PostServiceImpl implements PostService {
-    private static final Logger log = LoggerFactory.getLogger(AuthServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(PostServiceImpl.class);
 
-    @Autowired
-    private PostRepository postRepository;
-    
-    @Autowired
-    private SubscriptionRepository subscriptionRepository;
-    
+    private final PostRepository postRepository;
+    private final SubscriptionRepository subscriptionRepository;
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
+    private final TopicRepository topicRepository;
+    private final ModelMapper modelMapper;
 
-    @Autowired
-    private TopicRepository topicRepository;
-
-    @Autowired
-    private ModelMapper modelMapper;
-
-    public PostServiceImpl(UserRepository userRepository, CommentRepository commentRepository) {
+    public PostServiceImpl(UserRepository userRepository, CommentRepository commentRepository, TopicRepository topicRepository, ModelMapper modelMapper, SubscriptionRepository subscriptionRepository,PostRepository postRepository ) {
         this.userRepository = userRepository;
         this.commentRepository = commentRepository;
+        this.topicRepository = topicRepository;
+        this.modelMapper = modelMapper;
+        this.subscriptionRepository = subscriptionRepository;
+        this.postRepository=postRepository;
     }
 
+    /**
+     * Creates a new post by a logged-in user under a specific topic.
+     * @param createPostRequest DTO containing the new post's details
+     * @return PostDto containing the data of the newly created post
+     * @throws NotFoundException if the user or topic does not exist
+     */
     @Override
     public PostDto createPost(CreatePostRequest createPostRequest) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -80,7 +81,12 @@ public class PostServiceImpl implements PostService {
         return postDto;
     }
 
-
+    /**
+     * Retrieves a post by its ID, including comments with usernames mapped.
+     * @param id the ID of the post to retrieve
+     * @return PostDto with details of the post and its comments
+     * @throws NotFoundException if the post does not exist
+     */
     @Override
     public PostDto getPostById(Long id) {
         Post post = postRepository.findById(id)
@@ -117,6 +123,11 @@ public class PostServiceImpl implements PostService {
         return postDto;
     }
     
+    /**
+     * Retrieves all posts from topics to which the user is subscribed.
+     * @return List of PostDto for all posts in subscribed topics
+     * @throws NotFoundException if the user does not exist
+     */
     @Override
     public List<PostDto> getPostsBySubscribedTopics() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -28,13 +27,20 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     private final SubscriptionRepository subscriptionRepository;
     private static final Logger log = LoggerFactory.getLogger(SubscriptionServiceImpl.class);
     private final UserRepository userRepository;
-    @Autowired
+
     public SubscriptionServiceImpl(TopicRepository topicRepository,SubscriptionRepository subscriptionRepository,  UserRepository userRepository) {
         this.topicRepository = topicRepository;
         this.subscriptionRepository = subscriptionRepository;
         this.userRepository = userRepository;
     }
-
+    
+    /**
+     * Subscribes a user to a topic.
+     * @param topicId the ID of the topic to subscribe to
+     * @return SubscriptionResponse indicating the result of the operation
+     * @throws NotFoundException if the user or topic is not found
+     * @throws BadRequestException if the user is already subscribed to the topic
+     */
     public SubscriptionResponse subscribe( Long topicId) {
         log.info("Subscribe to topic {}", topicId);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -55,7 +61,13 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         subscriptionRepository.save(subscription);
         return new SubscriptionResponse("Subscribed successfully to topic " + topicId, topicId);
     }
-
+    /**
+     * Unsubscribes a user from a topic.
+     * @param topicId the ID of the topic to unsubscribe from
+     * @return SubscriptionResponse indicating the result of the operation
+     * @throws NotFoundException if the user or topic is not found
+     * @throws BadRequestException if the user is not subscribed to the topic
+     */
     @Transactional
     public SubscriptionResponse  unsubscribe( Long topicId) {
         log.info("Unsubscribe to topic {}", topicId);

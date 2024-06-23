@@ -12,8 +12,8 @@ import org.springframework.validation.BindingResult;
 
 import com.openclassrooms.mddapi.dto.requests.CreateCommentRequest;
 import com.openclassrooms.mddapi.dto.requests.CreatePostRequest;
-import com.openclassrooms.mddapi.dto.responses.MessageResponse;
 import com.openclassrooms.mddapi.exception.BadRequestException;
+import com.openclassrooms.mddapi.dto.CommentDto;
 import com.openclassrooms.mddapi.dto.PostDto;
 import com.openclassrooms.mddapi.service.interfaces.CommentService;
 import com.openclassrooms.mddapi.service.interfaces.PostService;
@@ -88,14 +88,14 @@ public class PostController {
     @Operation(summary = "Add a new comment to a post", description = "Adds a new comment to the specified post and returns a message")
     @ApiResponse(responseCode = "200", description = "Comment added successfully",
         content = @Content(mediaType = "application/json",
-        		 schema = @Schema(implementation = MessageResponse.class),  examples = @ExampleObject(value = "{\"message\": \"Comment Added Successfully\"}")))
+        		schema = @Schema(implementation = CommentDto.class)))
     @ApiResponse(responseCode = "400", description = "Bad Request",
         content = @Content(mediaType = "application/json",
                            examples = @ExampleObject(name = "Validation Failed", value = "{\"message\":\"content: Content cannot be empty.\"}")))
     @ApiResponse(responseCode = "404", description = "Not Found",
     content = @Content(mediaType = "application/json",
                        examples = @ExampleObject(name = "Post Not Found", value = "{\"message\":\"Post Not Found\"}")))
-    public MessageResponse addComment(@PathVariable Long postId, @RequestBody @Valid CreateCommentRequest createCommentRequest, BindingResult bindingResult) {
+    public CommentDto addComment(@PathVariable Long postId, @RequestBody @Valid CreateCommentRequest createCommentRequest, BindingResult bindingResult) {
         log.info("Add Comment {}", createCommentRequest.getContent());
         if (bindingResult.hasErrors()) {
             String errorDetails = bindingResult.getFieldErrors().stream()

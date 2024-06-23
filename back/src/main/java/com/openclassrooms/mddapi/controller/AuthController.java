@@ -24,7 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api")
 @Tag(name = "Authentication", description = "Endpoints for user authentication")
 public class AuthController {
     private static final Logger log = LoggerFactory.getLogger(AuthController.class);
@@ -35,7 +35,6 @@ public class AuthController {
         this.authService = authService;
     }
     
-    @PostMapping("/register")
     @Operation(summary = "Register a new user", description = "Registers a new user and returns a JWT token")
     @ApiResponse(responseCode = "200", description = "Successful registration",
         content = @Content(mediaType = "application/json",
@@ -46,6 +45,7 @@ public class AuthController {
     @ApiResponse(responseCode = "409", description = "Conflict",
     content = @Content(mediaType = "application/json",
                        examples = @ExampleObject(name = "Email Already Exists", value = "{\"message\":\"Email already exists\"}")))    
+    @PostMapping("/register")
     public TokenResponse registerUser(@RequestBody @Valid RegisterRequest registerRequest, BindingResult bindingResult) {
         log.info("Registering {}", registerRequest.getEmail());
         if (bindingResult.hasErrors()) {

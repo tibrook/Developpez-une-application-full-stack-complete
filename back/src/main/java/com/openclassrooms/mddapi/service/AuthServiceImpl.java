@@ -19,7 +19,9 @@ import com.openclassrooms.mddapi.service.interfaces.JwtService;
 import com.openclassrooms.mddapi.service.interfaces.UserService;
 
 /**
- * Implementation of AuthService interface providing authentication and registration functionalities.
+ * Service for managing user authentication and registration.
+ * This service leverages Spring Security components for authentication,
+ * and generates JWT tokens through JwtService.
  */
 @Service
 public class AuthServiceImpl implements AuthService{
@@ -28,26 +30,33 @@ public class AuthServiceImpl implements AuthService{
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     
+    /**
+     * Constructor for dependency injection.
+     * @param userService the service to manage user operations
+     * @param jwtService the service to manage JWT token creation
+     * @param authenticationManager the Spring Security authentication manager
+     */
     public AuthServiceImpl(UserService userService, JwtService jwtService, AuthenticationManager authenticationManager) {
     	this.userService = userService;
     	this.jwtService=jwtService;
     	this.authenticationManager = authenticationManager;
     }
- 
+    
+    /**
+     * Authenticates the user and generates a JWT token.
+     * @param loginRequest the user's login details
+     * @return a JWT token wrapped in a TokenResponse
+     * @throws AuthenticationException if the user is not found
+     */
     public TokenResponse authenticateAndGenerateToken(LoginRequest loginRequest) {
     	log.info("Authenticating user {}", loginRequest.getUsernameOrEmail());
 
-        // Use UserService to authenticate the user first
         userService.authenticateUser(loginRequest.getUsernameOrEmail(), loginRequest.getPassword());
-
-        // Load the user details to get the email
         User user = userService.findByEmail(loginRequest.getUsernameOrEmail())
                 .orElseGet(() -> userService.findByUsername(loginRequest.getUsernameOrEmail())
                         .orElseThrow(() -> new AuthenticationException("User not found")));
         String email = user.getEmail();
         Long userId = user.getId();
-
-        // If authentication is successful, proceed with Spring Security Authentication.
         Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(email, loginRequest.getPassword())
         );
@@ -56,10 +65,16 @@ public class AuthServiceImpl implements AuthService{
         return new TokenResponse(jwtService.generateTokenWithSubject(String.valueOf(userId)));
     }
 
+    /**
+     * Registers a new user and generates a JWT token.
+     * @param registerRequest the user's registration data
+     * @return a JWT token wrapped in a TokenResponse
+     */
     public TokenResponse registerAndGenerateToken(RegisterRequest registerRequest) {
         log.info("Registering user {}", registerRequest.getEmail());
         User newUser = userService.registerUser(registerRequest.getEmail(), registerRequest.getUsername(), registerRequest.getPassword());
         log.info("User {} registered successfully", newUser.getEmail());
-        return new TokenResponse(jwtService.generateToken(new UsernamePasswordAuthenticationToken(newUser.getEmail(), null, new ArrayList<>())));
+        Long userId = newUser.getId();
+        return new TokenResponse(jwtService.generateTokenWithSubject(String.valueOf(userId)));
     }
 }

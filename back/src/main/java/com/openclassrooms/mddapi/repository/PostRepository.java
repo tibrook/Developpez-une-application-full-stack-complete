@@ -9,5 +9,10 @@ import com.openclassrooms.mddapi.model.Topic;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
+	 /**
+     * Retrieves all posts associated with a specific topic.
+     * @param topic the Topic object associated with the posts
+     * @return a list of posts that belong to the specified topic
+     */
     List<Post> findByTopic(Topic topic); 
 }

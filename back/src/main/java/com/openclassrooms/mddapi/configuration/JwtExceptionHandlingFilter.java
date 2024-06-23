@@ -37,8 +37,8 @@ public class JwtExceptionHandlingFilter extends OncePerRequestFilter {
     private static final Logger logger = LoggerFactory.getLogger(JwtExceptionHandlingFilter.class);
     private final AntPathMatcher pathMatcher = new AntPathMatcher(); // Utility for URL pattern matching.
     private static final Set<String> PUBLIC_URLS = Set.of(
-            "/api/auth/register",
-            "/api/auth/login",
+            "/api/register",
+            "/api/login",
             "/api-docs/**",
             "/swagger-ui.html",
             "/swagger-ui/**"

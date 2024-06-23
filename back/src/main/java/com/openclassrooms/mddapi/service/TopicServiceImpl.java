@@ -32,7 +32,12 @@ public class TopicServiceImpl  implements TopicService{
 	    this.userRepository = userRepository;
 	    this.modelMapper = modelMapper;
 	}
-
+	
+	/**
+     * Retrieves all topics and marks whether the logged-in user is subscribed to each.
+     * @return List of TopicListResponse where each response includes subscription status
+     * @throws CustomException if the user is not found in the database
+     */
     public List<TopicListResponse> getAllTopics() {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
   	    Long userId = Long.valueOf(authentication.getName());

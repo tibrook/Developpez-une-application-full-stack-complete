@@ -19,12 +19,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/auth/profile")
 @Tag(name = "Users", description = "Endpoints for managing user information")
-public class UserController {
-    private static final Logger log = LoggerFactory.getLogger(UserController.class);
+public class ProfileController {
+    private static final Logger log = LoggerFactory.getLogger(ProfileController.class);
     
     private UserService userService;
 
-    public UserController(UserService userService) {
+    public ProfileController(UserService userService) {
     	this.userService = userService;
     }
 
