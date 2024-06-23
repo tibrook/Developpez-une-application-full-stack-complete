@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
 import { RegisterRequest } from '../../interfaces/RegisterRequest.interface';
-
+import { UserService } from 'src/app/services/user.service';
+import { passwordStrengthValidator } from 'src/app/utils/password.validator';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -19,14 +20,15 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private location: Location 
+    private location: Location,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
       username: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      password: ['', [Validators.required, passwordStrengthValidator()]]
     });
   }
 
@@ -41,6 +43,7 @@ export class RegisterComponent implements OnInit {
       next: (response: any) => {
         console.log('Registration successful', response);
         localStorage.setItem('token', response.token);
+        this.userService.loadUserData();
         this.router.navigate(['/']);
       },
       error: (error: any) => {

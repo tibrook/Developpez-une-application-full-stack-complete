@@ -55,7 +55,10 @@
     font-size: 1rem;
     font-weight: bold;
   }
-
+  .btn:disabled {
+    background-color: #cccccc; /* Grisé */
+    cursor: not-allowed; /* Change le curseur pour indiquer l'interdiction */
+  }
   .error {
     color: red;
     font-size: 0.875rem;

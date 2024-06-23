@@ -5,9 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { TopicService } from './topic.service';
 import { Topic } from '../interfaces/topic.interface';
-import { SubscriptionService } from './subscription.service';
 import { SubscriptionResponse } from '../interfaces/subscription.interface';
-import { PostService } from './post.service';
 
 @Injectable({
   providedIn: 'root'

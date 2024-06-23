@@ -65,6 +65,10 @@
     font-size: 1rem;
     font-weight: bold;
   }
+  .btn:disabled {
+    background-color: #cccccc; /* Grisé */
+    cursor: not-allowed; /* Change le curseur pour indiquer l'interdiction */
+  }
   .button-container {
     display: flex;
     justify-content: center;

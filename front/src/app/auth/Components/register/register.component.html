@@ -7,7 +7,7 @@
       <div class="form-group">
         <label for="username">Nom d'utilisateur</label>
         <input id="username" formControlName="username" type="text" />
-        <div *ngIf="submitted && formControls['username'].errors" class="error">
+        <div *ngIf=" formControls['username'].errors" class="error">
           <div *ngIf="formControls['username'].errors['required']">Ce champ est requis</div>
         </div>
       </div>
@@ -15,22 +15,23 @@
       <div class="form-group">
         <label for="email">Adresse e-mail</label>
         <input id="email" formControlName="email" type="email" />
-        <div *ngIf="submitted && formControls['email'].errors" class="error">
+        <div *ngIf=" formControls['email'].errors" class="error">
           <div *ngIf="formControls['email'].errors['required']">Ce champ est requis</div>
+          <div *ngIf="formControls['email'].errors['email']">Ce champ doit être au format email</div>
         </div>
       </div>
   
       <div class="form-group">
         <label for="password">Mot de passe</label>
         <input id="password" formControlName="password" type="password" />
-        <div *ngIf="submitted && formControls['password'].errors" class="error">
+        <div *ngIf="formControls['password'].errors" class="error">
           <div *ngIf="formControls['password'].errors['required']">Ce champ est requis</div>
-          <div *ngIf="formControls['password'].errors['minlength']">Le mot de passe doit contenir au moins 8 caractères</div>
+          <div *ngIf="formControls['password'].errors['passwordStrength']">Le mot de passe doit contenir au moins 8 caractères, dont une majuscule, une minuscule, un chiffre, et un caractère spécial.</div>
         </div>
       </div>
   
       <div class="button-container">
-        <button mat-raised-button color="primary" type="submit">S'inscrire</button>
+        <button  type="submit" class="btn" [disabled]="!registerForm.valid">S'inscrire</button>
       </div>
   
       <div *ngIf="errorMessage" class="error">

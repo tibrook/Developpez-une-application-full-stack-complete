@@ -7,7 +7,7 @@
       <div class="form-group">
         <label for="usernameOrEmail">E-mail ou nom d'utilisateur</label>
         <input id="usernameOrEmail" formControlName="usernameOrEmail" type="text" />
-        <div *ngIf="submitted && formControls['usernameOrEmail'].errors" class="error">
+        <div *ngIf=" formControls['usernameOrEmail'].errors" class="error">
           <div *ngIf="formControls['usernameOrEmail'].errors['required']">Ce champ est requis</div>
         </div>
       </div>
@@ -15,14 +15,14 @@
       <div class="form-group">
         <label for="password">Mot de passe</label>
         <input id="password" formControlName="password" type="password" />
-        <div *ngIf="submitted && formControls['password'].errors" class="error">
+        <div *ngIf=" formControls['password'].errors" class="error">
           <div *ngIf="formControls['password'].errors['required']">Ce champ est requis</div>
           <div *ngIf="formControls['password'].errors['minlength']">Le mot de passe doit contenir au moins 8 caractères</div>
         </div>
       </div>
   
       <div class="button-container">
-        <button type="submit" class="btn">Se connecter</button>
+        <button type="submit" class="btn" [disabled]="!loginForm.valid">Se connecter</button>
       </div>
   
       <div *ngIf="errorMessage" class="error">
