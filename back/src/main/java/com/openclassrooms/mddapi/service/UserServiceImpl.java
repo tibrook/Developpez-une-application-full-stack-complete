@@ -43,10 +43,10 @@ public class UserServiceImpl implements UserService, UserDetailsService{
      */
     public User registerUser(String email, String username, String password) {
         if (userRepository.findByEmail(email).isPresent()) {
-            throw new ConflictException("Email already exists");
+            throw new ConflictException("Email already exists", "email");
         }
         if(userRepository.findByUsername(username).isPresent()) {
-            throw new ConflictException("Username already exists");
+            throw new ConflictException("Username already exists", "username");
         }
         User user = new User();
         user.setEmail(email);
@@ -114,12 +114,7 @@ public class UserServiceImpl implements UserService, UserDetailsService{
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         return modelMapper.map(user, UserDto.class);
     }
-    /**
-     * Updates user information based on data provided in UpdateUserRequest.
-     * @param updateUserRequest contains the new data for the user
-     * @return UserDto containing the updated user data
-     * @throws ConflictException if the new email or username is already used by another user
-     */
+
     @Override
     public UserDto updateUser(UpdateUserRequest updateUserRequest) {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -127,10 +122,10 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 	    User user = userRepository.findById(userId)
     	            .orElseThrow(() -> new CustomException("User not found"));
 	    if (userRepository.existsByEmailAndIdNot(updateUserRequest.getEmail(), userId)) {
-	        throw new ConflictException("Email already exists");
+	        throw new ConflictException("Email already exists", "email");
 	    }
 	    if (userRepository.existsByUsernameAndIdNot(updateUserRequest.getUsername(), userId)) {
-	        throw new ConflictException("Username already exists");
+	        throw new ConflictException("Username already exists", "username");
 	    }
 	    user.setUsername(updateUserRequest.getUsername());
 	    user.setEmail(updateUserRequest.getEmail());

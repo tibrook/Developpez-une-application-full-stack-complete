@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
 import com.openclassrooms.mddapi.dto.responses.ErrorResponse;
+import com.openclassrooms.mddapi.dto.responses.ErrorResponseWithField;
 import com.openclassrooms.mddapi.exception.AuthenticationException;
 import com.openclassrooms.mddapi.exception.BadRequestException;
 import com.openclassrooms.mddapi.exception.ConflictException;
@@ -37,19 +38,19 @@ public class GlobalExceptionHandler {
     }
     // Handle custom exceptions
     @ExceptionHandler(ConflictException.class)
-    public ResponseEntity<ErrorResponse> handleConflictException(ConflictException ex, WebRequest request) {
-        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage());
+    public ResponseEntity<ErrorResponseWithField> handleConflictException(ConflictException ex, WebRequest request) {
+        ErrorResponseWithField errorResponse = new ErrorResponseWithField(ex.getMessage(), ex.getField());
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
     // Handle JWT Authentication exceptions
     @ExceptionHandler(JwtAuthenticationException.class)
-    public ResponseEntity<ErrorResponse> handleCustomException(JwtAuthenticationException ex, WebRequest request) {
+    public ResponseEntity<ErrorResponse> handleJwtAuthenticationException(JwtAuthenticationException ex, WebRequest request) {
     	logger.error("handle JwtAuthenticationException: {}", ex.getMessage());
         ErrorResponse errorResponse = new ErrorResponse( "Bad JWT");
         return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<ErrorResponse> handleCustomException(BadRequestException ex, WebRequest request) {
+    public ResponseEntity<ErrorResponse> handleBadRequestException(BadRequestException ex, WebRequest request) {
     	logger.error("handle BadRequestException: {}", ex.getMessage());
         ErrorResponse errorResponse = new ErrorResponse(  ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);

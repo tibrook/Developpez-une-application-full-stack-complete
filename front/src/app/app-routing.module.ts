@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './auth/Components/login/login.component';
-import { RegisterComponent } from './auth/Components/register/register.component';
-import { UnauthGuard } from './guards/unauth.guards';
-import { AuthGuard } from './guards/auth.guards';
-import { PostsComponent } from './pages/posts/posts.component';
-import { TopicsComponent } from './pages/topics/topics.component';
-import { PostDetailComponent } from './pages/posts/post-detail/post-detail.component';
-import { ProfileComponent } from './pages/profile/profile.component';
-import { CreatePostComponent } from './pages/posts/create-post/create-post.component';
+import { HomeComponent } from './features/home/home.component';
+import { LoginComponent } from './features/auth/login/login.component';
+import { RegisterComponent } from './features/auth/register/register.component';
+import { UnauthGuard } from './core/guards/unauth.guards';
+import { AuthGuard } from './core/guards/auth.guards';
+import { PostsComponent } from './features/posts/list/posts.component';
+import { TopicsComponent } from './features/topics/list/topics.component';
+import { PostDetailComponent } from './features/posts/detail/post-detail.component';
+import { ProfileComponent } from './features/profile/profile.component';
+import { CreatePostComponent } from './features/posts/create/create-post.component';
+
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [UnauthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [UnauthGuard] },
