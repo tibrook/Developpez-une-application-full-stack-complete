@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit {
   isAuthPage: boolean = false;
   isUserActiveRoute: boolean = false;
+  isMenuOpen: boolean = false;
+
   constructor(private userService: UserService, private router: Router) {
     this.router.events.subscribe((event) => {
       this.checkActiveRoute();
@@ -24,5 +26,7 @@ export class HeaderComponent implements OnInit {
   checkActiveRoute() {
     this.isUserActiveRoute = this.router.url === '/profile';
   }
-
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
 }
