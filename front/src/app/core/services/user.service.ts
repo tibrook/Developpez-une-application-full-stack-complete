@@ -61,5 +61,8 @@ export class UserService {
       }
     });
   }
+  logout(): void {
+    this.setUser(null);
+  }
 
 }

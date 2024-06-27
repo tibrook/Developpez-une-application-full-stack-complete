@@ -6,13 +6,14 @@ import { LoginRequest } from '../interfaces/auth/LoginRequest.interface';
 import { RegisterRequest } from '../interfaces/auth/RegisterRequest.interface';
 import { LoginResponse } from '../interfaces/auth/LoginResponse.interface';
 import { RegisterResponse } from '../interfaces/auth/RegisterResponse.interface';
+import { UserService } from './user.service';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private apiUrl = `${environment.baseUrl}`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private userService: UserService) { }
 
   login(loginRequest: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, loginRequest);
@@ -26,5 +27,6 @@ export class AuthService {
   }
   logout(): void {
     localStorage.removeItem('token');
+    this.userService.logout(); 
   }
 }
