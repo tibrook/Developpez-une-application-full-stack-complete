@@ -39,6 +39,9 @@
   }
     .profile-button {
       cursor: pointer;
+      outline: none;
+      border: none;
+      overflow: visible;
       &.active {
         color: #6C5CCF;
       }
