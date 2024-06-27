@@ -4,13 +4,22 @@
       <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
         <mat-form-field appearance="outline">
           <input matInput formControlName="username">
+          <mat-error *ngIf="profileForm.get('username')?.hasError('required')">Le nom d'utilisateur est requis.</mat-error>
+          <mat-error *ngIf="profileForm.get('username')?.hasError('pattern')">Le nom d'utilisateur ne doit pas contenir de caractères spéciaux ni d'espaces.</mat-error>
+          <mat-error *ngIf="errorMessage['username']">{{ errorMessage['username'] }}</mat-error>
         </mat-form-field>
+      
         <mat-form-field appearance="outline">
           <input matInput formControlName="email">
+          <mat-error *ngIf="profileForm.get('email')?.hasError('required')">L'email est requis.</mat-error>
+          <mat-error *ngIf="profileForm.get('email')?.hasError('email')">L'email doit être au format valide.</mat-error>
+          <mat-error *ngIf="errorMessage['email']">{{ errorMessage['email'] }}</mat-error>
         </mat-form-field>
+      
         <button mat-raised-button color="primary" type="submit">Sauvegarder</button>
       </form>
     <button class="logout-button" mat-button (click)="logout()">Se déconnecter</button>
+   
   </div>
   <hr />
   <div class="subscriptions-container">
@@ -23,5 +32,6 @@
       </div>
     </div>
   </div>
+ 
 </div>
   

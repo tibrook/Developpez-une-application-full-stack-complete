@@ -14,6 +14,7 @@ export class ProfileComponent implements OnInit {
   profileForm!: FormGroup;
   user: any;
   subscriptions: Topic[] = [];
+  errorMessage: { [key: string]: string } = {};
 
   constructor(
     private userService: UserService,
@@ -25,7 +26,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.profileForm = this.formBuilder.group({
-      username: ['', [Validators.required]],
+      username: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]*$/)]],
       email: ['', [Validators.required, Validators.email]],
     });
 
@@ -52,6 +53,24 @@ export class ProfileComponent implements OnInit {
   }
 
   saveProfile(): void {
+    if (this.profileForm.invalid) {
+      return;
+    }
+
+    const updatedUser = this.profileForm.value;
+    this.userService.updateUser(updatedUser).subscribe({
+      next: (user) => {
+        this.user = user;
+        this.profileForm.patchValue(user);
+        this.errorMessage = {};
+      },
+      error: (err) => {
+        console.error('Error updating user', err);
+        if (err.error && err.error.field) {
+          this.errorMessage[err.error.field] = err.error.message;
+        }    
+      } 
+    });
   }
 
   logout(): void {

@@ -13,7 +13,7 @@ import { SubscriptionResponse } from '../interfaces/topics/subscription.interfac
 export class UserService {
 
   private userSubject = new BehaviorSubject<any>(null);
-  private apiUrl = `${environment.baseUrl}/auth/profile/me`;
+  private apiUrl = `${environment.baseUrl}/auth/profile`;
   private topicsSubject = new BehaviorSubject<Topic[]>([]);
   private subscriptionsSubject = new BehaviorSubject<SubscriptionResponse[]>([]);
 
@@ -45,9 +45,12 @@ export class UserService {
     }
   }
   getUserDetails(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}`);
+    return this.http.get<any>(`${this.apiUrl}/me`);
   }
 
+  updateUser(user: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/update`, user);
+  }
   loadTopics(): void {
     this.topicService.getAllTopics().subscribe({
       next: (topics) => {
