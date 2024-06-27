@@ -1,7 +1,7 @@
 <div class="topic-card">
     <h2>{{ topic.name }}</h2>
     <p>{{ topic.description }}</p>
-    <button *ngIf="!topic.subscribed" mat-raised-button color="primary" (click)="subscribe(topic.id)">S'abonner</button>
-    <button *ngIf="topic.subscribed" mat-raised-button color="warn" (click)="unsubscribe(topic.id)">Se désabonner</button>
+    <button *ngIf="!topic.subscribed" mat-raised-button class="action-button" (click)="subscribe(topic.id)">S'abonner</button>
+    <button *ngIf="topic.subscribed" mat-raised-button class="action-button" (click)="unsubscribe(topic.id)">Se désabonner</button>
 </div>
   
