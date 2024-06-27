@@ -9,3 +9,10 @@
       cursor: pointer;
     }
 }
+@media screen and (max-width: 768px) {
+    .back-button {
+        top: 115px;
+        left: 20px;
+    }
+  
+}

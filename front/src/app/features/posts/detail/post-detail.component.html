@@ -1,8 +1,10 @@
-<app-back-button></app-back-button>
 
 <div class="post-detail-container">
     <div class="post-content">
-      <h1>{{ post?.title }}</h1>
+      <div class="header-post">
+        <app-back-button></app-back-button>
+        <h1>{{ post?.title }}</h1>
+      </div>
       <div class="post-meta">
         <span> {{ post?.createdAt | date:'shortDate' }}</span>
         <span> {{ post?.author }}</span>

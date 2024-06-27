@@ -13,7 +13,7 @@
         display: flex;
         justify-content: space-between;
         margin-bottom: 20px;
-        width: 30%;
+        width: 45%;
       
       }
     }
@@ -92,5 +92,67 @@
           font-weight: 400;
         }
       }
+  }
+  @media (max-width: 576px) {
+  .post-detail-container {
+    padding: 0px;
+    margin: 0 1.5rem;
+  }
+  .post-meta{
+    width: 100%!important;
+    display: flex;
+    flex-wrap: wrap;
+  }
+    .post-content h1 {
+      padding: 1rem 5rem;
+      font-size: 20px;
+    }
+  
+    .comments-section h3 {
+      font-size: 18px;
+    }
+  
+    .comment-meta {
+      padding: 10px;
+      font-size: 12px;
+  
+      p {
+        font-size: 12px;
+      }
+    }
+    .comment {
+      flex-direction: column-reverse;
+      .comment-meta {
+        padding: 10px;
+        font-size: 14px;
+        color: #333;
+        flex-grow: 1;
+
+      }
+  
+      span {
+        margin-top: 10px;
+        font-size: 12px;
+        align-self: flex-end;
+      }
+    }
+    .add-comment {
+      width: 100%;
+      gap: 10px;
+      width: 100%;
+  
+      textarea {
+        font-size: 14px;
+        padding: 8px;
+
+      }
+  
+      svg {
+        position: absolute;
+        width: 35px;
+        height: 35px;
+        right:35px;
+      }
+    }
   }
   
