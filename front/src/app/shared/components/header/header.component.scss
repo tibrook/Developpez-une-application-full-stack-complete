@@ -121,6 +121,9 @@ a.active {
 }
 /* Responsive styling */
 @media (max-width: 768px) {
+  .header{
+    padding:0px 1.5rem;
+  }
   .nav-links {
     display: none;
   }

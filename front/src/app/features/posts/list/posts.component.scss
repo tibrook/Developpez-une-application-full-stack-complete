@@ -4,8 +4,7 @@
     margin: 0 auto;
     padding: 3rem 6rem;
     .header-post{
-        display: flex;
-        justify-content: space-between;
+      text-align: center;
         .action-button {
             margin-bottom: 20px;
             height: 40px;
@@ -65,6 +64,51 @@
           -webkit-box-orient: vertical;
           overflow: hidden;
         }
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    .posts-container {
+      padding: 1.5rem;
+    }
+  
+    .header-post {
+      margin-top: 8px;
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      .action-button {
+        width: auto;
+        font-size: 14px;
+      }
+  
+      .sort-section {
+        display: block;
+        font-size: 14px;
+        line-height: 16px;
+        margin: auto;
+        span {
+          margin-right: 3px;
+        }
+      }
+    }
+    .posts-grid {
+      grid-template-columns: 1fr!important;
+    }
+    .post-card {
+      padding: 10px;
+  
+      h2 {
+        font-size: 14px;
+      }
+  
+      .post-meta {
+        font-size: 12px;
+        line-height: 15px;
+      }
+  
+      p {
+        font-size: 12px;
       }
     }
   }
