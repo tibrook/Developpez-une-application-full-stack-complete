@@ -4,8 +4,10 @@ import com.openclassrooms.mddapi.validation.ValidPassword;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.Data;
 import lombok.Getter;
 
+@Data
 @Getter
 @Schema(description = "Request data for user login")
 public class LoginRequest {
@@ -19,9 +21,6 @@ public class LoginRequest {
     @Schema(description = "User's password", requiredMode = Schema.RequiredMode.REQUIRED, example = "Password123#")
     private final String password;
     
-    public LoginRequest(String usernameOrEmail , String password) {
-        this.usernameOrEmail  = usernameOrEmail ;
-        this.password = password;
-    }
+   
 }
 

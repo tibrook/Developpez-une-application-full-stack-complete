@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +28,7 @@ public class RegisterRequest {
     private final String password;
     
 	@NotBlank(message = "Username is required and cannot be blank.")
+    @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "Username must not contain special characters or spaces.")
     @Size(max = 255, message = "Username must not exceed 255 characters.")
     @Schema(description = "User's username", requiredMode = Schema.RequiredMode.REQUIRED, example = "username")
     private final String username;

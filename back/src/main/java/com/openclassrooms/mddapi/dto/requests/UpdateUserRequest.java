@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,8 +14,9 @@ import lombok.Data;
 @Schema(description = "Request data to update user information")
 public class UpdateUserRequest {
 	
-	@NotBlank(message = "Name is required and cannot be blank.")
-    @Size(max = 255, message = "Name must not exceed 255 characters.")
+	@NotBlank(message = "Username is required and cannot be blank.")
+    @Size(max = 255, message = "Username must not exceed 255 characters.")
+    @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "Username must not contain special characters or spaces.")
     @Schema(description = "New username of the user", example = "newusername")
     private String username;
 	

@@ -2,18 +2,23 @@ package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.dto.requests.UpdateUserRequest;
+import com.openclassrooms.mddapi.exception.BadRequestException;
 import com.openclassrooms.mddapi.service.interfaces.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -49,8 +54,15 @@ public class ProfileController {
         content = @Content(mediaType = "application/json",
                            examples = @ExampleObject(name = "Validation Failed", value = "{\"message\":\"email : must be a valid email\"}")))
     @PutMapping("/update")
-    public UserDto updateUser(@RequestBody UpdateUserRequest updateUserRequest) {
+    public UserDto updateUser(@RequestBody @Valid UpdateUserRequest updateUserRequest, BindingResult bindingResult) {
         log.info("Update user for user {}", updateUserRequest.getEmail());
+        if (bindingResult.hasErrors()) {
+            String errorDetails = bindingResult.getFieldErrors().stream()
+                .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
+                .collect(Collectors.joining(", "));
+            log.error("createPost : Validation failed : {}",  errorDetails);
+            throw new BadRequestException(errorDetails);
+        }
         return userService.updateUser(updateUserRequest);
     }
 }
