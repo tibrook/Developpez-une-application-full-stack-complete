@@ -15,6 +15,7 @@ export class ProfileComponent implements OnInit {
   user: any;
   subscriptions: Topic[] = [];
   errorMessage: { [key: string]: string } = {};
+  successMessage: string = '';
 
   constructor(
     private userService: UserService,
@@ -32,6 +33,14 @@ export class ProfileComponent implements OnInit {
 
     this.loadUserProfile();
     this.loadSubscriptions();
+
+    this.profileForm.get('username')?.valueChanges.subscribe(() => {
+      this.errorMessage['username'] = '';
+    });
+
+    this.profileForm.get('email')?.valueChanges.subscribe(() => {
+      this.errorMessage['email'] = '';
+    });
   }
   loadSubscriptions(): void {
     this.userService.topics$.subscribe(topic => {
@@ -63,9 +72,12 @@ export class ProfileComponent implements OnInit {
         this.user = user;
         this.profileForm.patchValue(user);
         this.errorMessage = {};
+        this.successMessage = 'Le profil a été mis à jour avec succès.';
+        this.profileForm.markAsPristine(); // Reset form state
       },
       error: (err) => {
         console.error('Error updating user', err);
+        this.successMessage = '';
         if (err.error && err.error.field) {
           this.errorMessage[err.error.field] = err.error.message;
         }    
@@ -83,4 +95,8 @@ export class ProfileComponent implements OnInit {
       this.subscriptions = this.subscriptions.filter(sub => sub.id !== topicId);
     });
   }
+  hasErrorMessage(): boolean {
+    return Object.keys(this.errorMessage['message']).length > 0;
+  }
+
 }

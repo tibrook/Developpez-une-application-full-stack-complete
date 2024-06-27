@@ -15,8 +15,9 @@
           <mat-error *ngIf="profileForm.get('email')?.hasError('email')">L'email doit être au format valide.</mat-error>
           <mat-error *ngIf="errorMessage['email']">{{ errorMessage['email'] }}</mat-error>
         </mat-form-field>
-      
-        <button mat-raised-button color="primary" type="submit">Sauvegarder</button>
+
+        <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+        <button mat-raised-button  class="action-button" type="submit" [disabled]="profileForm.invalid || !profileForm.dirty || errorMessage['email'].length !== 0|| errorMessage['username'].length !== 0">Sauvegarder</button>
       </form>
     <button class="logout-button" mat-button (click)="logout()">Se déconnecter</button>
    
@@ -27,7 +28,7 @@
       <h1>Abonnements</h1>
       <div class="subscriptions-grid">
         <app-topic-card *ngFor="let subscription of subscriptions" [topic]="subscription">
-          <button mat-raised-button color="warn" (click)="unsubscribe(subscription.id)">Se désabonner</button>
+          <button (click)="unsubscribe(subscription.id)">Se désabonner</button>
         </app-topic-card>
       </div>
     </div>
