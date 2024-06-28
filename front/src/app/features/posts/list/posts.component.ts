@@ -19,7 +19,7 @@ export class PostsComponent {
    }
 
   viewPost(postId: number): void {
-    this.router.navigate(['/posts', postId.toString()]);
+    this.router.navigate(['/posts/detail', postId.toString()]);
   }
   onClickCreatePost(): void {
     this.router.navigate(['/posts/create']);
