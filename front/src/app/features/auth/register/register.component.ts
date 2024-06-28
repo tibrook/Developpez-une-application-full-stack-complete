@@ -8,7 +8,9 @@ import { UserService } from 'src/app/core/services/user.service';
 import { passwordStrengthValidator } from 'src/app/utils/validators/password.validator';
 import { usernameValidator } from 'src/app/utils/validators/username.validator';
 import { RegisterResponse } from 'src/app/core/interfaces/auth/RegisterResponse.interface';
-
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs';
+import { OnDestroy } from '@angular/core';
 /**
  * Component for handling user registration.
  *
@@ -20,11 +22,12 @@ import { RegisterResponse } from 'src/app/core/interfaces/auth/RegisterResponse.
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
   registerForm!: FormGroup;
   submitted = false;
   errorMessage: string = '';
   fieldAlreadyTaken: string = '';
+  private unsubscribe$ = new Subject<void>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -58,7 +61,9 @@ export class RegisterComponent implements OnInit {
   onSubmit(): void {
     this.submitted = true;
 
-    const observer = {
+    const registerRequest = this.registerForm.value as RegisterRequest;
+
+    this.authService.register(registerRequest).pipe(takeUntil(this.unsubscribe$)).subscribe({
       next: (response: RegisterResponse) => {
         localStorage.setItem('token', response.token);
         this.userService.loadUserData();
@@ -66,15 +71,13 @@ export class RegisterComponent implements OnInit {
       },
       error: (error: any) => {
         console.error('Registration error', error);
-        if(error.status === 409){
+        if (error.status === 409) {
           this.fieldAlreadyTaken = error.error.field;
-        }else{
+        } else {
           this.errorMessage = error.error.message || "Erreur d'enregistrement";
         }
       }
-    };
-    const registerRequest = this.registerForm.value as RegisterRequest;
-    this.authService.register(registerRequest).subscribe(observer);
+    });
   }
 
    /**
@@ -82,5 +85,13 @@ export class RegisterComponent implements OnInit {
    */
   goBack(): void {
     this.location.back();
+  }
+
+  /**
+   * Unsubscribe to avoid memory leaks.
+   */
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

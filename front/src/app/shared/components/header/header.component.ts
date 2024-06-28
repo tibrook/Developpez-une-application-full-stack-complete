@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../core/services/user.service';
 import { Router } from '@angular/router';
-
+import { filter, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 /**
  * HeaderComponent manages the navigation header, updating its state based on the user's authentication status
  * and the current route.
@@ -17,6 +18,8 @@ export class HeaderComponent implements OnInit {
   isAuthPage: boolean = false;
   isUserActiveRoute: boolean = false;
   isMenuOpen: boolean = false;
+  private unsubscribe$ = new Subject<void>();
+
 
   constructor(private userService: UserService, private router: Router) {
     // Listen to route changes to determine if the user is on the profile page.
@@ -46,5 +49,10 @@ export class HeaderComponent implements OnInit {
    */
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

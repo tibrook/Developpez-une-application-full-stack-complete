@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy } from '@angular/core';
 import { SubscriptionService } from 'src/app/core/services/subscription.service';
 import { Output } from '@angular/core';
 import { Topic } from 'src/app/core/interfaces/topics/topic.interface';
-
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 /**
  * Component that represents a single topic card, allowing users to subscribe or unsubscribe from topics.
  *
@@ -13,9 +14,10 @@ import { Topic } from 'src/app/core/interfaces/topics/topic.interface';
   templateUrl: './topic-card.component.html',
   styleUrls: ['./topic-card.component.scss']
 })
-export class TopicCardComponent {
+export class TopicCardComponent implements OnDestroy{
   @Input() topic!: Topic; // Input property to receive topic data from the parent component.
   @Output() subscriptionChanged = new EventEmitter<void>(); // Output event to notify the parent component of subscription changes.
+  private unsubscribe$ = new Subject<void>();
 
   constructor(
     private subscriptionService: SubscriptionService
@@ -26,7 +28,7 @@ export class TopicCardComponent {
    * @param topicId The ID of the topic to subscribe to.
    */
   subscribe(topicId: number): void {
-    this.subscriptionService.subscribe(topicId).subscribe({
+    this.subscriptionService.subscribe(topicId).pipe(takeUntil(this.unsubscribe$)).subscribe({
       next: () => {
         this.updateTopicSubscription(true);
         this.subscriptionChanged.emit();
@@ -41,7 +43,7 @@ export class TopicCardComponent {
    * @param topicId The ID of the topic to unsubscribe from.
    */
   unsubscribe(topicId: number): void {
-    this.subscriptionService.unsubscribe(topicId).subscribe({
+    this.subscriptionService.unsubscribe(topicId).pipe(takeUntil(this.unsubscribe$)).subscribe({
       next: () => {
         this.updateTopicSubscription(false);
         this.subscriptionChanged.emit();
@@ -60,5 +62,13 @@ export class TopicCardComponent {
     if (topic) {
       topic.subscribed = subscribed;
     }
+  }
+
+   /**
+    * Unsubscribes from the subscription service when the component is destroyed.
+   */
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

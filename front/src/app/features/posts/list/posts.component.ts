@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { Post } from 'src/app/core/interfaces/posts/post.interface';
 import { Router } from '@angular/router';
 import { PostService } from 'src/app/core/services/post.service';
-
+import { OnInit, OnDestroy } from '@angular/core';
+import { takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 /**
  * Component for displaying a list of posts.
  * Allows users to view, create, and sort posts.
@@ -14,10 +16,11 @@ import { PostService } from 'src/app/core/services/post.service';
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.scss']
 })
-export class PostsComponent {
+export class PostsComponent implements  OnDestroy  {
 
   public posts: Post[] = [];
   public isAscending = false;
+  private unsubscribe$ = new Subject<void>();
 
   constructor(private postService: PostService, private router:Router) {
       this.loadPosts();
@@ -42,9 +45,9 @@ export class PostsComponent {
    * Fetches posts from the server and sorts them based on the current sorting order.
    */
   loadPosts(): void {
-    this.postService.getPostsBySubscribedTopics().subscribe(posts => {
+    this.postService.getPostsBySubscribedTopics().pipe(takeUntil(this.unsubscribe$)).subscribe(posts => {
       this.posts = posts.sort((a, b) => this.isAscending ? new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime() :
-                                        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     });
   }
 
@@ -54,5 +57,13 @@ export class PostsComponent {
   toggleSortOrder(): void {
     this.isAscending = !this.isAscending;
     this.loadPosts(); // Refresh the list with the new sort order
+  }
+
+  /**
+   * Unsubscribes from the post service when the component is destroyed.
+   */
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

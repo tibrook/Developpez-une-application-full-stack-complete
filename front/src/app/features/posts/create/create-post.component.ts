@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PostService } from 'src/app/core/services/post.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { Topic } from 'src/app/core/interfaces/topics/topic.interface';
-
+import { takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 /**
  * Component for creating new posts.
  *
@@ -15,11 +16,13 @@ import { Topic } from 'src/app/core/interfaces/topics/topic.interface';
   templateUrl: './create-post.component.html',
   styleUrls: ['./create-post.component.scss']
 })
-export class CreatePostComponent implements OnInit {
+export class CreatePostComponent implements OnInit, OnDestroy {
   postForm!: FormGroup;
   submitted = false;
   errorMessage: string = '';
   topics: Topic[] = [];
+  private unsubscribe$ = new Subject<void>();
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -39,9 +42,9 @@ export class CreatePostComponent implements OnInit {
     });
 
     // Load subscribed topics
-    this.userService.topics$.subscribe({
+    this.userService.topics$.pipe(takeUntil(this.unsubscribe$)).subscribe({
       next: (topics) => {
-        this.topics = topics
+        this.topics = topics;
       },
       error: (err) => {
         console.error('Error loading topics', err);
@@ -75,5 +78,13 @@ export class CreatePostComponent implements OnInit {
         this.errorMessage = error.error.message || 'Post creation failed';
       }
     });
+  }
+
+  /**
+   * Unsubscribe to avoid memory leaks.
+   */
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

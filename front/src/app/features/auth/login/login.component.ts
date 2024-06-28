@@ -6,7 +6,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { Location } from '@angular/common';
 import { UserService } from 'src/app/core/services/user.service';
 import { RegisterResponse } from 'src/app/core/interfaces/auth/RegisterResponse.interface';
-
+import { OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs';
 /**
  * LoginComponent manages user login, form validation, and navigation post-login.
  *
@@ -17,10 +19,11 @@ import { RegisterResponse } from 'src/app/core/interfaces/auth/RegisterResponse.
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   loginForm!: FormGroup;
   submitted = false;
   errorMessage: string = '';
+  private unsubscribe$ = new Subject<void>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -50,25 +53,31 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     const loginRequest = this.loginForm.value as LoginRequest;
 
-    const observer = {
+    this.authService.login(loginRequest).pipe(takeUntil(this.unsubscribe$)).subscribe({
       next: (response: RegisterResponse) => {
         localStorage.setItem('token', response.token);
         this.userService.loadUserData();
         this.router.navigate(['/posts']);
-
       },
       error: (error: any) => {
         console.error('Login error', error);
         this.errorMessage = error.error.message || 'Login failed';
       }
-    };
-    this.authService.login(loginRequest).subscribe(observer);
+    });
   }
-  
+
   /**
    * Navigates back to the previous page.
    */
   goBack(): void {
     this.location.back();
+  }
+
+   /**
+   * Unsubscribe to avoid memory leaks.
+   */
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

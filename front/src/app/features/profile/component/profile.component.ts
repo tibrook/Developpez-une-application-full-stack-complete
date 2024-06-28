@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Topic } from 'src/app/core/interfaces/topics/topic.interface';
 import { User } from 'src/app/core/interfaces/profile/user.interface';
-
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 /**
  * Component for managing user profile information.
  *
@@ -16,12 +17,13 @@ import { User } from 'src/app/core/interfaces/profile/user.interface';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit , OnDestroy{
   profileForm!: FormGroup;
   user: User | null = null;
   subscriptions: Topic[] = [];
   errorMessage: { [key: string]: string } = {};
   successMessage: string = '';
+  private unsubscribe$ = new Subject<void>();
 
   constructor(
     private userService: UserService,
@@ -66,7 +68,7 @@ export class ProfileComponent implements OnInit {
    * Loads topics that the user is subscribed to.
    */
   loadSubscriptions(): void {
-    this.userService.topics$.subscribe(topic => {
+    this.userService.topics$.pipe(takeUntil(this.unsubscribe$)).subscribe(topic => {
       this.subscriptions = topic.filter(topic => topic.subscribed);
     });
   }
@@ -139,4 +141,11 @@ export class ProfileComponent implements OnInit {
     return Object.keys(this.errorMessage['message']).length > 0;
   }
 
+  /**
+   * Unsubscribe to avoid memory leaks.
+   */
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 }
