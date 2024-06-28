@@ -19,7 +19,6 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private subscriptionService: SubscriptionService,
     private authService: AuthService,
     private router: Router,
     private formBuilder: FormBuilder
@@ -46,6 +45,9 @@ export class ProfileComponent implements OnInit {
     this.userService.topics$.subscribe(topic => {
       this.subscriptions = topic.filter(topic => topic.subscribed);
     });
+  }
+  onSubscriptionChanged(): void {
+    this.loadSubscriptions();
   }
   loadUserProfile(): void {
     const user = this.userService.getUser();
@@ -90,11 +92,6 @@ export class ProfileComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  unsubscribe(topicId: number): void {
-    this.subscriptionService.unsubscribe(topicId).subscribe(() => {
-      this.subscriptions = this.subscriptions.filter(sub => sub.id !== topicId);
-    });
-  }
   hasErrorMessage(): boolean {
     return Object.keys(this.errorMessage['message']).length > 0;
   }

@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
-import { TopicService } from 'src/app/core/services/topic.service';
+import { Component, EventEmitter, Input } from '@angular/core';
 import { SubscriptionService } from 'src/app/core/services/subscription.service';
+import { Output } from '@angular/core';
+
 @Component({
   selector: 'app-topic-card',
   templateUrl: './topic-card.component.html',
@@ -8,16 +9,17 @@ import { SubscriptionService } from 'src/app/core/services/subscription.service'
 })
 export class TopicCardComponent {
   @Input() topic: any;
+  @Output() subscriptionChanged = new EventEmitter<void>();
 
   constructor(
-    private topicService: TopicService,
     private subscriptionService: SubscriptionService
   ) {}
 
   subscribe(topicId: number): void {
     this.subscriptionService.subscribe(topicId).subscribe({
-      next: (response) => {
-        this.updateTopicSubscription(topicId, true);
+      next: () => {
+        this.updateTopicSubscription(true);
+        this.subscriptionChanged.emit();
       },
       error: (err) => {
         console.error('Error subscribing to topic', err);
@@ -27,15 +29,16 @@ export class TopicCardComponent {
 
   unsubscribe(topicId: number): void {
     this.subscriptionService.unsubscribe(topicId).subscribe({
-      next: (response) => {
-        this.updateTopicSubscription(topicId, false);
+      next: () => {
+        this.updateTopicSubscription(false);
+        this.subscriptionChanged.emit();
       },
       error: (err) => {
         console.error('Error unsubscribing from topic', err);
       }
     });
   }
-  updateTopicSubscription(topicId: number, subscribed: boolean): void {
+  updateTopicSubscription(subscribed: boolean): void {
     const topic = this.topic;
     if (topic) {
       topic.subscribed = subscribed;

@@ -15,9 +15,17 @@ export class TopicsComponent implements OnInit {
     this.userService.topics$.subscribe({
       next: (topics) => {
         if (topics.length > 0) {
-          this.topics = topics;
+          this.topics = topics.filter(topic => !topic.subscribed);
         } 
       }
+    });
+  }
+  onSubscriptionChanged(): void {
+    this.loadSubscriptions();
+  }
+  loadSubscriptions(): void {
+    this.userService.topics$.subscribe(topic => {
+      this.topics = topic.filter(topic => !topic.subscribed);
     });
   }
 }

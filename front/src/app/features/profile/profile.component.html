@@ -27,8 +27,7 @@
     <div class="subscriptions">
       <h1>Abonnements</h1>
       <div class="subscriptions-grid">
-        <app-topic-card *ngFor="let subscription of subscriptions" [topic]="subscription">
-          <button (click)="unsubscribe(subscription.id)">Se désabonner</button>
+        <app-topic-card *ngFor="let subscription of subscriptions" [topic]="subscription" (subscriptionChanged)="onSubscriptionChanged()">
         </app-topic-card>
          
       </div>

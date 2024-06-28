@@ -1,5 +1,14 @@
 <div class="topics-container">
   <div class="topics-grid">
-    <app-topic-card *ngFor="let topic of topics" [topic]="topic"></app-topic-card>
+    <app-topic-card *ngFor="let topic of topics" [topic]="topic" (subscriptionChanged)="onSubscriptionChanged()"></app-topic-card>
+  </div>
+  <div class="noData" *ngIf="topics.length ===0">
+    <p>Vous avez déjà souscrit à tous les thèmes.</p>
+    <p>Pour vous désinscrire, rendez-vous sur la page 
+        <a [routerLink]="['/profile']">profile</a>
+    </p>
+    <p>Pour voir les articles , rendez-vous sur la page         
+      <a [routerLink]="['/topic']">articles</a>
+    </p>
   </div>
 </div>
