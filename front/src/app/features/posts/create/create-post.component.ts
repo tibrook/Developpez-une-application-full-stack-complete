@@ -33,7 +33,9 @@ export class CreatePostComponent implements OnInit {
     // Load subscribed topics
     this.userService.topics$.subscribe({
       next: (topics) => {
-        this.topics = topics.filter((topic) => topic.subscribed);
+        console.log(topics)
+        this.topics = topics
+        // this.topics = topics.filter((topic) => topic.subscribed);
       },
       error: (err) => {
         console.error('Error loading topics', err);

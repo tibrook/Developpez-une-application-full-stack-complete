@@ -1,6 +1,7 @@
 @import "../../../styles/variables.scss";
 
 .profile-container {
+  align-items: center;
     margin: 0 auto;
     padding: 3rem 6rem;
     h1 {
@@ -49,7 +50,16 @@
         flex-wrap: wrap;
         gap: 16px;
       }
+     
     }
-  
+    .noItems{
+      width: 100%;
+      text-align: center;
+      p{
+        width: auto;
+        margin: auto;
+
+      }
+    }
   }
   

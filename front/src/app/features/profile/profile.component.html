@@ -30,6 +30,13 @@
         <app-topic-card *ngFor="let subscription of subscriptions" [topic]="subscription">
           <button (click)="unsubscribe(subscription.id)">Se désabonner</button>
         </app-topic-card>
+         
+      </div>
+      <div class="noItems">
+        <p *ngIf="subscriptions.length === 0">
+          Aucun thème souscrit pour le moment. 
+          <a [routerLink]="['/topics']">Rendez-vous sur cette page pour vous abonner à un thème</a>
+        </p>  
       </div>
     </div>
   </div>
