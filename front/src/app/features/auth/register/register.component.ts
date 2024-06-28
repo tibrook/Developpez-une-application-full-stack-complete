@@ -8,6 +8,13 @@ import { UserService } from 'src/app/core/services/user.service';
 import { passwordStrengthValidator } from 'src/app/utils/validators/password.validator';
 import { usernameValidator } from 'src/app/utils/validators/username.validator';
 import { RegisterResponse } from 'src/app/core/interfaces/auth/RegisterResponse.interface';
+
+/**
+ * Component for handling user registration.
+ *
+ * @Component Decorator that provides metadata for the component including its selector,
+ * templateUrl, and styleUrls.
+ */
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -27,6 +34,9 @@ export class RegisterComponent implements OnInit {
     private userService: UserService
   ) { }
 
+  /**
+   * Initializes the component, setting up the registration form with validators.
+   */
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
       username: ['', [Validators.required,usernameValidator()]],
@@ -35,10 +45,16 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  /**
+   * Getter for easy access to form controls from the template.
+   */
   get formControls() {
     return this.registerForm.controls;
   }
 
+  /**
+   * Handles form submission for registration.
+   */
   onSubmit(): void {
     this.submitted = true;
 
@@ -61,6 +77,9 @@ export class RegisterComponent implements OnInit {
     this.authService.register(registerRequest).subscribe(observer);
   }
 
+   /**
+   * Navigates back to the previous page.
+   */
   goBack(): void {
     this.location.back();
   }

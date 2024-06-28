@@ -6,6 +6,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Topic } from 'src/app/core/interfaces/topics/topic.interface';
 import { User } from 'src/app/core/interfaces/profile/user.interface';
 
+/**
+ * Component for managing user profile information.
+ *
+ * @Component Angular decorator that defines metadata for the component.
+ */
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -25,6 +30,9 @@ export class ProfileComponent implements OnInit {
     private formBuilder: FormBuilder
   ) { }
 
+  /**
+   * Initializes component, form and loads user data.
+   */
   ngOnInit(): void {
     this.profileForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]*$/)]],
@@ -35,6 +43,10 @@ export class ProfileComponent implements OnInit {
     this.loadSubscriptions();
     this.setupFormValueChanges();
   }
+
+  /**
+   * Sets up form value changes subscriptions to handle form validation dynamically.
+   */
   setupFormValueChanges(): void {
     this.profileForm.get('username')?.valueChanges.subscribe(() => {
       this.errorMessage['username'] = '';
@@ -49,14 +61,26 @@ export class ProfileComponent implements OnInit {
       this.successMessage = '';
     });
   }
+
+  /**
+   * Loads topics that the user is subscribed to.
+   */
   loadSubscriptions(): void {
     this.userService.topics$.subscribe(topic => {
       this.subscriptions = topic.filter(topic => topic.subscribed);
     });
   }
+
+  /**
+   * Handles subscription change events.
+   */
   onSubscriptionChanged(): void {
     this.loadSubscriptions();
   }
+
+  /**
+   * Loads user profile data and sets it in the form.
+   */
   loadUserProfile(): void {
     const user = this.userService.getUser();
     if (user) {
@@ -70,9 +94,11 @@ export class ProfileComponent implements OnInit {
         }
       });
     }
-
   }
 
+  /**
+   * Submits the profile form and updates the user profile.
+   */
   saveProfile(): void {
     if (this.profileForm.invalid) {
       return;
@@ -97,11 +123,18 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  /**
+   * Logs out the user and navigates to the login page.
+   */
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
 
+  /**
+   * Checks if there is any error message present.
+   * @returns Boolean indicating if there is an error message.
+   */
   hasErrorMessage(): boolean {
     return Object.keys(this.errorMessage['message']).length > 0;
   }

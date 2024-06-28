@@ -4,6 +4,7 @@ import { TopicCardComponent } from './card/topic-card.component';
 import { TopicsComponent } from './list/topics.component';
 import { TopicsRoutingModule } from './topics-routing.module';
 import { SharedModule } from 'src/app/shared/components/shared.module';
+
 @NgModule({
   declarations: [
     TopicsComponent,

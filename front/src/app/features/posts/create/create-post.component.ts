@@ -5,6 +5,11 @@ import { PostService } from 'src/app/core/services/post.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { Topic } from 'src/app/core/interfaces/topics/topic.interface';
 
+/**
+ * Component for creating new posts.
+ *
+ * @Component Decorator that defines metadata and selector for the component.
+ */
 @Component({
   selector: 'app-create-post',
   templateUrl: './create-post.component.html',
@@ -23,6 +28,9 @@ export class CreatePostComponent implements OnInit {
     private router: Router
   ) {}
 
+  /**
+   * Initializes component, form, and loads necessary data.
+   */
   ngOnInit(): void {
     this.postForm = this.formBuilder.group({
       title: ['', [Validators.required]],
@@ -40,11 +48,16 @@ export class CreatePostComponent implements OnInit {
       }
     });
   }
-
+  /**
+   * Getter for easy access to form controls within the template.
+   */
   get formControls() {
     return this.postForm.controls;
   }
 
+  /**
+   * Handles form submission to create a new post.
+   */
   onSubmit(): void {
     this.submitted = true;
     if (this.postForm.invalid) {

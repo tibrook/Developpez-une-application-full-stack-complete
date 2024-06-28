@@ -4,6 +4,12 @@ import { PostService } from 'src/app/core/services/post.service';
 import { CommentService } from 'src/app/core/services/comment.service';
 import { Post } from 'src/app/core/interfaces/posts/post.interface';
 import { Comment } from 'src/app/core/interfaces/comments/comment.interface';
+
+/**
+ * Component for displaying the details of a post, including its comments.
+ *
+ * @Component Decorator that provides Angular metadata for configuring component properties.
+ */
 @Component({
   selector: 'app-post-detail',
   templateUrl: './post-detail.component.html',
@@ -20,6 +26,9 @@ export class PostDetailComponent implements OnInit {
     private router: Router
   ) { }
 
+  /**
+   * Initializes the component by fetching the post details using the post ID from the route.
+   */
   ngOnInit(): void {
     const postId = this.route.snapshot.paramMap.get('id');
     if (postId) {
@@ -27,6 +36,10 @@ export class PostDetailComponent implements OnInit {
     }
   }
 
+  /**
+   * Fetches a post by its ID.
+   * @param id The ID of the post to fetch.
+   */
   getPost(id: string): void {
     this.postService.getPostById(id).subscribe({
       next: (post: Post) => {
@@ -43,6 +56,10 @@ export class PostDetailComponent implements OnInit {
     });
   }
 
+  /**
+   * Adds a new comment to the post.
+   * @param content The text content of the new comment.
+   */
   addComment(content: string): void {
     const postId = this.route.snapshot.paramMap.get('id');
     if (postId && content.trim()) {

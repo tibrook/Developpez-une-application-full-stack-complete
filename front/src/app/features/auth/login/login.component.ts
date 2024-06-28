@@ -6,6 +6,12 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { Location } from '@angular/common';
 import { UserService } from 'src/app/core/services/user.service';
 import { RegisterResponse } from 'src/app/core/interfaces/auth/RegisterResponse.interface';
+
+/**
+ * LoginComponent manages user login, form validation, and navigation post-login.
+ *
+ * @Component Decorator that associates metadata with the LoginComponent class.
+ */
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -31,10 +37,16 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  /**
+   * Getter for easy access to form controls from the template.
+   */
   get formControls() {
     return this.loginForm.controls;
   }
 
+  /**
+   * Handles form submission for login.
+   */
   onSubmit(): void {
     const loginRequest = this.loginForm.value as LoginRequest;
 
@@ -51,8 +63,11 @@ export class LoginComponent implements OnInit {
       }
     };
     this.authService.login(loginRequest).subscribe(observer);
-   
   }
+  
+  /**
+   * Navigates back to the previous page.
+   */
   goBack(): void {
     this.location.back();
   }
