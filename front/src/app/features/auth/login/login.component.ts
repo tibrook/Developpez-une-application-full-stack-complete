@@ -5,6 +5,7 @@ import { LoginRequest } from '../../../core/interfaces/auth/LoginRequest.interfa
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Location } from '@angular/common';
 import { UserService } from 'src/app/core/services/user.service';
+import { RegisterResponse } from 'src/app/core/interfaces/auth/RegisterResponse.interface';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -39,7 +40,7 @@ export class LoginComponent implements OnInit {
     const loginRequest = this.loginForm.value as LoginRequest;
 
     const observer = {
-      next: (response: any) => {
+      next: (response: RegisterResponse) => {
         console.log('Login successful', response);
         localStorage.setItem('token', response.token);
         this.userService.loadUserData();

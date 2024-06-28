@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input } from '@angular/core';
 import { SubscriptionService } from 'src/app/core/services/subscription.service';
 import { Output } from '@angular/core';
+import { Topic } from 'src/app/core/interfaces/topics/topic.interface';
 
 @Component({
   selector: 'app-topic-card',
@@ -8,7 +9,7 @@ import { Output } from '@angular/core';
   styleUrls: ['./topic-card.component.scss']
 })
 export class TopicCardComponent {
-  @Input() topic: any;
+  @Input() topic!: Topic;
   @Output() subscriptionChanged = new EventEmitter<void>();
 
   constructor(

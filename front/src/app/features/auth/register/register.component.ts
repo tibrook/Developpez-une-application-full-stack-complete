@@ -7,6 +7,7 @@ import { RegisterRequest } from '../../../core/interfaces/auth/RegisterRequest.i
 import { UserService } from 'src/app/core/services/user.service';
 import { passwordStrengthValidator } from 'src/app/utils/validators/password.validator';
 import { usernameValidator } from 'src/app/utils/validators/username.validator';
+import { RegisterResponse } from 'src/app/core/interfaces/auth/RegisterResponse.interface';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -42,7 +43,7 @@ export class RegisterComponent implements OnInit {
     this.submitted = true;
 
     const observer = {
-      next: (response: any) => {
+      next: (response: RegisterResponse) => {
         console.log('Registration successful', response);
         localStorage.setItem('token', response.token);
         this.userService.loadUserData();

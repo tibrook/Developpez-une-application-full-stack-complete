@@ -6,13 +6,14 @@ import { environment } from 'src/environments/environment';
 import { TopicService } from './topic.service';
 import { Topic } from '../interfaces/topics/topic.interface';
 import { SubscriptionResponse } from '../interfaces/topics/subscription.interface';
+import { User } from '../interfaces/profile/user.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private userSubject = new BehaviorSubject<any>(null);
+  private userSubject = new BehaviorSubject<User|null>(null);
   private apiUrl = `${environment.baseUrl}/auth/profile`;
   private topicsSubject = new BehaviorSubject<Topic[]>([]);
   private subscriptionsSubject = new BehaviorSubject<SubscriptionResponse[]>([]);
@@ -23,11 +24,11 @@ export class UserService {
 
   constructor(private http: HttpClient,  private topicService: TopicService) {}
 
-  setUser(user: any): void {
+  setUser(user: User | null): void {
     this.userSubject.next(user);
   }
 
-  getUser(): any {
+  getUser(): User | null {
     return this.userSubject.value;
   }
 
@@ -44,12 +45,12 @@ export class UserService {
       });
     }
   }
-  getUserDetails(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/me`);
+  getUserDetails(): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/me`);
   }
 
-  updateUser(user: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/update`, user);
+  updateUser(user: User): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}/update`, user);
   }
   loadTopics(): void {
     this.topicService.getAllTopics().subscribe({

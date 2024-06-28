@@ -1,3 +1,4 @@
+import { Comment } from '../comments/comment.interface';
 export interface Post {
     id: number;
     title: string;
@@ -5,4 +6,6 @@ export interface Post {
     author: string; 
     createdAt: Date;
     updatedAt: Date;
+    topicName: string;  
+    comments: Comment[];  
   }

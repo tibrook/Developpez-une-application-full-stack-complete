@@ -3,23 +3,23 @@
     <div class="post-content">
       <div class="header-post">
         <app-back-button></app-back-button>
-        <h1>{{ post?.title }}</h1>
+        <h1>{{ post.title }}</h1>
       </div>
       <div class="post-meta">
-        <span> {{ post?.createdAt | date:'shortDate' }}</span>
-        <span> {{ post?.author }}</span>
-        <span> {{ post?.topicName }}</span>
+        <span> {{ post.createdAt | date:'shortDate' }}</span>
+        <span> {{ post.author }}</span>
+        <span> {{ post.topicName }}</span>
 
       </div>
-      <p>{{ post?.content }}</p>
+      <p>{{ post.content }}</p>
     </div>
     <hr />
     <div class="comments-section">
       <h3>Commentaires</h3>
-      <div *ngIf="post?.comments?.length === 0" class="no-comments">
+      <div *ngIf="(post?.comments ?? []).length === 0" class="no-comments">
         <p>Aucun commentaire pour le moment</p>
         </div>
-        <div *ngIf="post?.comments?.length > 0">
+        <div *ngIf="(post?.comments ?? []).length > 0">
           <div *ngFor="let comment of post.comments" class="comment">
             <span>{{ comment.username }}</span>
             <div class="comment-meta">

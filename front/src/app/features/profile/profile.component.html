@@ -17,7 +17,7 @@
         </mat-form-field>
 
         <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
-        <button mat-raised-button  class="action-button" type="submit" [disabled]="profileForm.invalid || !profileForm.dirty || errorMessage['email'].length !== 0|| errorMessage['username'].length !== 0">Sauvegarder</button>
+        <button mat-raised-button  class="action-button" type="submit" [disabled]="profileForm.invalid ||  errorMessage['email'] && errorMessage['email'].length !== 0|| errorMessage['username'] && errorMessage['username'].length !== 0">Sauvegarder</button>
       </form>
     <button class="logout-button" mat-button (click)="logout()">Se déconnecter</button>
    

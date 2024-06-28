@@ -4,7 +4,8 @@ import { UserService } from 'src/app/core/services/user.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Topic } from 'src/app/core/interfaces/topics/topic.interface';
-import { SubscriptionService } from 'src/app/core/services/subscription.service';
+import { User } from 'src/app/core/interfaces/profile/user.interface';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -12,7 +13,7 @@ import { SubscriptionService } from 'src/app/core/services/subscription.service'
 })
 export class ProfileComponent implements OnInit {
   profileForm!: FormGroup;
-  user: any;
+  user: User | null = null;
   subscriptions: Topic[] = [];
   errorMessage: { [key: string]: string } = {};
   successMessage: string = '';
@@ -32,13 +33,20 @@ export class ProfileComponent implements OnInit {
 
     this.loadUserProfile();
     this.loadSubscriptions();
-
+    this.setupFormValueChanges();
+  }
+  setupFormValueChanges(): void {
     this.profileForm.get('username')?.valueChanges.subscribe(() => {
       this.errorMessage['username'] = '';
     });
 
     this.profileForm.get('email')?.valueChanges.subscribe(() => {
       this.errorMessage['email'] = '';
+    });
+
+    this.profileForm.valueChanges.subscribe(() => {
+      this.errorMessage = {};
+      this.successMessage = '';
     });
   }
   loadSubscriptions(): void {
@@ -56,8 +64,10 @@ export class ProfileComponent implements OnInit {
       this.profileForm.patchValue(user);
     } else {
       this.userService.user$.subscribe(user => {
-        this.user = user;
-        this.profileForm.patchValue(user);
+        if (user) { 
+          this.user = user;
+          this.profileForm.patchValue(user);
+        }
       });
     }
 
