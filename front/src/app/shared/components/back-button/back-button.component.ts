@@ -12,7 +12,7 @@ export class BackButtonComponent {
 
   goBack(): void {
     if (this.router.url === '/login') {
-      this.router.navigate(['/home']);
+      this.router.navigate(['']);
     } else {
       this.location.back();
     }
