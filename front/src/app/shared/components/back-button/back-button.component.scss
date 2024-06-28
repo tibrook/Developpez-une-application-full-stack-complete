@@ -9,10 +9,16 @@
       cursor: pointer;
     }
 }
+
 @media screen and (max-width: 768px) {
     .back-button {
         top: 115px;
-        left: 20px;
+        left: 40px;
     }
+    .back-button.auth-page {
+        position: absolute;
+        top: 40px; 
+        width: 100%;
+      }
   
 }

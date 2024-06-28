@@ -36,12 +36,10 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log("login with credentials", this.loginForm.value)
     const loginRequest = this.loginForm.value as LoginRequest;
 
     const observer = {
       next: (response: RegisterResponse) => {
-        console.log('Login successful', response);
         localStorage.setItem('token', response.token);
         this.userService.loadUserData();
         this.router.navigate(['/posts']);

@@ -25,7 +25,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
           this.authService.logout();
           this.dialog.open(SessionExpiredModalComponent).afterClosed().subscribe(() => {
-            this.router.navigate(['/login']);
+            this.router.navigate(['/auth/login']);
           });        }
         return throwError(error);
       })

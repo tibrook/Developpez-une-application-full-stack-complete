@@ -14,3 +14,12 @@
         margin: auto;
     }
 }
+@media screen and (max-width: 768px) {
+    .topics-container{
+        padding: 1rem;
+    }
+    .topics-grid {
+        grid-template-columns: 1fr!important;
+    }
+    
+}

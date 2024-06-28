@@ -121,6 +121,21 @@ a.active {
 }
 /* Responsive styling */
 @media (max-width: 768px) {
+  .header.no-border {
+    border-bottom: none;
+    box-shadow: none;
+  }
+  .header.large-logo{
+    height: auto;
+  }
+  .header.large-logo .logo-container{
+    margin:auto;
+    padding-top: 100px;
+  }
+  .header.large-logo .logo-container img {
+      width: 225px; 
+      height: 130px;
+  }
   .header{
     padding:0px 1.5rem;
   }
