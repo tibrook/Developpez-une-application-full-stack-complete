@@ -11,7 +11,7 @@ import { map } from 'rxjs';
 })
 export class PostsComponent {
 
-  public posts$: Observable<Post[]> = this.postService.getPostsBySubscribedTopics();
+  public posts: Post[] = [];
   public isAscending = false;
 
   constructor(private postService: PostService, private router:Router) {
@@ -25,11 +25,12 @@ export class PostsComponent {
     this.router.navigate(['/posts/create']);
   }
   loadPosts(): void {
-    this.posts$ = this.postService.getPostsBySubscribedTopics().pipe(
-      map(posts => posts.sort((a, b) => this.isAscending ? new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime() :
-                                        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()))
-    );
+    this.postService.getPostsBySubscribedTopics().subscribe(posts => {
+      this.posts = posts.sort((a, b) => this.isAscending ? new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime() :
+                                        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    });
   }
+
   toggleSortOrder(): void {
     this.isAscending = !this.isAscending;
     this.loadPosts(); // Refresh the list with the new sort order

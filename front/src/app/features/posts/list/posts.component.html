@@ -4,14 +4,14 @@
             Créer un article
         </button>
       
-        <div *ngIf="(posts$ | async)?.length" class="sort-section" (click)="toggleSortOrder()">
+        <div *ngIf="posts.length" class="sort-section" (click)="toggleSortOrder()">
           <span>Trier par</span>
           <mat-icon>{{ isAscending ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
         </div>
     </div>
     
-    <div *ngIf="(posts$ | async)?.length; else noPosts" class="posts-grid">
-      <div *ngFor="let post of (posts$ |async) " class="post-card" (click)="viewPost(post.id)">
+    <div *ngIf="posts.length; else noPosts" class="posts-grid">
+      <div *ngFor="let post of posts" class="post-card" (click)="viewPost(post.id)">
         <h2>{{ post.title }}</h2>
         <div class="post-meta">
           <span>{{ post.createdAt | date:'shortDate' }}</span>
