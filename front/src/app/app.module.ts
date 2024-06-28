@@ -26,10 +26,12 @@ import localeFr from '@angular/common/locales/fr';
 import { LoaderComponent } from './shared/components/loader/loader.component';
 import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
 import { LoadingService } from './core/services/loading.service';
+import { MatDialogModule } from '@angular/material/dialog';
+import { SessionExpiredModalComponent } from './shared/components/session-expired-modal/session-expired-modal.component';
 registerLocaleData(localeFr, 'fr');
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, HeaderComponent, PostsComponent, TopicsComponent, PostDetailComponent, BackButtonComponent, TopicCardComponent, ProfileComponent, CreatePostComponent, LoaderComponent],
+  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, HeaderComponent, PostsComponent, TopicsComponent, PostDetailComponent, BackButtonComponent, TopicCardComponent, ProfileComponent, CreatePostComponent, LoaderComponent, SessionExpiredModalComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -37,7 +39,8 @@ registerLocaleData(localeFr, 'fr');
     MatButtonModule,
     HttpClientModule,
     ReactiveFormsModule, 
-    MatIconModule
+    MatIconModule,
+    MatDialogModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
