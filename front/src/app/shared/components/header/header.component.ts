@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from '../../../core/services/user.service';
 import { Router } from '@angular/router';
-import { filter, Subject } from 'rxjs';
+import {  Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 /**
  * HeaderComponent manages the navigation header, updating its state based on the user's authentication status
@@ -14,7 +14,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   public isAuthPage: boolean = false;
   public isUserActiveRoute: boolean = false;
   public isMenuOpen: boolean = false;
