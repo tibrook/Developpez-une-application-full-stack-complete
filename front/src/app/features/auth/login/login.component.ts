@@ -20,9 +20,9 @@ import { takeUntil } from 'rxjs';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  loginForm!: FormGroup;
-  submitted = false;
-  errorMessage: string = '';
+  public loginForm!: FormGroup;
+  public submitted: boolean = false;
+  public errorMessage: string = '';
   private unsubscribe$ = new Subject<void>();
 
   constructor(

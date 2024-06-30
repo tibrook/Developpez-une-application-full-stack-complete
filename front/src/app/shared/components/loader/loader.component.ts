@@ -16,7 +16,7 @@ export class LoaderComponent {
    * Observable that emits loading state changes.
    * Subscribed to in the component's template to show/hide the loading indicator as needed.
    */
-  loading$ = this.loadingService.loading$;
+  public loading$ = this.loadingService.loading$;
 
   constructor(private loadingService: LoadingService) { }
 }

@@ -19,14 +19,14 @@ import { User } from '../interfaces/profile/user.interface';
 })
 export class UserService {
 
-  private userSubject = new BehaviorSubject<User|null>(null);
-  private apiUrl = `${environment.baseUrl}/auth/profile`;
-  private topicsSubject = new BehaviorSubject<Topic[]>([]);
-  private subscriptionsSubject = new BehaviorSubject<SubscriptionResponse[]>([]);
+  private userSubject: BehaviorSubject<User | null> = new BehaviorSubject<User|null>(null);
+  private apiUrl: string = `${environment.baseUrl}/auth/profile`;
+  private topicsSubject: BehaviorSubject<Topic[]>  = new BehaviorSubject<Topic[]>([]);
+  private subscriptionsSubject: BehaviorSubject<SubscriptionResponse[]> = new BehaviorSubject<SubscriptionResponse[]>([]);
 
-  user$ = this.userSubject.asObservable();
-  subscriptions$ = this.subscriptionsSubject.asObservable();
-  topics$ = this.topicsSubject.asObservable();
+  user$: Observable<User | null> = this.userSubject.asObservable();
+  subscriptions$: Observable<SubscriptionResponse[]> = this.subscriptionsSubject.asObservable();
+  topics$: Observable<Topic[]> = this.topicsSubject.asObservable();
 
   constructor(private http: HttpClient,  private topicService: TopicService) {}
 

@@ -15,9 +15,9 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  isAuthPage: boolean = false;
-  isUserActiveRoute: boolean = false;
-  isMenuOpen: boolean = false;
+  public isAuthPage: boolean = false;
+  public isUserActiveRoute: boolean = false;
+  public isMenuOpen: boolean = false;
   private unsubscribe$ = new Subject<void>();
 
 
@@ -41,13 +41,13 @@ export class HeaderComponent implements OnInit {
   /**
    * Checks if the current route is the user's profile page, which may trigger UI changes.
    */
-  checkActiveRoute() {
+  checkActiveRoute(): void {
     this.isUserActiveRoute = this.router.url === '/profile';
   }
    /**
    * Toggles the state of the navigation menu, primarily for mobile views.
    */
-  toggleMenu() {
+  toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
   }
 

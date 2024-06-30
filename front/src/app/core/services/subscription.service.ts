@@ -15,7 +15,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class SubscriptionService {
-  private apiUrl = `${environment.baseUrl}/auth`;
+  private apiUrl: string = `${environment.baseUrl}/auth`;
 
   constructor(private http: HttpClient) { }
 

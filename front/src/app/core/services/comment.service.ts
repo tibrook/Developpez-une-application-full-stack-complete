@@ -15,7 +15,7 @@ import { Comment } from '../interfaces/comments/comment.interface';
   providedIn: 'root'
 })
 export class CommentService {
-  private apiUrl = `${environment.baseUrl}/auth/posts`;
+  private apiUrl:string = `${environment.baseUrl}/auth/posts`;
 
   constructor(private http: HttpClient) { }
   /**

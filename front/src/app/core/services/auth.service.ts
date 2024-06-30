@@ -17,7 +17,7 @@ import { UserService } from './user.service';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = `${environment.baseUrl}`;
+  private apiUrl:string = `${environment.baseUrl}`;
 
   constructor(private http: HttpClient, private userService: UserService) { }
  /**

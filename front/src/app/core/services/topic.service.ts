@@ -16,7 +16,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class TopicService {
-  private apiUrl = `${environment.baseUrl}/auth/topics`;
+  private apiUrl: string = `${environment.baseUrl}/auth/topics`;
 
   constructor(private http: HttpClient) { }
 

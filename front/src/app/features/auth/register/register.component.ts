@@ -23,11 +23,11 @@ import { OnDestroy } from '@angular/core';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit, OnDestroy {
-  registerForm!: FormGroup;
-  submitted = false;
-  errorMessage: string = '';
-  fieldAlreadyTaken: string = '';
-  private unsubscribe$ = new Subject<void>();
+  public registerForm!: FormGroup;
+  public submitted: boolean = false;
+  public errorMessage: string = '';
+  public fieldAlreadyTaken: string = '';
+  private unsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     private formBuilder: FormBuilder,
