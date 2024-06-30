@@ -18,11 +18,11 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit , OnDestroy{
-  profileForm!: FormGroup;
-  user: User | null = null;
-  subscriptions: Topic[] = [];
-  errorMessage: { [key: string]: string } = {};
-  successMessage: string = '';
+  public profileForm!: FormGroup;
+  public user: User | null = null;
+  public subscriptions: Topic[] = [];
+  public errorMessage: { [key: string]: string } = {};
+  public successMessage: string = '';
   private unsubscribe$ = new Subject<void>();
 
   constructor(

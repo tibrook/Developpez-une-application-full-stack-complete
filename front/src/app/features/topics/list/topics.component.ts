@@ -14,7 +14,7 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./topics.component.scss']
 })
 export class TopicsComponent implements OnInit, OnDestroy {
-  topics: Topic[] = [];
+  public topics: Topic[] = [];
   private unsubscribe$ = new Subject<void>();
 
 

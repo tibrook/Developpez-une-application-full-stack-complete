@@ -17,10 +17,10 @@ import { Subject } from 'rxjs';
   styleUrls: ['./create-post.component.scss']
 })
 export class CreatePostComponent implements OnInit, OnDestroy {
-  postForm!: FormGroup;
-  submitted = false;
-  errorMessage: string = '';
-  topics: Topic[] = [];
+  public postForm!: FormGroup;
+  public submitted: boolean = false;
+  public errorMessage: string = '';
+  public topics: Topic[] = [];
   private unsubscribe$ = new Subject<void>();
 
 

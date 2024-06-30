@@ -17,8 +17,8 @@ import { Subject } from 'rxjs';
   styleUrls: ['./post-detail.component.scss']
 })
 export class PostDetailComponent implements OnInit, OnDestroy {
-  post!: Post;
-  comments: Comment[] = [];
+  public post!: Post;
+  public comments: Comment[] = [];
   private unsubscribe$ = new Subject<void>();
 
   constructor(
@@ -32,17 +32,19 @@ export class PostDetailComponent implements OnInit, OnDestroy {
    * Initializes the component by fetching the post details using the post ID from the route.
    */
   ngOnInit(): void {
-    const postId = this.route.snapshot.paramMap.get('id');
-    if (postId) {
-      this.getPost(postId);
-    }
+    const postId= this.route.snapshot.paramMap.get('id');
+    this.getPost(postId);
   }
 
   /**
    * Fetches a post by its ID.
    * @param id The ID of the post to fetch.
    */
-  getPost(id: string): void {
+  getPost(id: string| null): void {
+    if (!id) {
+      this.router.navigate(['/']);  
+      return;
+    }
     this.postService.getPostById(id).pipe(takeUntil(this.unsubscribe$)).subscribe({
       next: (post: Post) => {
         if (post) {
