@@ -10,6 +10,18 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Str
     public void initialize(ValidPassword constraintAnnotation) {
     }
 
+    /**
+     * Validates that the provided password meets the required strength criteria.
+     * The password must be at least 8 characters long and contain at least:
+     * - One digit
+     * - One lowercase letter
+     * - One uppercase letter
+     * - One special character
+     *
+     * @param password the password to validate
+     * @param context context in which the constraint is evaluated
+     * @return true if the password is valid, false otherwise
+     */
     @Override
     public boolean isValid(String password, ConstraintValidatorContext context) {
         if (password == null) {

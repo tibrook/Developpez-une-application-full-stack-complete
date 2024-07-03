@@ -67,7 +67,7 @@ public class SpringSecurityConfig {
                 .anyRequest().authenticated())
             .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
           
-        http.addFilterBefore(jwtExceptionHandlingFilter,  UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtExceptionHandlingFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
     

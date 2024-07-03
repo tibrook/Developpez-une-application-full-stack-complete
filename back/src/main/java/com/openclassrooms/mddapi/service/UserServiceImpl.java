@@ -109,12 +109,29 @@ public class UserServiceImpl implements UserService, UserDetailsService{
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), Collections.emptyList());
     }
     
+    
+    /**
+     * Retrieves detailed information about a user by ID.
+     * 
+     * @param userId the ID of the user to find
+     * @return a UserDto containing the details of the user
+     * @throws RuntimeException if the user is not found
+     */
     @Override
     public UserDto getUserById(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         return modelMapper.map(user, UserDto.class);
     }
 
+    
+    /**
+     * Updates the details of the current authenticated user.
+     * 
+     * @param updateUserRequest DTO containing the updated user details
+     * @return a UserDto containing the updated details of the user
+     * @throws CustomException if the user is not found
+     * @throws ConflictException if the email or username already exists
+     */
     @Override
     public UserDto updateUser(UpdateUserRequest updateUserRequest) {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
