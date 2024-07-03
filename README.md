@@ -61,6 +61,20 @@ Ensure you have the following software installed:
     ```
 
     Replace `root` with your MySQL username if different.
+3. **Creating Sample Topics**
+
+    To create sample topics for the application, run the following SQL commands in your MySQL database:
+
+    ```sql
+    USE mdd_db;
+
+    INSERT INTO topics (name, description) VALUES ('Java', 'All about Java programming');
+    INSERT INTO topics (name, description) VALUES ('JavaScript', 'Everything related to JavaScript');
+    INSERT INTO topics (name, description) VALUES ('Python', 'Discussions on Python programming');
+    INSERT INTO topics (name, description) VALUES ('DevOps', 'Topics on DevOps practices and tools');
+    INSERT INTO topics (name, description) VALUES ('Angular', 'All about Angular framework');
+    INSERT INTO topics (name, description) VALUES ('Spring Boot', 'Spring Boot related topics');
+    ```
 
 ### Frontend
 
