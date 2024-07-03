@@ -82,7 +82,7 @@ For instructions on setting up the frontend, please refer to the [frontend READM
 
 ### Backend
 
-For instructions on setting up the backend, please refer to the [backend README](./back/README.md).
+For instructions on setting up the backend, please refer to the [backend README](./back/readme.md).
 
 ## Usage
 
