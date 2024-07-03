@@ -1,0 +1,58 @@
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { UserService } from '../../../core/services/user.service';
+import { Router } from '@angular/router';
+import {  Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+/**
+ * HeaderComponent manages the navigation header, updating its state based on the user's authentication status
+ * and the current route.
+ *
+ * @Component Decorator that specifies Angular metadata for the component.
+ */
+@Component({
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss']
+})
+export class HeaderComponent implements OnInit, OnDestroy {
+  public isAuthPage: boolean = false;
+  public isUserActiveRoute: boolean = false;
+  public isMenuOpen: boolean = false;
+  private unsubscribe$ = new Subject<void>();
+
+
+  constructor(private userService: UserService, private router: Router) {
+    // Listen to route changes to determine if the user is on the profile page.
+    this.router.events.subscribe(() => {
+      this.checkActiveRoute();
+    });
+   }
+
+  /**
+   * Initializes the component by subscribing to the user$ observable from UserService to determine
+   * if a user is authenticated, which affects the header display.
+   */
+  ngOnInit(): void {
+    this.userService.user$.subscribe(user => {
+      this.isAuthPage = !!user;
+    });
+  }
+
+  /**
+   * Checks if the current route is the user's profile page, which may trigger UI changes.
+   */
+  checkActiveRoute(): void {
+    this.isUserActiveRoute = this.router.url === '/profile';
+  }
+   /**
+   * Toggles the state of the navigation menu, primarily for mobile views.
+   */
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+}

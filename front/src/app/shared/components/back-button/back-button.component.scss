@@ -1,0 +1,24 @@
+.back-button {
+    position: absolute;
+    top: 145px;
+    left: 40px;
+
+    svg {
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .back-button {
+        top: 115px;
+        left: 40px;
+    }
+    .back-button.auth-page {
+        position: absolute;
+        top: 40px; 
+        width: 100%;
+      }
+  
+}

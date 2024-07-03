@@ -1,0 +1,44 @@
+<div class="profile-container">
+  <div class="user-profile-container">
+    <h1>Profil utilisateur</h1>
+      <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+        <mat-form-field appearance="outline">
+          <input matInput formControlName="username">
+          <mat-error *ngIf="profileForm.get('username')?.hasError('required')">Le nom d'utilisateur est requis.</mat-error>
+          <mat-error *ngIf="profileForm.get('username')?.hasError('pattern')">Le nom d'utilisateur ne doit pas contenir de caractères spéciaux ni d'espaces.</mat-error>
+          <mat-error *ngIf="errorMessage['username']">{{ errorMessage['username'] }}</mat-error>
+        </mat-form-field>
+      
+        <mat-form-field appearance="outline">
+          <input matInput formControlName="email">
+          <mat-error *ngIf="profileForm.get('email')?.hasError('required')">L'email est requis.</mat-error>
+          <mat-error *ngIf="profileForm.get('email')?.hasError('email')">L'email doit être au format valide.</mat-error>
+          <mat-error *ngIf="errorMessage['email']">{{ errorMessage['email'] }}</mat-error>
+        </mat-form-field>
+
+        <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+        <button mat-raised-button  class="action-button" type="submit" [disabled]="profileForm.invalid ||  errorMessage['email'] && errorMessage['email'].length !== 0|| errorMessage['username'] && errorMessage['username'].length !== 0">Sauvegarder</button>
+      </form>
+    <button class="logout-button" mat-button (click)="logout()">Se déconnecter</button>
+   
+  </div>
+  <hr />
+  <div class="subscriptions-container">
+    <div class="subscriptions">
+      <h1>Abonnements</h1>
+      <div class="subscriptions-grid">
+        <app-topic-card *ngFor="let subscription of subscriptions" [topic]="subscription" (subscriptionChanged)="onSubscriptionChanged()">
+        </app-topic-card>
+         
+      </div>
+      <div class="noItems">
+        <p *ngIf="subscriptions.length === 0">
+          Aucun thème souscrit pour le moment. 
+          <a [routerLink]="['/topics']">Rendez-vous sur cette page pour vous abonner à un thème</a>
+        </p>  
+      </div>
+    </div>
+  </div>
+ 
+</div>
+  

@@ -1,0 +1,48 @@
+<div class="register-container">
+    <app-back-button></app-back-button>
+    <div class="register-header">
+      <h2>Inscription</h2>
+    </div>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Nom d'utilisateur(login)</label>
+        <input id="username" formControlName="username" type="text" />
+        <div *ngIf=" formControls['username'].errors" class="error">
+          <div *ngIf="formControls['username'].errors['required']">Ce champ est requis</div>
+          <div *ngIf="formControls['username'].errors['invalidUsername']">Le nom d'utilisateur ne doit pas contenir d'espaces ou de caractères spéciaux.</div>
+        </div>
+        <div *ngIf="fieldAlreadyTaken && fieldAlreadyTaken==='username'" class="error">
+          Le nom d'utilisateur est déjà pris
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Adresse e-mail</label>
+        <input id="email" formControlName="email" type="email" />
+        <div *ngIf=" formControls['email'].errors" class="error">
+          <div *ngIf="formControls['email'].errors['required']">Ce champ est requis</div>
+          <div *ngIf="formControls['email'].errors['email']">Ce champ doit être au format email</div>
+        </div>
+        <div *ngIf="fieldAlreadyTaken && fieldAlreadyTaken==='email'" class="error">
+          L'email est déjà pris
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input id="password" formControlName="password" type="password" />
+        <div *ngIf="formControls['password'].errors" class="error">
+          <div *ngIf="formControls['password'].errors['required']">Ce champ est requis</div>
+          <div *ngIf="formControls['password'].errors['passwordStrength']">Le mot de passe doit contenir au moins 8 caractères, dont une majuscule, une minuscule, un chiffre, et un caractère spécial.</div>
+        </div>
+      </div>
+  
+      <div class="button-container">
+        <button  type="submit" class="btn action-button" [disabled]="!registerForm.valid">S'inscrire</button>
+      </div>
+  
+      <div *ngIf="errorMessage" class="error">
+        {{ errorMessage }}
+      </div>
+    </form>
+  </div>
+  

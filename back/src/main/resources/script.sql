@@ -1,0 +1,40 @@
+CREATE TABLE Users (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Topics (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Posts (
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES Users(id),
+    topic_id INT REFERENCES Topics(id),
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Comments (
+    id SERIAL PRIMARY KEY,
+    post_id INT REFERENCES Posts(id),
+    user_id INT REFERENCES Users(id),
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Subscriptions (
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES Users(id),
+    topic_id INT REFERENCES Topics(id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

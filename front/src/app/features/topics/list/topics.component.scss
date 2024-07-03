@@ -1,0 +1,25 @@
+.topics-container {
+    padding: 3rem 6rem;
+}
+  
+.topics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 10px;
+}
+.noData{
+    text-align: center;
+    p{
+        width: auto;
+        margin: auto;
+    }
+}
+@media screen and (max-width: 768px) {
+    .topics-container{
+        padding: 1rem;
+    }
+    .topics-grid {
+        grid-template-columns: 1fr!important;
+    }
+    
+}

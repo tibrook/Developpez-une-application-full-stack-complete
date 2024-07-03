@@ -1,4 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./_variables.scss";
+html, body {
+    font-family: 'Inter', sans-serif  !important;
+    margin: 0;
+    padding: 0;
+    font-weight: 400;
+}
+h2, span, p, a{
+    font-family: 'Inter', sans-serif  !important;
+}
+h1, h2, h3, h4, h5, h6, span, p, a, .mat-h1, .mat-headline, .mat-typography .mat-h1, .mat-typography .mat-headline, .mat-typography h1 {
+  font-family: 'Inter', sans-serif !important;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+  .action-button{
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: $border-radius;
+    background: $primary-color;
+    color:white;
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
+  }
+  mat-error {
+    color: red
+  }
+  .success-message {
+    color: green;
+  }
