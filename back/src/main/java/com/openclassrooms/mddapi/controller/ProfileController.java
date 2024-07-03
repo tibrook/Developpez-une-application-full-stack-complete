@@ -4,6 +4,7 @@ import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.dto.requests.UpdateUserRequest;
 import com.openclassrooms.mddapi.exception.BadRequestException;
 import com.openclassrooms.mddapi.service.interfaces.UserService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -21,6 +22,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/auth/profile")
 @Tag(name = "Users", description = "Endpoints for managing user information")

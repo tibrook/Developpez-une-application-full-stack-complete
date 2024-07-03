@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.openclassrooms.mddapi.dto.responses.SubscriptionResponse;
 import com.openclassrooms.mddapi.dto.responses.TopicListResponse;
@@ -23,6 +24,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/auth/topics")
 @Tag(name = "Topics", description = "Endpoints for managing topics and subscriptions")

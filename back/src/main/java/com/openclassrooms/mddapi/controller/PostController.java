@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.openclassrooms.mddapi.dto.requests.CreateCommentRequest;
 import com.openclassrooms.mddapi.dto.requests.CreatePostRequest;
@@ -25,6 +26,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/auth/posts")
 @Tag(name = "Posts", description = "Endpoints for managing posts")

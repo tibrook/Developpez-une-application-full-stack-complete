@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.openclassrooms.mddapi.dto.requests.LoginRequest;
 import com.openclassrooms.mddapi.dto.requests.RegisterRequest;
@@ -23,6 +24,7 @@ import org.springframework.validation.BindingResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api")
 @Tag(name = "Authentication", description = "Endpoints for user authentication")
