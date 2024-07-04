@@ -75,7 +75,15 @@ Ensure you have the following software installed:
     INSERT INTO topics (name, description) VALUES ('Angular', 'All about Angular framework');
     INSERT INTO topics (name, description) VALUES ('Spring Boot', 'Spring Boot related topics');
     ```
+    
+4. **Creating Database User**
+Create a new user and grant all privileges on the created database
 
+```
+CREATE USER 'mddUser'@'localhost' IDENTIFIED BY 'your_password';
+GRANT ALL PRIVILEGES ON mdd_db.* TO 'mddUser'@'localhost';
+FLUSH PRIVILEGES;
+```
 ### Frontend
 
 For instructions on setting up the frontend, please refer to the [frontend README](./front/README.md).
