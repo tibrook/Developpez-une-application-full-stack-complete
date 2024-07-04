@@ -4,7 +4,7 @@
             Créer un article
         </button>
       
-        <div *ngIf="posts.length" class="sort-section" (click)="toggleSortOrder()">
+        <div *ngIf="posts.length >1" class="sort-section" (click)="toggleSortOrder()">
           <span>Trier par</span>
           <mat-icon>{{ isAscending ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
         </div>
@@ -22,7 +22,8 @@
     </div>
      <ng-template #noPosts>
       <div class="no-posts">
-        Aucuns articles disponibles
+        Aucuns articles disponibles. Veuillez vous abonner à des <a [routerLink]="['/topics']">thèmes</a>
+        pour voir les articles correspondants.
       </div>
     </ng-template>
   </div>

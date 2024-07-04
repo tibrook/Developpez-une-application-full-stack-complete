@@ -12,8 +12,8 @@
   }
   
   h2 {
-    font-size: 24px;
-    font-weight: 400;
+    font-size: $font-size-big;
+    font-weight: $font-weight-normal;
     margin: 0;
     text-align: center;
   }
@@ -25,7 +25,7 @@
   label {
     display: block;
     color: #333;
-    font-size: 16px;
+    font-size: $font-size-small-mid;
   }
   
   input {
@@ -34,7 +34,7 @@
     padding: 0.5rem;
     box-sizing: border-box;
     border: 1px solid #ccc;
-    border-radius: 8px;
+    border-radius: $border-radius-small;
   }
   
   .btn {

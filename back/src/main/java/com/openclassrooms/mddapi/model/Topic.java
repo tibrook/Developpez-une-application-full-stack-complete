@@ -18,7 +18,7 @@ public class Topic {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @Column
+    @Column (length = 5000)
     private String description;
 
     @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

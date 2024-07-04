@@ -1,16 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./_variables.scss";
 html, body {
-    font-family: 'Inter', sans-serif  !important;
+    font-family: $font-family;
     margin: 0;
     padding: 0;
-    font-weight: 400;
+    font-weight: $font-weight-normal;
 }
 h2, span, p, a{
-    font-family: 'Inter', sans-serif  !important;
+    font-family: $font-family;
 }
 h1, h2, h3, h4, h5, h6, span, p, a, .mat-h1, .mat-headline, .mat-typography .mat-h1, .mat-typography .mat-headline, .mat-typography h1 {
-  font-family: 'Inter', sans-serif !important;
+  font-family: $font-family, sans-serif !important;
 }
 
 
@@ -18,8 +18,9 @@ h1, h2, h3, h4, h5, h6, span, p, a, .mat-h1, .mat-headline, .mat-typography .mat
     background: none;
     border: none;
     cursor: pointer;
-    border-radius: $border-radius;
+    border-radius: $border-radius-small;
     background: $primary-color;
+    font-weight: $font-weight-bold;
     color:white;
     &:hover {
       background-color: darken($primary-color, 10%);

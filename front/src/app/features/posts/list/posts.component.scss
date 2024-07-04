@@ -10,7 +10,7 @@
         .action-button {
             margin-bottom: 20px;
             height: 40px;
-            font-size: 16px;
+            font-size: $font-size-small-mid;
             width: 153px;
           }
         
@@ -19,9 +19,9 @@
             align-items: center;
             margin-bottom: 20px;
             cursor: pointer;
-            font-weight: 700;
-            font-size: 16px;
-            line-height: 19.36px;
+            font-weight: $font-weight-bold;
+            font-size: $font-size-small-mid;
+            line-height: $line-height-small-mid;
             span {
               margin-right: 5px;
             }
@@ -36,30 +36,33 @@
 
       .post-card {
         background-color: #F5F5F5;
-        border-radius: $border-radius;
+        border-radius: $border-radius-small;
         padding: 15px;
         &:hover {
           cursor: pointer;
         }
         h2 {
           margin-top: 0;
-          font-size: 16px;
-          font-weight: 700;
+          font-size: $font-size-small-mid;
+          font-weight: $font-weight-bold;
+          line-height: $line-height-small-mid;
         }
   
         .post-meta {
           display: flex;
           justify-content: space-between;
-          font-size: 14px;
-          font-weight: 400;
-          line-height: 17px;
+          font-size: $font-size-small;
+          font-weight: $font-weight-normal;
+          line-height: $line-height-small;
           width: 40%;
           margin-bottom: 10px;
         }
   
         p {
           margin: 0;
-          font-size: 14px;
+          line-height: $line-height-small;
+          font-size: $font-size-small;
+          font-weight: $font-weight-normal;
           color: #333;
           display: -webkit-box;
           -webkit-line-clamp: 5;
@@ -72,46 +75,50 @@
   @media (max-width: 768px) {
     .posts-container {
       padding: 1.5rem;
-    }
-  
-    .header-post {
-      margin-top: 8px;
-      align-items: center;
-      display: flex;
-      flex-direction: column;
-      .action-button {
-        width: auto;
-        font-size: 14px;
-      }
-  
-      .sort-section {
-        display: block;
-        font-size: 14px;
-        line-height: 16px;
-        margin: auto;
-        span {
-          margin-right: 3px;
+
+      .header-post {
+        margin-top: 8px;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+
+        .action-button {
+          width: auto;
+          width: 175px;
+          margin: 0;
+        }
+    
+        .sort-section {
+          display: flex;
+          align-items: center;
+          margin: 8px;
+          padding:8px;
+          span {
+            margin-right: 3px;
+          }
         }
       }
-    }
-    .posts-grid {
-      grid-template-columns: 1fr!important;
-    }
-    .post-card {
-      padding: 10px;
-  
-      h2 {
-        font-size: 14px;
+      .posts-grid {
+        grid-template-columns: 1fr!important;
+        .post-card {
+          padding: 10px;
+      
+          h2 {
+            font-size: $font-size-small;
+          }
+      
+          .post-meta {
+            width: 65%;
+            font-size: $font-size-extra-small;
+            line-height: 15px;
+          }
+      
+          p {
+            font-size: $font-size-extra-small;
+          }
+        }
       }
-  
-      .post-meta {
-        font-size: 12px;
-        line-height: 15px;
-      }
-  
-      p {
-        font-size: 12px;
-      }
+      
     }
-  }
+}
   
