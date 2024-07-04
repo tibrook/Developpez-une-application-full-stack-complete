@@ -2,13 +2,13 @@
 @import "../../../../styles/_variables.scss";
 .topic-card {
     background-color: #F5F5F5;
-    border-radius: $border-radius;
+    border-radius: $border-radius-small;
     padding: 15px;
     h2 {
         margin-top: 0;
-        font-size: 16px;
-        font-weight: 700;
-        line-height: 19.36px;
+        font-size: $font-size-small-mid;
+        font-weight: $font-weight-bold;
+        line-height: $line-height-small-mid;
       }
 
     p {
@@ -17,16 +17,16 @@
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 16.94px;
+      font-weight: $font-weight-normal;
+      font-size: $font-size-small;
+      line-height: $line-height-small;
     }
   
     button {
         display: block;
         margin: auto;
         height: 40px;
-        font-size: 16px;
+        font-size: $font-size-small-mid;
         width: 153px;
     }
   }

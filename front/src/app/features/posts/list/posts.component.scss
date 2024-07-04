@@ -10,7 +10,7 @@
         .action-button {
             margin-bottom: 20px;
             height: 40px;
-            font-size: 16px;
+            font-size: $font-size-small-mid;
             width: 153px;
           }
         
@@ -19,9 +19,9 @@
             align-items: center;
             margin-bottom: 20px;
             cursor: pointer;
-            font-weight: 700;
-            font-size: 16px;
-            line-height: 19.36px;
+            font-weight: $font-weight-bold;
+            font-size: $font-size-small-mid;
+            line-height: $line-height-small-mid;
             span {
               margin-right: 5px;
             }
@@ -36,33 +36,33 @@
 
       .post-card {
         background-color: #F5F5F5;
-        border-radius: $border-radius;
+        border-radius: $border-radius-small;
         padding: 15px;
         &:hover {
           cursor: pointer;
         }
         h2 {
           margin-top: 0;
-          font-size: 16px;
-          font-weight: 700;
-          line-height: 19.36px;
+          font-size: $font-size-small-mid;
+          font-weight: $font-weight-bold;
+          line-height: $line-height-small-mid;
         }
   
         .post-meta {
           display: flex;
           justify-content: space-between;
-          font-size: 14px;
-          font-weight: 400;
-          line-height: 16.94px;
+          font-size: $font-size-small;
+          font-weight: $font-weight-normal;
+          line-height: $line-height-small;
           width: 40%;
           margin-bottom: 10px;
         }
   
         p {
           margin: 0;
-          line-height: 16.94px;
-          font-size: 14px;
-          font-weight: 400;
+          line-height: $line-height-small;
+          font-size: $font-size-small;
+          font-weight: $font-weight-normal;
           color: #333;
           display: -webkit-box;
           -webkit-line-clamp: 5;
@@ -104,17 +104,17 @@
           padding: 10px;
       
           h2 {
-            font-size: 14px;
+            font-size: $font-size-small;
           }
       
           .post-meta {
             width: 65%;
-            font-size: 12px;
+            font-size: $font-size-extra-small;
             line-height: 15px;
           }
       
           p {
-            font-size: 12px;
+            font-size: $font-size-extra-small;
           }
         }
       }

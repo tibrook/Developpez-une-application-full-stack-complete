@@ -2,13 +2,13 @@
 .post-detail-container {
     margin:  auto 60px ;
     padding: 3rem 6rem;
-    font-size: 20px;
-    line-height: 24.2px;
+    font-size: $font-size-mid;
+    line-height: $line-height-mid;
     .post-content {
       h1 {
        font-weight: 600;
-       line-height: 29.05px;
-       font-size: 24px;
+       line-height: $line-height-big;
+       font-size: $font-size-big;
       }
       .post-meta {
         margin-bottom: 20px;
@@ -18,9 +18,9 @@
         }
       }
       p{
-        font-weight: 400;
-        font-size: 20px;
-        line-height: 24.2px;
+        font-weight: $font-weight-normal;
+        font-size: $font-size-mid;
+        line-height: $line-height-mid;
         margin-bottom: 20px;
       }
     }
@@ -28,9 +28,9 @@
       cursor: pointer;
     }
     h3{
-      font-size: 20px;
-      font-weight: 400;
-      line-height: 24px;
+      font-size: $font-size-mid;
+      font-weight: $font-weight-normal;
+      line-height: $line-height-mid;
       margin-bottom: 24px;
     }
     .comments-section {
@@ -38,8 +38,8 @@
   
      h1 {
         margin-bottom: 20px;
-        font-size: 20px;
-        line-height: 24.2px;
+        font-size: $font-size-mid;
+        line-height: $line-height-mid;
       }
       .comment {
         display: flex;
@@ -49,17 +49,17 @@
           width: 100%;
           background: #f9f9f9;
           border: 1px solid #ddd;
-          border-radius: 16px;
+          border-radius: $border-radius-big;
           padding:  15px;
           margin-bottom: 20px;
           margin-left: 20px;
-          font-size: 12px;
+          font-size: $font-size-extra-small;
           color: #999;
           margin-bottom: 10px;
         }
   
         p {
-          font-size: 14px;
+          font-size: $font-size-small;
           color: #333;
         }
       }
@@ -79,9 +79,9 @@
         gap: 60px;
         textarea {
           padding: 16px;
-          border-radius: 16px;
+          border-radius: $border-radius-big;
           border: 1px solid #ddd;
-          font-size: 16px;
+          font-size: $font-size-small-mid;
           resize: none;
           width: 100%;
           height: 120px;
@@ -104,10 +104,10 @@
       textarea::placeholder {
         color: #939393;
         padding: 8px;
-        font-size: 20px;
-        line-height: 24.2px;
-        font-weight: 400;
-        font-family: 'inter', sans-serif;
+        font-size: $font-size-mid;
+        line-height: $line-height-mid;
+        font-weight: $font-weight-normal;
+        font-family: $font-family;
       }
     }
   }
@@ -125,7 +125,7 @@
         margin:0px;
         .comment-meta {
           padding: 10px;
-          font-size: 14px;
+          font-size: $font-size-small;
           color: #333;
           flex-grow: 1;
   
@@ -133,7 +133,7 @@
     
         span {
           margin-top: 10px;
-          font-size: 12px;
+          font-size: $font-size-extra-small;
           align-self: flex-end;
         }
       }
@@ -144,7 +144,7 @@
       width: 100%;
       margin-left: 0px;
       textarea {
-        font-size: 14px;
+        font-size: $font-size-small;
         padding: 8px;
 
       }
@@ -169,14 +169,14 @@
   }
     .post-content h1 {
       padding: 1rem 0rem 1rem 5rem;
-      font-size: 20px;
+      font-size: $font-size-mid;
     }
     .comment-meta {
       padding: 10px;
-      font-size: 12px;
+      font-size: $font-size-extra-small;
   
       p {
-        font-size: 12px;
+        font-size: $font-size-extra-small;
       }
     }
    
