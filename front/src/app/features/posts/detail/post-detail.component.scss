@@ -7,14 +7,21 @@
     .post-content {
       h1 {
        font-weight: 600;
+       line-height: 29.05px;
        font-size: 24px;
       }
       .post-meta {
-        display: flex;
-        justify-content: space-between;
         margin-bottom: 20px;
-        width: 45%;
-      
+        width: 100%;
+        span{
+          margin: 0 4rem 0 0;
+        }
+      }
+      p{
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 24.2px;
+        margin-bottom: 20px;
       }
     }
     svg{
@@ -24,9 +31,10 @@
       font-size: 20px;
       font-weight: 400;
       line-height: 24px;
+      margin-bottom: 24px;
     }
     .comments-section {
-      margin-top: 40px;
+      margin-top: 20px;
   
      h1 {
         margin-bottom: 20px;
@@ -35,12 +43,14 @@
       }
       .comment {
         display: flex;
+        margin-left: 8rem;
+        width: 85%;
         .comment-meta {
-          width: 80%;;
+          width: 100%;
           background: #f9f9f9;
           border: 1px solid #ddd;
           border-radius: 16px;
-          padding: 15px;
+          padding:  15px;
           margin-bottom: 20px;
           margin-left: 20px;
           font-size: 12px;
@@ -59,16 +69,13 @@
     width: 90%;
 
   }
-  .comment{
-    margin: auto;
-    width: 90%;
-  }
+ 
     .add-comment {
-      width: 90%;
-      padding-top: 20px;
+        width: 85%;
+        padding-top: 20px;
         display: flex;
         align-items: center;
-        margin: auto;
+        margin-left: 8rem;
         gap: 60px;
         textarea {
           padding: 16px;
@@ -82,65 +89,60 @@
          
         }
         .comment-input {
+          width: 90%;
           flex: 1; 
-          margin-right: 10px;
+          position: relative;
+          textarea{
+            padding: 8px 0px 0px 8px;
+          }
       }
-        textarea::placeholder {
-          color: #939393;
-          padding: 8px 12px;
-          font-size: 20px;
-          font-weight: 400;
-        }
+      svg{
+        position: absolute;
+        right: 12rem;
       }
+    
+      textarea::placeholder {
+        color: #939393;
+        padding: 8px;
+        font-size: 20px;
+        line-height: 24.2px;
+        font-weight: 400;
+        font-family: 'inter', sans-serif;
+      }
+    }
   }
   @media (max-width: 768px) {
   .post-detail-container {
     padding: 0px;
     margin: 0 1.5rem;
-  }
-  .post-meta{
-    width: 100%!important;
-    display: flex;
-    flex-wrap: wrap;
-  }
-    .post-content h1 {
-      padding: 1rem 5rem;
-      font-size: 20px;
-    }
-  
-    .comments-section h3 {
-      font-size: 18px;
-    }
-  
-    .comment-meta {
-      padding: 10px;
-      font-size: 12px;
-  
-      p {
-        font-size: 12px;
+    .comments-section{
+      h3 {
+        font-size: 18px;
       }
-    }
-    .comment {
-      flex-direction: column-reverse;
-      .comment-meta {
-        padding: 10px;
-        font-size: 14px;
-        color: #333;
-        flex-grow: 1;
-
-      }
+      .comment {
+        display: flex;
+        flex-direction: column-reverse;
+        margin:0px;
+        .comment-meta {
+          padding: 10px;
+          font-size: 14px;
+          color: #333;
+          flex-grow: 1;
   
-      span {
-        margin-top: 10px;
-        font-size: 12px;
-        align-self: flex-end;
+        }
+    
+        span {
+          margin-top: 10px;
+          font-size: 12px;
+          align-self: flex-end;
+        }
       }
     }
     .add-comment {
       width: 100%;
       gap: 10px;
       width: 100%;
-  
+      margin-left: 0px;
       textarea {
         font-size: 14px;
         padding: 8px;
@@ -154,5 +156,30 @@
         right:35px;
       }
     }
+
+  }
+  .post-meta{
+    width: 100%!important;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  span{
+    margin-top:0px;
+    padding-bottom: 8px;
+  }
+    .post-content h1 {
+      padding: 1rem 0rem 1rem 5rem;
+      font-size: 20px;
+    }
+    .comment-meta {
+      padding: 10px;
+      font-size: 12px;
+  
+      p {
+        font-size: 12px;
+      }
+    }
+   
+   
   }
   

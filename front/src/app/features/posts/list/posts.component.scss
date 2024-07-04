@@ -45,6 +45,7 @@
           margin-top: 0;
           font-size: 16px;
           font-weight: 700;
+          line-height: 19.36px;
         }
   
         .post-meta {
@@ -52,14 +53,16 @@
           justify-content: space-between;
           font-size: 14px;
           font-weight: 400;
-          line-height: 17px;
+          line-height: 16.94px;
           width: 40%;
           margin-bottom: 10px;
         }
   
         p {
           margin: 0;
+          line-height: 16.94px;
           font-size: 14px;
+          font-weight: 400;
           color: #333;
           display: -webkit-box;
           -webkit-line-clamp: 5;
@@ -72,46 +75,50 @@
   @media (max-width: 768px) {
     .posts-container {
       padding: 1.5rem;
-    }
-  
-    .header-post {
-      margin-top: 8px;
-      align-items: center;
-      display: flex;
-      flex-direction: column;
-      .action-button {
-        width: auto;
-        font-size: 14px;
-      }
-  
-      .sort-section {
-        display: block;
-        font-size: 14px;
-        line-height: 16px;
-        margin: auto;
-        span {
-          margin-right: 3px;
+
+      .header-post {
+        margin-top: 8px;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+
+        .action-button {
+          width: auto;
+          width: 175px;
+          margin: 0;
+        }
+    
+        .sort-section {
+          display: flex;
+          align-items: center;
+          margin: 8px;
+          padding:8px;
+          span {
+            margin-right: 3px;
+          }
         }
       }
-    }
-    .posts-grid {
-      grid-template-columns: 1fr!important;
-    }
-    .post-card {
-      padding: 10px;
-  
-      h2 {
-        font-size: 14px;
+      .posts-grid {
+        grid-template-columns: 1fr!important;
+        .post-card {
+          padding: 10px;
+      
+          h2 {
+            font-size: 14px;
+          }
+      
+          .post-meta {
+            width: 65%;
+            font-size: 12px;
+            line-height: 15px;
+          }
+      
+          p {
+            font-size: 12px;
+          }
+        }
       }
-  
-      .post-meta {
-        font-size: 12px;
-        line-height: 15px;
-      }
-  
-      p {
-        font-size: 12px;
-      }
+      
     }
-  }
+}
   

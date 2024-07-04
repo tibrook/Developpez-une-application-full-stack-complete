@@ -4,7 +4,7 @@
     <h1>Créer un nouvel article</h1>
     <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
-            <select id="topic" formControlName="topicId" class="form-control"  [ngClass]="{'placeholder': formControls['topicId'].value === ''}">
+            <select id="topic" formControlName="topicId" class="form-control placeholder">
               <option value="" disabled selected>Sélectionner un thème</option>
               <option *ngFor="let topic of topics" [value]="topic.id" >{{ topic.name }}</option>
             </select>

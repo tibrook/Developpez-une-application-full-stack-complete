@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from '../../../core/services/user.service';
 import { Router } from '@angular/router';
 import {  Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 /**
  * HeaderComponent manages the navigation header, updating its state based on the user's authentication status
  * and the current route.

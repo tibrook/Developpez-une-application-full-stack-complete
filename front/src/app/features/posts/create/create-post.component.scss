@@ -58,9 +58,11 @@ form {
   
   textarea::placeholder {
     color: #939393;
-    padding-left: 8px;
+    padding: 8px;
     font-size: 20px;
     font-weight: 400;
+    line-height: 24.2px;
+    font-family: "inter", sans-serif;
   }
 
   button {
