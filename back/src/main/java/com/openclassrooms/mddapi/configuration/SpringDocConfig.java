@@ -10,7 +10,7 @@ public class SpringDocConfig {
     public GroupedOpenApi publicApi() {
         return GroupedOpenApi.builder()
                 .group("springshop-public")
-                .pathsToMatch("/api/auth/**")
+                .pathsToMatch("/api/**")
                 .build();
     }
 }

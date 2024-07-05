@@ -43,7 +43,23 @@ public class TopicController {
     @Operation(summary = "Get all topics", description = "Fetches a list of all available topics")
     @ApiResponse(responseCode = "200", description = "List of topics retrieved successfully",
         content = @Content(mediaType = "application/json",
-                           schema = @Schema(implementation = TopicListResponse.class)))
+        		examples = @ExampleObject(
+        	            name = "TopicListExample",
+        	            description = "Example response with a list of topics",
+        	            value = "[{" +
+        	                    "\"id\": 1," +
+        	                    "\"name\": \"Java Development\"," +
+        	                    "\"description\": \"A topic for discussing Java development practices and tips.\"," +
+        	                    "\"createdAt\": \"2023-06-22T10:00:00\"," +
+        	                    "\"subscribed\": true" +
+        	                    "}, {" +
+        	                    "\"id\": 2," +
+        	                    "\"name\": \"Web Development\"," +
+        	                    "\"description\": \"Discussions on web technologies and frameworks.\"," +
+        	                    "\"createdAt\": \"2023-06-23T11:15:00\"," +
+        	                    "\"subscribed\": false" +
+        	                    "}]"
+        	        )))
     public List<TopicListResponse> getAllTopics() {
         log.info("Get All Topics");
         return topicService.getAllTopics();

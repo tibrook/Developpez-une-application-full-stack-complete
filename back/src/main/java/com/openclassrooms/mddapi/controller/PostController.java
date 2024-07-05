@@ -79,7 +79,25 @@ public class PostController {
     @Operation(summary = "Get posts by subscribed topics", description = "Fetches posts from topics the user is subscribed to")
     @ApiResponse(responseCode = "200", description = "Posts retrieved successfully",
         content = @Content(mediaType = "application/json",
-                           schema = @Schema(implementation = PostDto.class)))
+        		  examples = @ExampleObject(
+        		            name = "SubscribedTopicsPostsExample",
+        		            description = "Example response for posts by subscribed topics",
+        		            value = "[{" +
+	        		                    "\"id\": 1," +
+	        		                    "\"title\": \"My First Post\"," +
+	        		                    "\"content\": \"This is the content of my first post\"," +
+	        		                    "\"author\": \"John Doe\"," +
+	        		                    "\"topicName\": \"Java Development\"," +
+	        		                    "\"createdAt\": \"2023-06-22T10:00:00Z\"," +
+	        		                    "\"updatedAt\": \"2023-06-22T12:00:00Z\"," +
+	        		                    "\"comments\": [{" +
+		        		                    "\"username\": \"JaneDoe\"," +
+		        		                    "\"content\": \"Great post!\"," +
+	        		                    "}]" +
+        		                    "}]"
+        		        ),
+                           schema = @Schema(implementation = PostDto.class)
+        ))
     @GetMapping("/feed")
     public List<PostDto> getSubscribedTopicsPosts() {
         log.info("Get All Posts in the feed");
